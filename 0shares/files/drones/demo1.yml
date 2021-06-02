@@ -1,0 +1,58 @@
+kind: pipeline
+type: docker
+name: analysis-once
+
+
+steps:
+  - name: 编译
+    image: registry.cn-beijing.aliyuncs.com/zhaoweiguo/golang:1.13.1
+    volumes:
+      - name: gopath
+        path: /go
+    environment:
+      CGO_ENABLED: "0"
+    commands:
+      - go build -o analysis-once ./once/main.go
+    environment:
+      GOPROXY: https://goproxy.cn,direct
+      GOSUMDB: sum.golang.google.cn
+      GOPRIVATE: corp.gitlab.com
+  - name: 构建镜像
+    image: plugins/docker
+    volumes:
+      - name: docker
+        path: /var/run/docker.sock
+    settings:
+      username:
+        from_secret: docker_user
+      password:
+        from_secret: docker_pass
+      repo: registry.cn-beijing.aliyuncs.com/zhaoweiguo/go-analysis
+      registry: registry.cn-beijing.aliyuncs.com
+      tags: ${DRONE_BUILD_NUMBER}
+  - name: Kubernetes 部署
+    image: guoxudongdocker/kubectl:v1.14.1
+    volumes:
+      - name: kube
+        path: /root/.kube
+    commands:
+      - sed -i "s/#Tag/${DRONE_BUILD_NUMBER}/g" jobCron.yml
+      - kubectl apply -f jobCron.yml
+
+volumes:
+  - name: kube
+    host:
+      path: /root/drone/kube
+  - name: docker
+    host:
+      path: /var/run/docker.sock
+  - name: gopath
+    host:
+      path: /root/drone/gopath
+
+trigger:
+  branch:
+    - master
+
+
+

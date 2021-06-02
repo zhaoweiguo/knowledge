@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: disk-ssd-ruler-eureka0
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  selector:
+    matchLabels:
+      alicloud-pvname: d-2zeetkf4u46w1vj3r2jf
+  storageClassName: disk
+  volumeName: d-2zeetkf4u46w1vj3r2jf
+
+
+
+

@@ -1,0 +1,71 @@
+ActionScript
+Ada
+ANTLR
+AppleScript
+Assembly (various)
+Asymptote
+Awk
+Befunge
+Boo
+BrainFuck
+C, C++
+C#
+Clojure
+CoffeeScript
+ColdFusion
+Common Lisp
+Coq
+Cython
+D
+Dart
+Delphi
+Dylan
+[erlang]Erlang
+Factor
+Fancy
+Fortran
+F#
+Gherkin (Cucumber)
+GL shaders
+Groovy
+Haskell (incl. Literate Haskell)
+Io
+Java
+JavaScript
+LLVM
+Logtalk
+Lua
+Matlab
+MiniD
+Modelica
+Modula-2
+MuPad
+Nemerle
+Nimrod
+Objective-C
+Objective-J
+Octave
+OCaml
+[php]PHP
+Perl
+PovRay
+PostScript
+PowerShell
+Prolog
+Python 2.x and 3.x (incl. console sessions and tracebacks)
+Rebol
+Redcode
+[ruby]Ruby (incl. irb sessions)
+S, S-Plus, R
+Scala
+Scheme
+Scilab
+Smalltalk
+SNOBOL
+Tcl
+Vala
+Verilog
+VHDL
+Visual Basic.NET
+XQuery
+

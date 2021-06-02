@@ -1,0 +1,59 @@
+;;;======================================================
+;;;文字与背景
+;;;======================================================
+;;已经逐渐不用了emacs23后内核就支持了
+;;(set-language-environment 'UTF-8)
+
+;;设置字体的大小和字型(文泉驿字体)
+(set-default-font "Bitstream Vera Sans Mono-12")
+;;设置中文字体
+(set-fontset-font "fontset-default"
+                  'unicode '("WenQuanYi Bitmap Song" . "unicode-bmp"))
+
+;; 手工选背景色(建议使用color-theme插件)
+;; (set-background-color xxx)
+
+;; 使用color-theme插件的方式
+;; (require color-theme)
+(color-theme-gray30)
+;; 将mmm-mode的背景色设深一些，与当前的背景色匹配
+(set-face-background 'mmm-default-submode-face "DarkSlateGray4")
+
+
+;;;======================================================
+;;; 功能与提示
+;;;======================================================
+;; 方便的小技巧
+(fset 'yes-or-no-p 'y-or-n-p) ; 将yes/no替换为y/n
+(mouse-avoidance-mode 'animate) ; 光标移动到鼠标下时，鼠标自动弹开
+(column-number-mode t) ; 显示列号
+(tool-bar-mode nil) ;;禁用工具栏
+;; 时间与日期
+(display-time-mode 1) ; 显示时间
+(setq display-time-24hr-format t) ; 24小时格式
+(setq display-time-day-and-date t) ; 显示日期
+
+
+
+;;;======================================================
+;;; 其他
+;;;======================================================
+
+(setq frame-title-format "March Liu@%b") ; 标题栏显示当前编辑的文档
+
+;; 插入当前编辑时间
+(defun insert-date ()
+  "Insert date at point."
+  (interactive)
+  (insert (format-time-string "%Y年%m月%e日 %l:%M %a %p")))
+
+
+;;;======================================================
+;;; 高级应用
+;;;======================================================
+;;添加插件所在位置
+(add-to-list 'load-path "xxx") 
+;; 加载库
+(require 'xxx) 
+;; 增加钩子
+(add-hook 'python-mode-hook 'python-mode-hook t)

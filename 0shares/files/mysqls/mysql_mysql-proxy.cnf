@@ -1,0 +1,15 @@
+[mysql-proxy]
+
+daemon = true
+log-file = /usr/local/mysql-proxy-0.8.3/mysqlproxy.log
+proxy-address=192.168.0.4:4040
+proxy-read-only-backend-addresses=192.168.0.9:3306
+proxy-backend-addresses=192.168.0.6:3306
+admin-lua-script=/usr/local/mysql-proxy-0.8.3/share/doc/mysql-proxy/admin-sql.lua
+admin-username= root
+admin-password=
+proxy-lua-script=/usr/local/mysql-proxy-0.8.3/share/doc/mysql-proxy/rw-splitting.lua
+
+
+
+

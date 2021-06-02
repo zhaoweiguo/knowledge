@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: logtail-ds
+  namespace: kube-system
+  labels:
+    k8s-app: logtail-ds
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: logtail-ds
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        name: logtail-ds
+    spec:
+      containers:
+      - env:
+        - name: ALIYUN_LOGTAIL_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              key: log-config-path
+              name: alibaba-log-configuration
+        name: logtail
+        image: registry-vpc.cn-beijing.aliyuncs.com/acs/logtail:v0.16.52.2-f161bec-aliyun
+        resources:
+          limits:
+            cpu: 500m
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /var/run
+          name: run
+        - mountPath: /logtail_host
+          name: root
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - hostPath:
+          path: /var/run
+          type: Directory
+        name: run
+      - hostPath:
+          path: /
+          type: Directory

@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1    # extensions是API group, v1beta1是version
+kind: Deployment
+metadata:
+  name: oneserver-deployment
+spec:
+  replicas: 3   # 指定复制pod个数
+  minReadySeconds: 10  # 就绪探针监测ready后要维持可运行10s,则认为此pod是可用状态
+  strategy:
+    rollingUpdate:
+      maxSurge: 1        # 可超出期望副本数之外的pod数量(可以是整数或百分比,百分比四舍五入)
+      maxUnavailable: 0  # 相对期望整本数,最多允许多少pod处于不可用状态(可以是整数或百分比)
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: oneserver
+  template:
+    metadata:
+      labels:
+        app: oneserver
+    spec:
+        containers:
+          - name: oneserver
+            image: registry.cn-beijing.aliyuncs.com/xxxxxx/oneserver:1
+            env:    # 环境变量
+            - name: device_name
+              value: "数据守护者"
+            - name: hub_server_addr
+              value: "http://172.19.56.34:9001"
+            readlinessProbe:   # 就绪探针1
+              exec:
+                command:
+                  - ls
+                  - /var/ready
+
+            readlinessProbe:   # 就绪探针2
+              periodSecond: 1  # 定义就绪探针每隔1秒执行一次
+              httpGet:
+                path: /
+                port: 8080
+
+
+
+
+
+

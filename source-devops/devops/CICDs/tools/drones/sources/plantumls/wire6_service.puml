@@ -1,0 +1,142 @@
+@startuml
+
+card cancelerNew
+(core.BuildStore) -> cancelerNew
+(core.Pubsub) -> cancelerNew
+(core.RepositoryStore) -> cancelerNew
+(core.Scheduler) -> cancelerNew
+(core.StageStore) -> cancelerNew
+(core.StatusService) -> cancelerNew
+(core.StepStore) -> cancelerNew
+(core.UserStore) -> cancelerNew
+(core.WebhookSender) -> cancelerNew
+cancelerNew --> (core.Canceler)
+
+card CommitNew
+(*scm.Client) --> CommitNew
+(core.Renewer) --> CommitNew
+CommitNew --> (core.CommitService)
+
+card SchedulerNew
+(core.CommitService) --> SchedulerNew
+(core.CronStore) --> SchedulerNew
+(core.RepositoryStore) --> SchedulerNew
+(core.UserStore) --> SchedulerNew
+(core.Triggerer) --> SchedulerNew
+SchedulerNew --> (cron.Scheduler)
+
+card LogStreamNew
+LogStreamNew --> (core.LogStream)
+
+card PubsubNew
+PubsubNew --> (core.Pubsub)
+
+card LinkerNew
+(*scm.Client) --> LinkerNew
+LinkerNew--> (core.Linker)
+
+card HookParserNew
+(*scm.Client) --> HookParserNew
+HookParserNew--> (core.HookParser)
+
+card Renewer
+(*oauth2.Refresher) --> Renewer
+(core.UserStore) --> Renewer
+Renewer --> (core.Renewer)
+
+card TriggererNew
+(core.Canceler) -> TriggererNew
+(core.ConfigService) -> TriggererNew
+(core.ConvertService) -> TriggererNew
+(core.CommitService) -> TriggererNew
+(core.StatusService) -> TriggererNew
+(core.BuildStore) -> TriggererNew
+(core.Scheduler) -> TriggererNew
+(core.RepositoryStore) -> TriggererNew
+(core.UserStore) -> TriggererNew
+(core.ValidateService) -> TriggererNew
+(core.WebhookSender) --> TriggererNew
+TriggererNew --> (core.TriggererNew)
+
+card UserServiceNew
+(*scm.Client) --> UserServiceNew
+(core.Renewer) --> UserServiceNew
+UserServiceNew --> core.UserService
+
+
+
+
+card provideContentService
+(*scm.Client) --> provideContentService
+(core.Renewer) --> provideContentService
+provideContentService --> (core.FileService)
+
+card provideHookService
+(*scm.Client) --> provideHookService
+(core.Renewer) --> provideHookService
+(config.Config) --> provideHookService
+provideHookService --> (core.HookService)
+
+
+card provideNetrcService
+(*scm.Client) --> provideNetrcService
+(core.Renewer) --> provideNetrcService
+(config.Config) --> provideNetrcService
+provideNetrcService --> (core.NetrcService)
+
+card provideOrgService
+(*scm.Client) --> provideOrgService
+(core.Renewer) --> provideOrgService
+provideOrgService --> (core.OrganizationService)
+
+card provideRepositoryService
+(*scm.Client) --> provideRepositoryService
+(core.Renewer) --> provideRepositoryService
+(config.Config) --> provideRepositoryService
+provideRepositoryService --> (core.RepositoryService)
+
+card provideSession
+(core.UserStore) --> provideSession
+(config.Config) --> provideSession
+provideSession --> (core.Session)
+
+card provideStatusService
+(*scm.Client) --> provideStatusService
+(core.Renewer) --> provideStatusService
+(config.Config) --> provideStatusService
+provideStatusService --> (core.StatusService)
+
+card provideSyncer
+(core.RepositoryStore) --> provideSyncer
+(core.UserStore) --> provideSyncer
+(core.Batcher) --> provideSyncer
+(config.Config) --> provideSyncer
+provideSyncer --> (core.Syncer)
+
+card provideSystem
+config.Config --> provideSystem
+provideSystem --> (*core.System)
+
+card provideDatadog
+(core.UserStore) --> provideDatadog
+(core.RepositoryStore) --> provideDatadog
+(core.BuildStore) --> provideDatadog
+(*core.System) --> provideDatadog
+(*core.License) --> provideDatadog
+(config.Config) --> provideDatadog
+provideDatadog --> (sink.Datadog)
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy
+metadata:
+  name: postgres-netpolicy 
+spec:
+  podSelector:
+    matchLabels:      # This policy secures access to pods with app=database label.
+      app: database
+  ingress:
+  - from:
+    - podSelector:    # It allows incoming connections only from pods with the app=webserver label.
+        matchLabels:
+          app: webserver
+    ports:
+    - port: 5432      # Connections to this port are allowed

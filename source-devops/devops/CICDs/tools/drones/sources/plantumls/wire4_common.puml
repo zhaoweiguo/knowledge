@@ -1,0 +1,88 @@
+@startuml
+
+card provideClient
+
+(config.Config)---> provideClient
+provideClient ---> (*scm.Client)
+
+
+card provideLicense
+card NewService
+(*scm.Client) --> provideLicense
+(config.Config) --> provideLicense
+provideLicense --> (*core.License)
+
+(core.UserStore) --> NewService
+(core.RepositoryStore) --> NewService
+(core.BuildStore) --> NewService
+(*core.License) --> NewService
+NewService --> (core.LicenseService)
+
+card provideLogin
+card provideRefresher
+(config.Config) --> provideLogin
+provideLogin --> (login.Middleware)
+(config.Config) --> provideRefresher
+provideRefresher --> (*oauth2.Refresher)
+
+card provideAdmissionPlugin
+(*scm.Client) --> provideAdmissionPlugin
+(core.OrganizationService) --> provideAdmissionPlugin
+(core.UserService) --> provideAdmissionPlugin
+(config spec.Config) --> provideAdmissionPlugin
+provideAdmissionPlugin --> (core.AdmissionService)
+
+card provideConfigPlugin
+(*scm.Client) --> provideConfigPlugin
+(core.FileService) --> provideConfigPlugin
+(spec.Config) --> provideConfigPlugin
+provideConfigPlugin --> (core.ConfigService)
+
+card provideConvertPlugin
+(*scm.Client) --> provideConvertPlugin
+(spec.Config) --> provideConvertPlugin
+
+card provideRegistryPlugin
+(spec.Config) --> provideRegistryPlugin
+provideRegistryPlugin --> (core.RegistryService)
+
+card provideSecretPlugin
+(spec.Config) --> provideSecretPlugin
+provideSecretPlugin --> (core.SecretService)
+
+card provideValidatePlugin
+(spec.Config) --> provideValidatePlugin
+provideValidatePlugin --> (core.ValidateService)
+
+card provideWebhookPlugin
+(spec.Config) --> provideWebhookPlugin
+(*core.System) --> provideWebhookPlugin
+provideWebhookPlugin --> (core.WebhookSender)
+
+card provideRunner
+(manager.BuildManager) --> provideRunner
+(core.SecretService) --> provideRunner
+(core.RegistryService) --> provideRunner
+(config.Config) --> provideRunner
+provideRunner --> (runner.Runner)
+
+
+card provideScheduler
+(core.StageStore) --> provideScheduler
+(config.Config) --> provideScheduler
+provideScheduler --> (core.Scheduler)
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+

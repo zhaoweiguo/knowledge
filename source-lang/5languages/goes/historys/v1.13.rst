@@ -1,0 +1,94 @@
+Go 1.13(released 2019/09/03)
+############################
+
+该版本改进了 sync.Pool ，使得池中的资源不会在垃圾回收的实话被清除。（通过新机制里引入的缓存，两次垃圾回收之间没有被使用过的实例才会被清除。）
+该版本重写了逃逸分析逻辑，使得 Go 程序减少了堆上的分配次数。
+
+
+
+
+Go module机制
+=============
+
+1. GO111MODULE=auto的行为变化::
+    
+    在Go 1.12版本中，GO111MODULE默认值为auto，
+        在auto模式下，GOPATH/src下面的repo以及在GOPATH之外的repo
+        依旧使用GOPATH mode，不使用go.mod来管理依赖；
+    在Go 1.13中，module mode优先级提升，GO111MODULE的默认值依然为auto，
+        但在这个auto下，无论是在GOPATH/src下还是GOPATH之外的repo中，
+        只要目录下有go.mod，go编译器都会使用go module来管理依赖。
+
+2. GOPROXY有默认初值并支持设置成多个代理的列表::
+    
+    之前版本中，GOPROXY这个环境环境变量默认值为空，
+    go编译器都是直接与类似github.com这样的代码托管站点通信并获取相关依赖库的数据的；
+    一些第三方GOPROXY服务发布后，迁移到go module的gopher们发现：
+    大多数情况下通过proxy获取依赖包数据的速度要远高于直接从代码托管站点获取，因此GOPROXY总是会配置上一个值。
+    Go核心团队也希望Go世界能有一个像nodejs那样的中心化的module仓库为大家提供服务，
+    于是在Go 1.13中将https://proxy.golang.org作为GOPROXY环境变量的默认值之一，这也是Go官方提供的GOPROXY服务。
+
+    同时GOPROXY支持设置为多个proxy的列表(多个proxy之间采用逗号分隔)，
+    Go编译器会按顺序尝试列表中的proxy以获取依赖包数据，
+    但是当有proxy server服务不可达或者是返回的http状态码不是404也不是410时，go会终止数据获取。
+
+    Go 1.13中，GOPROXY的默认值为: https://proxy.golang.org,direct。
+    当官方代理返回404或410时，Go编译器会尝试直接连接依赖module的代码托管站点以获取数据。
+    
+    由于国内无法访问Go官方的proxy，因此我一般会将我的工作环境下的GOPROXY设置为:
+    export GOPROXY=https://goproxy.cn,自己在国外主机使用athens搭建的代理,direct
+
+3. GOSUMDB::
+    
+    我们知道go会在go module启用时在本地建立一个go.sum文件，用来存储依赖包特定版本的加密校验和。
+    同时，Go维护下载的软件包的缓存，并在下载时计算并记录每个软件包的加密校验和。
+    在正常操作中，go命令对照这些预先计算的校验和去检查某repo下的go.sum文件，而非每次命令调用时都重新计算它们。
+
+    在日常开发中，特定module版本的校验和永远不会改变。
+    每次运行或构建时，go命令都会通过本地的go.sum去检查其本地缓存副本的校验和是否一致。
+    如果校验和不匹配，则go命令将报告安全错误，并拒绝运行构建或运行。
+    在这种情况下，重要的是找出正确的校验和，确定是go.sum错误还是下载的代码是错误的。
+    如果go.sum中尚未包含已下载的module，并且该模块是公共module，
+    则go命令将查询Go校验和数据库以获取正确的校验和数据存入go.sum。
+    如果下载的代码与校验和不匹配，则go命令将报告不匹配并退出。
+
+    Go 1.13提供了GOSUMDB环境变量用于配置Go校验和数据库的服务地址（和公钥），
+    其默认值为”sum.golang.org”，
+    这也是Go官方提供的校验和数据库服务
+    (大陆gopher可以使用sum.golang.google.cn)。
+
+    出于安全考虑，建议保持GOSUMDB开启。
+    但如果因为某些因素，无法访问GOSUMDB（甚至是sum.golang.google.cn），可以通过下面命令将其关闭：
+    go env -w GOSUMDB=off
+    GOSUMDB关闭后，仅能使用本地的go.sum进行包的校验和校验了。
+
+4. 面向私有模块的GOPRIVATE::
+
+    有了GOPROXY后，公共module的数据获取变得十分easy。
+    但是如果依赖的是企业内部module或托管站点上的private库，
+    通过GOPROXY（默认值）获取显然会得到一个失败的结果，
+    除非你搭建了自己的公私均可的goproxy server并将其设置到GOPROXY中。
+    
+    Go 1.13提供了GOPRIVATE变量，用于指示哪些仓库下的module是private，
+    不需要通过GOPROXY下载，也不需要通过GOSUMDB去验证其校验和。
+    不过要注意的是GONOPROXY和GONOSUMDB可以override GOPRIVATE中的设置，因此设置时要谨慎，
+    比如下面的例子:
+    GOPRIVATE=pkg.tonyba.com/private
+    GONOPROXY=none
+    GONOSUMDB=none
+
+    GOPRIVATE指示pkg.tonybai.com/private下的包不经过代理下载，不经过SUMDB验证。
+    但GONOPROXY和GONOSUMDB均为none，意味着所有module，不管是公共的还是私有的，
+    都要经过proxy下载，经过sumdb验证。
+
+    前面提到过了，GONOPROXY和GONOSUMDB会override GOPRIVATE的设置，
+    因此在这样的配置下，所有依赖包都要经过proxy下载，也要经过sumdb验证。
+    不过这个例子中的GOPRIVATE的值也不是一无是处，它可以给其他go tool提供私有module的指示信息。
+
+
+
+参考
+====
+
+* https://app.yinxiang.com/fx/374310bd-ce62-481d-92c4-28892354e666
+* https://www.flysnow.org/2019/09/06/go1.13-error-wrapping.html

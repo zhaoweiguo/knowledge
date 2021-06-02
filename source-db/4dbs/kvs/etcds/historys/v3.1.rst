@@ -1,0 +1,61 @@
+v3.1 [1]_
+#########
+
+v3.1.21 (2019-TBD)
+==================
+
+etcdctl v3::
+
+    Strip out insecure endpoints from DNS SRV records when using discovery with etcdctl v2
+    Add etcdctl endpoint health --write-out support.
+
+
+v3.1.19 (2018-07-24)
+====================
+
+Improved::
+
+    ReadIndex机制: Improve Raft Read Index timeout warning messages.
+
+Go::
+
+    Compile with Go 1.8.7.
+
+
+
+v3.1.13 (2018-03-29)
+====================
+
+Improved::
+
+    Adjust election timeout on server restart to reduce disruptive rejoining servers.
+
+Metrics, Monitoring::
+
+    Note that any etcd_debugging_* metrics are experimental and subject to change.
+
+Go::
+
+    Compile with Go 1.8.7.
+
+
+v3.1.0 (2017-01-20)
+===================
+
+Improved::
+
+    Faster linearizable reads (implements Raft read-index).
+        https://github.com/etcd-io/etcd/pull/6212
+    v3 authentication API is now stable.
+
+Go::
+
+    Compile with Go 1.7.4.
+
+
+
+
+
+
+
+.. [1] https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.1.md

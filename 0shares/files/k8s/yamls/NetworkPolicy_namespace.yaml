@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1 
+kind: NetworkPolicy
+metadata:
+  name: shoppingcart-netpolicy 
+spec:
+  podSelector:
+    matchLabels:          # This policy applies to pods labeled as microservice= shopping-cart.
+      app: shopping-cart 
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:      # Only pods running in namespaces labeled as tenant=manning 
+          tenant: manning #     are allowed to access the microservice.
+    ports:
+    - port: 80

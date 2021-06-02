@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: light
+    component: frontend
+  name: light-edge-router
+  namespace: geekbuying-light
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    ingress.kubernetes.io/ssl-redirect: "false"     // 是否强制使用https
+    traefik.frontend.rule.type: "PathPrefixStrip"
+    traefik.ingress.kubernetes.io/frontend-entry-points: "http,https"
+    traefik.ingress.kubernetes.io/priority: "3"
+spec:
+  rules:
+  - host: <hostdomain literal>
+    http:
+      paths:
+      - path: /api/v1/light
+        backend: 
+          serviceName: aggregation-light-api
+          servicePort: 80
+      - path: /api/v1/identity
+        backend: 
+          serviceName: identity-api
+          servicePort: 80
+
+
+
+
+
+

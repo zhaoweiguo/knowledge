@@ -1,0 +1,90 @@
+go1.15 (released 2020/08/11)
+############################
+
+Most of its changes are in the implementation of the toolchain, runtime, and libraries.
+
+受疫情影响，这次版本变化的内容不太多，但如期发布了。
+
+Go 1.15 包括对链接器的重大改进，改进了对具有大量内核的小对象的分配，并弃用了 X.509 CommonName。GOPROXY 现在支持跳过返回错误的代理，并添加了新的嵌入式 tzdata 包。
+
+1. 新的链接器
+=============
+
+* 官方的设计文档地址：https://golang.org/s/better-linker
+* 此版本 Go 可减少链接器资源的使用（时间和内存）并提高代码的健壮性/可维护性。对于在 amd64 架构上运行的基于 ELF 的操作系统（Linux，FreeBSD，NetBSD，OpenBSD，Dragonfly 和S olaris），代表性的大型 Go 程序集的链接速度提高 20％，平均所需内存减少 30％。其他体系结构/OS 组合的改进。
+
+2. 编译器改进
+=============
+
+* 包 unsafe 的安全规则允许在调用某些函数时将 unsafe.Pointer 转换为 uintptr。
+* 与 Go 1.14 相比，Go 1.15 通过消除某些类型的 GC 元数据和更积极地消除了未使用的类型元数据，与 Go 1.14 相比将典型的二进制大小减少了大约 5％。
+
+3. 内嵌 tzdata
+==============
+
+增加了一个新包：time/tzdata，当系统找不到时区数据时（比如 Windows 等），通过导入这个包，在程序中内嵌时区数据，也可以通过编译时传递 -tags timetzdata 来实现同样的效果。
+
+* 具体查看这个 issue: https://github.com/golang/go/issues/38017 
+* 以及包 time/tzdata 的说明: https://golang.org/pkg/time/tzdata/
+
+4. 增加 testing.TB.TempDir
+==========================
+
+* 测试生成临时文件挺常见的，这个为了更好的解决此问题。
+* 详情见 issue: https://github.com/golang/go/issues/35998
+
+5. 增加 testing.T.Deadline
+==========================
+
+* 将 context 引入 testing 包。
+* 详情见 issue: https://github.com/golang/go/issues/28135
+
+6. 关于 Ports 部分
+==================
+
+darwin/386、darwin/arm 不再支持；riscv64 变得更好；linux/arm64 现在作为第一类 port 支持
+
+7. API 的变动
+=============
+
+* 1）net/url.URL RawFragment 和 EscapedFragment ，详情见 issue: https://github.com/golang/go/issues/3777
+* 2）net/url.URL.Redacted，详情见 issue: https://github.com/golang/go/issues/34855
+* 3）time.Ticker.Reset，我们知道 Timer 是有 Reset 的，这次为 Ticker 也增加，详情见 issue: https://github.com/golang/go/issues/33184
+* 4）regexp.Regexp.SubexpIndex，详情见 issue: https://github.com/golang/go/issues/32420
+* 5）sync.Map.LoadAndDelete，详情见 issue: https://github.com/golang/go/issues/33762
+* 6）crypto/tls.Dialer.DialContext，详情见 issue: https://github.com/golang/go/issues/18482
+
+8. 工具链
+=========
+
+* 1）增加 go env GOMODCACHE: https://github.com/golang/go/issues/34527
+* 2）opt-in fallbacks in GOPROXY: https://github.com/golang/go/issues/37367
+* 3）vet：warn about string(int) 和 detect impossible interface assertions: https://github.com/golang/go/issues/32479 和 https://github.com/golang/go/issues/4483
+* 4）println 允许打印两个值。println(twoValues())；
+* 5）panic：显示可打印的值而不是地址。比如::
+  
+    type MyString string
+    panic(MyString("hello"))
+
+    现在打印：
+    panic: (main.MyString) (0x48aa00,0x4c0840)
+    期望打印：
+    panic: main.MyString("hello")
+
+
+9. 性能
+=======
+
+* 1）在 amd64 上更好的写屏蔽
+* 2）在 Linux 上，forkAndExec 使用 dup3；
+* 3）sha512 算法速度提升 15%；
+* 4）ReadMemStats 延迟降低 95%；
+* 5）关闭状态的 channel 接收速度提升 99%;
+* 6）将小的 int 值转为 interface{} 不额外分配内存；
+
+
+* Go 1.15 Release Notes: https://tip.golang.org/doc/go1.15
+* 官网说明: https://golang.org/doc/go1.15
+* https://studygolang.com/topics/12104
+* PPT: https://docs.google.com/presentation/d/1veyF0y6Ynr6AFzd9gXi4foaURlgbMxM-tmB4StDrdAM/edit#slide=id.g840eaeb4b4_0_8 
+* 视频: https://www.youtube.com/watch?v=OZSJ2fwSSUM&list=PLdeYrDm3hJTh21xi3rezgsSqrZl_Xs0VA

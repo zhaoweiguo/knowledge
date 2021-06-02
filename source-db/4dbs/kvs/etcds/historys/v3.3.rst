@@ -1,0 +1,88 @@
+v3.3 [1]_
+#########
+
+
+v3.3.18(2019-11-26)
+===================
+
+Metrics, Monitoring
+-------------------
+
+See List of metrics for all metrics per release.
+
+Note that any etcd_debugging_* metrics are experimental and subject to change.
+
+* Add etcd_cluster_version Prometheus metric.
+* Add etcd_debugging_mvcc_total_put_size_in_bytes Prometheus metric.
+
+etcdserver
+----------
+
+Fix `wait purge file loop during shutdown. <https://github.com/etcd-io/etcd/pull/11308>`_::
+
+    Previously, during shutdown etcd could accidentally remove needed wal files, 
+        resulting in catastrophic error 「etcdserver: open wal error: wal: file not found.」 during startup.
+    Now, etcd makes sure the purge file loop exits before server signals stop of the raft node.
+
+v3.3.14 (2019-08-16)
+====================
+
+Breaking Changes::
+
+    Rewrite client balancer with new gRPC balancer interface.
+    Require Go 1.12+.
+    Migrate dependency management tool from glide to Go module.
+
+API::
+
+    Add watch_id field to etcdserverpb.WatchCreateRequest to allow user-provided watch ID to mvcc.
+    Add fragment field to etcdserverpb.WatchCreateRequest to request etcd server to split watch events
+    Add WatchRequest.WatchProgressRequest.
+
+Go::
+
+    Require Go 1.12+.
+
+
+v3.3.0 (2018-02-01)
+===================
+
+Improved::
+
+    Use coreos/bbolt to replace boltdb/bolt.
+
+Dependency::
+
+    Upgrade boltdb/bolt from v1.3.0 to coreos/bbolt v1.3.1-coreos.6.
+    Upgrade google.golang.org/grpc from v1.2.1 to v1.7.5.
+    Upgrade github.com/ugorji/go/codec to v1.1, and regenerate v2 client.
+    Upgrade github.com/ugorji/go/codec to ugorji/go@54210f4e0, and regenerate v2 client.
+    Upgrade github.com/grpc-ecosystem/grpc-gateway from v1.2.2 to v1.3.0.
+    Upgrade golang.org/x/crypto/bcrypt to golang/crypto@6c586e17d.
+
+Security, Authentication::
+
+    Add CRL based connection rejection to manage revoked certs.
+    Document TLS authentication changes.
+    Add etcd --peer-cert-allowed-cn flag.
+    Protect lease revoke with auth.
+    Provide user's role on auth permission error.
+    Fix auth store panic with disabled token.
+
+API::
+
+    Support ranges in transaction comparisons for disconnected linearized reads.
+    Add nested transactions to extend proxy use cases.
+    Add lease comparison target in transaction.
+    Add lease list.
+    Add hash by revision for better corruption checking against boltdb.
+
+Go::
+
+    Require Go 1.9+.
+    Compile with Go 1.9.3.
+    Deprecate golang.org/x/net/context.
+
+
+
+.. [1] https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.3.md

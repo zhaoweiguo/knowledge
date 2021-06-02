@@ -1,0 +1,45 @@
+
+  --with-aolserver=DIR    Specify path to the installed AOLserver
+  --with-apxs[=FILE]      Build shared Apache 1.x module. FILE is the optional
+                          pathname to the Apache apxs tool [apxs]
+  --with-apache[=DIR]     Build Apache 1.x module. DIR is the top-level Apache
+                          build directory [/usr/local/apache]
+  --enable-mod-charset      APACHE: Enable transfer tables for mod_charset (Rus Apache)
+  --with-apxs2filter[=FILE]   
+                          EXPERIMENTAL: Build shared Apache 2.0 Filter module. FILE is the optional
+                          pathname to the Apache apxs tool [apxs]
+  --with-apxs2[=FILE]     Build shared Apache 2.0 Handler module. FILE is the optional
+                          pathname to the Apache apxs tool [apxs]
+  --with-apache-hooks[=FILE]      
+                          EXPERIMENTAL: Build shared Apache 1.x module. FILE is the optional
+                          pathname to the Apache apxs tool [apxs]
+  --with-apache-hooks-static[=DIR]
+                          EXPERIMENTAL: Build Apache 1.x module. DIR is the top-level Apache
+                          build directory [/usr/local/apache]
+  --enable-mod-charset      APACHE (hooks): Enable transfer tables for mod_charset (Rus Apache)
+  --with-caudium[=DIR]    Build PHP as a Pike module for use with Caudium.
+                          DIR is the Caudium server dir [/usr/local/caudium/server]
+  --disable-cli           Disable building CLI version of PHP
+                          (this forces --without-pear)
+  --with-continuity=DIR   Build PHP as Continuity Server module. 
+                          DIR is path to the installed Continuity Server root
+  --enable-embed[=TYPE]   EXPERIMENTAL: Enable building of embedded SAPI library
+                          TYPE is either 'shared' or 'static'. [TYPE=shared]
+  --enable-fpm              EXPERIMENTAL: Enable building of the fpm SAPI executable
+  --with-fpm-user[=USER]  Set the user for php-fpm to run as. (default: nobody)
+  --with-fpm-group[=GRP]  Set the group for php-fpm to run as. For a system user, this 
+                  should usually be set to match the fpm username (default: nobody)
+  --with-isapi[=DIR]      Build PHP as an ISAPI module for use with Zeus
+  --with-litespeed        Build PHP as litespeed module
+  --with-milter[=DIR]     Build PHP as Milter application
+  --with-nsapi=DIR        Build PHP as NSAPI module for Netscape/iPlanet/Sun Webserver
+  --with-phttpd=DIR       Build PHP as phttpd module
+  --with-pi3web[=DIR]     Build PHP as Pi3Web module
+  --with-roxen=DIR        Build PHP as a Pike module. DIR is the base Roxen
+                          directory, normally /usr/local/roxen/server
+  --enable-roxen-zts        ROXEN: Build the Roxen module using Zend Thread Safety
+  --with-thttpd=SRCDIR    Build PHP as thttpd module
+  --with-tux=MODULEDIR    Build PHP as a TUX module (Linux only)
+  --with-webjames=SRCDIR  Build PHP as a WebJames module (RISC OS only)
+  --disable-cgi           Disable building CGI version of PHP
+

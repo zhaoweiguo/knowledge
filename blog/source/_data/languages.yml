@@ -1,0 +1,13 @@
+en:
+  name: English
+  disqus: en
+  subtitle: zhaoweiguo's blog
+  author: zhaoweiguo
+  description: zhaoweiguo's blog
+
+zh-CN:
+  name: Chinese
+  disqus: zh-CN
+  subtitle: 新溪-gordon之胡写乱画
+  author: zhaoweiguo
+  description: Just do it now.

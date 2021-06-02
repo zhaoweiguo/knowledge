@@ -1,0 +1,39 @@
+v1.16版本
+#########
+
+
+
+* Release Note [1]_
+* 发布时间: 2019年09月19日
+
+
+功能增强
+========
+
+Kubernetes 1.16.6版本相较于1.14版本的演进和增强值得注意的变更主要为以下几个方面::
+
+    extensions/v1beta1、apps/v1beta1、apps/v1beta2的API均不再被默认支持
+        其中，所有apps/v1beta1和apps/v1beta1下的资源使用apps/v1替代
+        位于extensions/v1beta1下的资源daemonsets、deployments、replicasets将使用apps/v1替代
+        位于extensions/v1beta1下的资源networkpolicies使用networking.k8s.io/v1替代
+
+    已废弃的kubelet安全控制参数AllowPrivileged、HostNetworkSources、HostPIDSources和HostIPCSources 已被移除
+        取而代之的是一些准入控制（例如PodSecurityPolicy）来增强这些限制。
+    多个功能进入更加稳定的阶段，例如CRD和Admission webhook在1.16.6版本中进入到了GA阶段
+
+.. note:: 说明 为了更好地兼容您的业务，ACK会在Kubernetes 1.16.6版本开启对上述API的兼容，并在1.18版本再彻底废除对其支持。建议您尽快调整这些API。
+
+
+
+
+
+参考
+====
+
+* Kubernetes Release Note 解读（1.15， 1.16）: https://developer.aliyun.com/article/748085
+* Kubernetes 1.16 与 1.14性能对比: https://developer.aliyun.com/article/747908
+* Deprecated APIs Removed In 1.16: Here’s What You Need To Know: https://kubernetes.io/blog/2019/07/18/api-deprecations-in-1-16/
+
+.. [1] https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md
+
+

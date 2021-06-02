@@ -1,0 +1,54 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: ruler-eureka-service
+spec:
+  clusterIP: None   # StatefulSet控制的Service必须是headless模式
+  selector:
+    app: ruler-eureka
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: web
+spec:
+  selector:
+    matchLabels:
+      app: ruler-eureka
+  serviceName: "ruler-eureka-service"
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ruler-eureka
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+          name: web
+        volumeMounts:
+        - name: disk-ssd
+          mountPath: /data
+  volumeClaimTemplates:    # 设定持久存储模板
+  - metadata:
+      name: disk-ssd
+    spec:
+      accessModes: [ "ReadWriteOnce" ]        # 只允许单结点挂载读写
+      storageClassName: "alicloud-disk-ssd"   # 指定阿里的ssd磁盘
+      resources:
+        requests:
+          storage: 20Gi    # 指定磁盘大小为20G
+
+
+
+
+

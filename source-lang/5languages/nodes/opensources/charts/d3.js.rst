@@ -1,0 +1,36 @@
+d3.js
+###########
+
+* 全称是（Data-Driven Documents）,一个被数据驱动的文档
+* github [1]_
+* 官网 [2]_
+* wiki [3]_
+
+CDN
+====
+
+* https://unpkg.com/browse/d3@5.12.0/
+* https://cdnjs.com/libraries/d3
+
+实例
+======
+
+* https://github.com/d3/d3/wiki/Gallery
+* https://github.com/d3/d3/wiki/Tutorials
+* https://bost.ocks.org/mike/
+  
+
+
+
+.. toctree::
+   :maxdepth: 2
+
+   d3s/normal
+   d3s/practice
+
+
+
+
+.. [1] https://github.com/d3/d3
+.. [2] https://d3js.org/
+.. [3] https://github.com/d3/d3/wiki

@@ -1,0 +1,86 @@
+v3.2 [1]_
+#########
+
+v3.2.32 (2021 TBD)
+==================
+
+Package wal::
+
+    add wal slice bound check to make sure entry index is not greater than the number of entries
+    check slice size in decodeRecord
+    fix panic when decoder not set
+
+Package fileutil::
+
+    fix constant for linux locking
+
+v3.2.28 (2019-11-10)
+====================
+
+Improved::
+
+    Add etcd --experimental-peer-skip-client-san-verification to skip verification of peer client address.
+        https://github.com/etcd-io/etcd/pull/11195
+
+etcdserver::
+
+    Fix wait purge file loop during shutdown.
+        https://github.com/etcd-io/etcd/pull/11308
+
+
+v3.2.24 (2018-07-24)
+====================
+
+Improved::
+
+    Improve Raft Read Index timeout warning messages.
+
+client v3::
+
+    Fix lease keepalive interval updates when response queue is full.
+        https://github.com/etcd-io/etcd/pull/9952
+
+Go::
+
+    Compile with Go 1.8.7.
+
+
+v3.2.10 (2017-11-16)
+====================
+
+Dependency::
+
+    Upgrade google.golang.org/grpc from v1.2.1 to v1.7.3.
+    Upgrade github.com/grpc-ecosystem/grpc-gateway from v1.2.0 to v1.3.
+
+
+
+v3.2.0 (2017-06-09)
+===================
+
+Improved::
+
+    Improve backend read concurrency.
+
+Breaking Changes::
+
+    Increased --snapshot-count default value from 10,000 to 100,000.
+
+Dependency::
+
+    Upgrade google.golang.org/grpc from v1.0.4 to v1.2.1.
+    Upgrade github.com/grpc-ecosystem/grpc-gateway to v1.2.0.
+
+Security, Authentication::
+
+    TLS certificates get reloaded on every client connection. 
+    Server denies incoming peer certs with wrong IP SAN.
+    Server resolves TLS DNSNames when checking SAN.
+    Auth support JWT token.
+
+Go::
+
+    Compile with Go 1.8.3.
+
+
+.. [1] https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.2.md

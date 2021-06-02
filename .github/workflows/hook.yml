@@ -1,0 +1,73 @@
+on:
+  push:
+    branches:
+      - deploy
+  pull_request:
+    branches:
+      - deploy
+jobs:
+  build:
+    name: Hook
+    runs-on: ubuntu-latest
+    steps:
+    # - name: Hook
+    #   uses: jasongitmail/fast-webhook@v1
+    #   with:
+    #     url: ${{ secrets.WEBHOOK_URL }}
+    #     json: '{"path":"/var/www/knowledge", "branch": "master", "actions": ["pull", "make"]}'
+
+
+    - name: Start
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+        fetch-depth: 0
+
+    - name: Sphinx Build
+      uses: zhaoweiguo/sphinx-action@master
+      with:
+        docs-folder: "source/"
+        build-command: "sphinx-build -b html . _build"
+
+    - name: Clone documentation repo
+      run: |
+        git clone https://github.com/zhaoweiguo/knowledge.zhaoweiguo.com.git  --branch main --single-branch knowledge
+        rm -rf ./knowledge/*
+        cp -r source/_build/* ./knowledge/
+        cd ./knowledge
+        git config --local user.email "zhaoweiguo@github.com"
+        git config --local user.name "zhaoweiguo"
+        git add .
+        git commit -m "[github workflow knowledge]Update changes"  -a
+
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ACCESS_TOKEN }}
+        directory: knowledge
+        repository: 'zhaoweiguo/knowledge.zhaoweiguo.com'
+        branch: main
+
+
+
+
+    - name: Send dingding notify
+      uses: zcong1993/actions-ding@master
+      with:
+        dingToken: ${{ secrets.DING_TOKEN }}
+        secret: ${{ secrets.DING_SECRET }} # if secret set, action will call API with sign
+        body: |
+          {
+            "msgtype": "link",
+            "link": {
+                "title": "GitHubAction",
+                "text": "[GitHubAction]knowledge src is done!",
+                "picUrl": "",
+                "messageUrl": "https://knowledge.zhaoweiguo.com"
+            }
+          }
+
+
+
+

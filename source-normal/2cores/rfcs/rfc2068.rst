@@ -1,0 +1,11 @@
+.. _rfc2068:
+
+rfc2068
+##############
+
+HTTP 返回代码表,Hypertext Transfer Protocol -- HTTP/1.1
+
+
+
+
+

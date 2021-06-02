@@ -1,0 +1,115 @@
+k6
+###
+
+
+安装::
+
+    $ brew install k6
+    $ docker pull loadimpact/k6
+
+
+说明::
+
+    1. 本地版只没有UI界面
+    2. cloud版不能调试本地接口 && 有请求限制 && Pro版收费
+
+.. note:: 注意k6有两个地方登录, 使用不同的用户体系. 一个是官网 https://k6.io 另一个是命令专用 https://app.k6.io
+
+
+
+
+简单实例::
+
+    $ cat script.js
+    import http from 'k6/http';
+    import { sleep } from 'k6';
+
+    export default function() {   // 注: 这个函数是必须的
+      http.get('http://test.k6.io');
+      sleep(1);
+    }
+
+    使用:
+    $ k6 run script.js
+
+    Docker版使用:
+    $ docker run -i loadimpact/k6 run - <script.js
+
+
+    Adding more VUs:
+    $ k6 run --vus 10 --duration 30s script.js
+
+code类型::
+
+    // init code
+
+    export default function( {
+      // vu code
+    }
+
+    init code与vu code的区别:
+    init code每个vu只执行一次而vu code在测试时间段内一直运行
+
+options字段::
+
+    import http from 'k6/http';
+    import { sleep } from 'k6';
+    export let options = {
+      vus: 10,
+      duration: '30s',
+    };
+    export default function() {
+      http.get('http://test.k6.io');
+      sleep(1);
+    }
+
+    等同于在命令行执行时增加:
+    --vus 10 and --duration 30s
+
+Stages(up/down VUs)::
+
+    import http from 'k6/http';
+    import { check, sleep } from 'k6';
+
+    export let options = {
+      stages: [        // 这儿有3个阶段
+        { duration: '30s', target: 20 },
+        { duration: '1m30s', target: 10 },
+        { duration: '20s', target: 0 },
+      ],
+    };
+
+    export default function() {
+      let res = http.get('https://httpbin.org/');
+      check(res, { 'status was 200': r => r.status == 200 });
+      sleep(1);
+    }
+
+three execution modes::
+
+    1. Local: on your local machine or a CI server.
+    2. Cloud: on cloud infrastructure managed by k6 Cloud.
+    3. Clustered: on more than one machine managed by you. Not supported yet.(估计这个会是开源与商业版的区别)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

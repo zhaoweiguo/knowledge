@@ -1,0 +1,6 @@
+#!/bin/sh
+
+mv ./abc /var/www/
+cp ./abc /home/gordon
+
+grep -R "ddd" .

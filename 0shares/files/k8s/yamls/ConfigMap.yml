@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: nginx-config
+    namespace: ingress-nginx
+data:
+    chnupdate.conf: |
+        server {
+            listen       80;
+            server_name  phpdemo.zhaoweiguo.com;
+            root   /webroot;
+            access_log  /var/log/nginx/access.log;
+            error_log  /var/log/nginx/error.log debug;
+
+            location / {
+                 try_files $uri /index.php$is_args$args;
+            }
+            location ~* ^/(js|css|images)/ {
+                expires 7d;
+                gzip on;
+                gzip_proxied    any;
+                gzip_min_length 500;
+                gzip_disable    "MSIE [1-6]\.";
+                gzip_types  text/plain text/xml text/css
+                    text/comma-separated-values
+                    text/javascript application/x-javascript application/json
+                    image/gif image/jpeg image/png
+                    application/atom+xml;
+            }
+
+            location ~ \.php$ {
+                fastcgi_pass   127.0.0.1:9000;
+                fastcgi_index  index.php;
+                fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;
+                include        fastcgi_params;
+            }
+        }

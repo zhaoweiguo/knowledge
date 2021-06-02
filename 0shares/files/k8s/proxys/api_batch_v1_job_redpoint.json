@@ -1,0 +1,68 @@
+{
+  "kind": "Job",
+  "apiVersion": "batch/v1",
+  "metadata": {
+    "name": "redpoint",
+    "namespace": "pvt",
+    "selfLink": "/apis/batch/v1/namespaces/pvt/jobs/redpoint",
+    "uid": "cf7abc4f-20a5-11ea-8aa4-763cdcd22cf4",
+    "resourceVersion": "3086597696",
+    "creationTimestamp": "2019-12-17T08:18:31Z",
+    "labels": {
+      "app": "redpoint"
+    },
+    "annotations": {
+      "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"labels\":{\"app\":\"redpoint\"},\"name\":\"redpoint\",\"namespace\":\"pvt\"},\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"redpoint\"},\"name\":\"redpoint\"},\"spec\":{\"containers\":[{\"command\":[\"/redpoint\"],\"env\":[{\"name\":\"aliyun_logs_service-redpoint-pvt\",\"value\":\"stdout\"}],\"image\":\"registry.cn-beijing.aliyuncs.com/xxxxx-tool/redpoint:25\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"redpoint\"}],\"imagePullSecrets\":[{\"name\":\"ali-image-key\"}],\"restartPolicy\":\"OnFailure\"}}}}\n"
+    }
+  },
+  "spec": {
+    "parallelism": 1,
+    "completions": 1,
+    "backoffLimit": 6,
+    "selector": {
+      "matchLabels": {
+        "controller-uid": "cf7abc4f-20a5-11ea-8aa4-763cdcd22cf4"
+      }
+    },
+    "template": {
+      "metadata": {
+        "name": "redpoint",
+        "creationTimestamp": null,
+        "labels": {
+          "app": "redpoint",
+          "controller-uid": "cf7abc4f-20a5-11ea-8aa4-763cdcd22cf4",
+          "job-name": "redpoint"
+        }
+      },
+      "spec": {
+        "containers": [{
+          "name": "redpoint",
+          "image": "registry.cn-beijing.aliyuncs.com/xxxxxx-tool/redpoint:25",
+          "command": [
+            "/redpoint"
+          ],
+          "env": [{
+            "name": "aliyun_logs_service-redpoint-pvt",
+            "value": "stdout"
+          }],
+          "resources": {},
+          "terminationMessagePath": "/dev/termination-log",
+          "terminationMessagePolicy": "File",
+          "imagePullPolicy": "IfNotPresent"
+        }],
+        "restartPolicy": "OnFailure",
+        "terminationGracePeriodSeconds": 30,
+        "dnsPolicy": "ClusterFirst",
+        "securityContext": {},
+        "imagePullSecrets": [{
+          "name": "ali-image-key"
+        }],
+        "schedulerName": "default-scheduler"
+      }
+    }
+  },
+  "status": {
+    "startTime": "2019-12-17T08:18:31Z",
+    "active": 1
+  }
+}

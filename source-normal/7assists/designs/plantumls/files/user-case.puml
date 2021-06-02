@@ -1,0 +1,20 @@
+@startuml
+
+(第一个用例)
+(另一个用例) as (UC2)  
+usecase UC3
+usecase (最后一个用例) as UC4
+
+:一个参与者:
+:另一个参与者: as Men2  
+actor Men3
+actor :最后一个参与者: as Men4
+
+
+用户 -> (开始)
+用户 --> (使用app) : 用户入口
+
+:管理员: ---> (使用app) : 管理员入口
+
+
+@enduml

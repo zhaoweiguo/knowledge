@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: goanalysis
+  labels:
+    app: goanalysis
+spec:
+  successfulJobsHistoryLimit: 3   # 保留执行成功的历史pod数
+  failedJobsHistoryLimit: 1       # 保留执行失败的历史pod数
+  schedule: "5 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: goanalysis
+          labels:
+            app: goanalysis
+        spec:
+          containers:
+            - name: goanalysis
+              image: registry.cn-beijing.aliyuncs.com/xxxxx-test/goanalysis:v5
+              imagePullPolicy: IfNotPresent
+              command: ["/goanalysis"]
+              resources:
+                requests:
+                  memory: "128Mi"
+                limits:
+                  memory: "256Mi"
+          restartPolicy: OnFailure      # 设定为OnFailure
+
+

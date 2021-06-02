@@ -1,0 +1,286 @@
+go1.16 (released 2021/02/16)
+############################
+
+
+Most of its changes are in the implementation of the toolchain, runtime, and libraries. As always, the release maintains the Go 1 promise of compatibility. 
+
+Ports
+=====
+
+Darwin and iOS::
+
+    adds support of 64-bit ARM architecture on macOS (also known as Apple Silicon) 
+        with `GOOS=darwin, GOARCH=arm64`.
+    The iOS port, which was previously darwin/arm64, has been renamed to `ios/arm64. GOOS=ios`
+    adds an `ios/amd64` port, which targets the iOS simulator running on AMD64-based macOS.
+
+    Go 1.16 is the last release that will run on macOS 10.12 Sierra
+
+其他::
+
+    NetBSD
+    OpenBSD
+    386RISC-V
+    等详见文档
+
+Tools
+=====
+
+Go command
+----------
+
+Modules::
+
+    1. 默认GO111MODULE=on
+    Module-aware mode is enabled by default, regardless of whether a go.mod file 
+        is present in the current working directory or a parent directory.
+        More precisely, the GO111MODULE environment variable now defaults to on.
+        To switch to the previous behavior, set GO111MODULE to auto.
+
+    2. go build或go test默认不再直接修改go.mod或go.sum
+    Build commands like go build and go test no longer modify go.mod and go.sum by default. 
+        Instead, they report an error if a module requirement or checksum needs to be added or updated 
+        (as if the -mod=readonly flag were used). 
+        Module requirements and sums may be adjusted with `go mod tidy or go get`
+
+    3. go install支持安装指定版本,如: go install example.com/cmd@v1.0.0
+    go install now accepts arguments with version suffixes (example, go install example.com/cmd@v1.0.0).
+        This causes go install to build and install packages in module-aware mode, 
+          ignoring the go.mod file in the current directory or any parent directory, if there is one. 
+        This is useful for installing executables without affecting the dependencies of the main module.
+
+    4. 推荐使用go install命令build和install packages(原来go get方式废弃)
+    go install, with or without a version suffix (as described above), is now the recommended way 
+        to build and install packages in module mode. 
+      go get should be used with the -d flag to adjust the current module's dependencies 
+        without building packages, 
+        and use of go get to build and install packages is deprecated. 
+      In a future release, the -d flag will always be enabled.
+
+    5. 在go.mod中增加retract标签
+    retract directives may now be used in a go.mod file to indicate that 
+        certain published versions of the module should not be used by other modules. 
+      A module author may retract a version after a severe problem is discovered 
+        or if the version was published unintentionally.
+
+    6. 禁止相对路径import
+    In module mode, the go command now disallows import paths that 
+        include non-ASCII characters or path elements with a leading dot character (.). 
+      Module paths with these characters were already disallowed (see Module paths and versions), so this change affects only paths within module subdirectories.
+
+
+
+Embedding Files::
+
+    The go command now supports including static files and file trees as part of the final executable, 
+        using the new `//go:embed` directive. 
+
+go test::
+
+    原来os:Exit(0)是程序终止，现在变成测试失败
+    When using go test, a test that calls os.Exit(0) during execution of a test function 
+        will now be considered to fail. 
+    This will help catch cases in which a test calls code that calls os.Exit(0) 
+        and thereby stops running all future tests. 
+    If a TestMain function calls os.Exit(0) that is still considered to be a passing test.
+
+go get::
+
+    The go get -insecure flag is deprecated and will be removed in a future version. 
+    替换:
+    使用环境变量: GOINSECURE
+    To bypass module sum validation, use GOPRIVATE or GONOSUMDB
+
+环境变量::
+
+    GOVCS:
+      By default, 
+      1. git and hg may be used to download code from any repository. 
+      2. svn, bzr, and fossil may only be used to download code from repositories 
+          with module paths or package paths matching patterns in the GOPRIVATE environment variable. 
+      See `go help vcs<https://golang.org/cmd/go/#hdr-Controlling_version_control_with_GOVCS>`_ for details.
+
+      其格式为:
+      GOVCS=<module prefix>:<tool name>,[<module prefix>:<tool name>, ...]
+      实例:
+      GOVCS=github.com:git,evil.com:off,*:git|hg
+
+
+
+
+
+
+Runtime
+=======
+
+GODEBUG——inittrace=1::
+
+    为 GODEBUG 环境变量增加了 inittrace=1 选项
+    可以输出 init 函数的执行时间和内存消耗(不要在init()中处理耗时的事情)
+
+    例:
+    package main
+
+    func init() {
+      println("hello")
+    }
+
+    func main() {
+      println("bye")
+    }
+    运行:
+    $ GODEBUG=inittrace=1 go run main.go 
+    init internal/bytealg @0.018 ms, 0 ms clock, 0 bytes, 0 allocs
+    init runtime @0.15 ms, 0.56 ms clock, 0 bytes, 0 allocs
+    init errors @1.7 ms, 0.010 ms clock, 0 bytes, 0 allocs
+    init sync @1.8 ms, 0.001 ms clock, 16 bytes, 1 allocs
+    init internal/oserror @1.8 ms, 0.001 ms clock, 80 bytes, 5 allocs
+    init syscall @1.9 ms, 0.010 ms clock, 944 bytes, 2 allocs
+    init time @1.9 ms, 0.014 ms clock, 400 bytes, 8 allocs
+    init context @2.0 ms, 0.002 ms clock, 128 bytes, 4 allocs
+    init math @2.0 ms, 0 ms clock, 0 bytes, 0 allocs
+    init strconv @2.1 ms, 0.006 ms clock, 32 bytes, 2 allocs
+    init unicode @2.1 ms, 0.086 ms clock, 23944 bytes, 27 allocs
+    ...
+    init internal/bytealg @0 ms, 0 ms clock, 0 bytes, 0 allocs
+    init runtime @0.048 ms, 0.042 ms clock, 0 bytes, 0 allocs
+    hello
+    init main @0.21 ms, 0.004 ms clock, 0 bytes, 0 allocs
+    bye
+
+GODEBUG——madvdontneed::
+
+    废弃: 原来依靠配置 GODEBUG=madvdontneed=1 来改善内存监控行为不再需要
+    
+    本版本在 Linux 上，runtime 现在默认会迅速地（使用 MADV_DONTNEED）向操作系统释放内存，
+        而不是在操作系统面临内存压力时（使用 MADV_FREE）惰性地释放内存。
+    On Linux, the runtime now defaults to 
+        releasing memory to the operating system promptly (using MADV_DONTNEED), 
+        rather than lazily when the operating system is under memory pressure (using MADV_FREE). 
+    
+    这意味着像 RSS 这样的进程级内存统计信息将更准确地反映 Go 进程所使用的物理内存数量
+    This means process-level memory statistics like RSS will more accurately reflect 
+        the amount of physical memory being used by Go processes. 
+    
+    因此以后不需要 GODEBUG=madvdontneed=1 配置了
+    Systems that are currently using GODEBUG=madvdontneed=1 to 
+        improve memory monitoring behavior no longer need to set this environment variable.
+
+
+* 列举一些 Go1.16 中可能对大家有影响的变化: https://polarisxu.studygolang.com/posts/go/dynamic/go1.16-changes-2020/
+* GODEBUG documentation: https://golang.org/pkg/runtime/#hdr-Environment_Variables
+
+Linker
+======
+
+For a representative set of large Go programs, linking is 20-25% faster than 1.15 and requires 5-15% less memory on average for linux/amd64
+
+Core library
+============
+
+Embedded Files::
+
+    详见下面的``内嵌资源文件``
+    对应`embed`库
+
+File Systems::
+
+    新增`io/fs`库
+    模仿 Linux 的 vfs 做一套基于 fs 的 io 接口
+    目的有三个:
+      1. os 包应该专注于和系统交互而不是包含一部分 io 接口
+      2. io 包和 os 包分别包含了 io 接口的一部分，导致互相依赖职责不清晰
+      3. 可以把有关联的一部分文件或者数据组成虚拟文件系统，供通用接口处理提升程序的可扩展性，比如 zip 打包的文件
+
+    fs 包中主要包含了下面几种数据类型（都是接口类型）:
+    名称              作用
+    FS              文件系统的抽象，有一个 Open 方法用来从 FS 打开获取文件数据
+    DirEntry        描述目录项目（包含目录自身）的数据结构
+    File            描述文件数据的结构，包含 Stat，Read，Close 方法
+    ReadDirFile     在 File 的基础上支持 ReadDir，可以代表目录自身
+    FileMode        描述文件类型，比如是通常文件还是套接字或者是管道
+    FileInfo        文件的元数据，例如创建时间等
+
+
+Deprecation of io/ioutil::
+
+    废弃` io/ioutil`package，把相关功能迁移到`os和io`package
+
+    Discard => io.Discard
+    NopCloser => io.NopCloser
+    ReadAll => io.ReadAll
+    ReadDir => os.ReadDir
+    ReadFile => os.ReadFile
+    TempDir => os.MkdirTemp
+    TempFile => os.CreateTemp
+    WriteFile => os.WriteFile
+
+.. warning:: io/ioutil库废弃需要做迁移
+
+template 允许跨行。例如::
+
+    {{"hello" |
+       printf}}
+
+简化的结构体字段标签写法::
+
+    原来:
+    type MyStruct struct {
+      Field1 string `json:"field_1,omitempty" bson:"field_1,omitempty" xml:"field_1,omitempty"`
+    }
+    现在:
+    type MyStruct struct {
+      Field1 string `json bson xml:"field_1,omitempty"`
+    }
+
+切片扩容策略::
+
+    一个 append(x, values...) 调用需要扩容，则基础切片 x 的容量将决定结果切片的容量
+    （而不是原来的基础切片 x 的长度决定结果切片的容量
+
+    实例:
+    package main
+    func main() {
+      const N = 1024
+      var a [N]int
+      x := append(a[:N-1:N], 0, 9)
+      y := append(a[:N:N], 9)
+      println(cap(x), cap(y))
+    }
+
+    结果:
+    Go 1.15 将输出 2048 1280，但是使用 Go 1.16 将输出 1280 1280。
+
+* `相关代码改动 <https://github.com/golang/go/commit/2333c6299f340a5f76a73a4fec6db23ffa388e97?branch=2333c6299f340a5f76a73a4fec6db23ffa388e97&diff=unified>`_
+
+
+内嵌资源文件
+============
+
+原来使用``go-bindata``之类的工具，把内嵌资源文件(如html等)嵌入到``.go``文件中。这样做的缺点也很明显，生成的文件大，需要依赖第三方生成器。
+
+
+实例::
+
+    package main
+
+    import (
+        "fmt"
+        _ "embed"
+    )
+
+    //go:embed test.tpl
+    var tpl []byte
+
+    func main() {
+        fmt.Println(tpl)
+    }
+
+
+参考
+====
+
+* Go 1.16 Release Notes: https://golang.org/doc/go1.16
+* embed package documentation(开发): https://pkg.go.dev/embed
+* embed package documentation: https://golang.org/pkg/embed/
+

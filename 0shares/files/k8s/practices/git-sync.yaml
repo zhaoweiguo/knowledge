@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: git-sync
+spec:
+  selector:
+    matchLabels:
+      demo: git-sync
+  template:
+    metadata:
+      labels:
+        demo: git-sync
+    spec:
+      volumes:
+      - name: git-secret
+        secret:
+          secretName: git-creds
+          defaultMode: 288 # 10进制转为8进制: = mode 0440
+      containers:
+      - name: git-sync
+        image: registry.cn-hangzhou.aliyuncs.com/xxxxxxxx/git-sync:v3.1.1
+        args:
+         - "-ssh"
+         - "-repo=git@gitee.com:weiguo/demo.git"    # git地址
+         - "-dest=demo"       # clone下来后项目文件夹名字
+         - "-branch=master"   # 指定分支名
+         - "-depth=1"
+        securityContext:
+          runAsUser: 65533 # git-sync user(指定用户)
+        volumeMounts:
+        - name: git-secret
+          mountPath: /etc/git-secret
+      securityContext:
+        fsGroup: 65533 # to make SSH key readable(指定用户组)
+
+
+
+
+
+
+
+
+
+
+

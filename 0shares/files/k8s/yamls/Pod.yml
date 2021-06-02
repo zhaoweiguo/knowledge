@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: gordondemo
+  labels:
+    app: gordondemo
+spec:
+  nodeSelector:
+    gpu: "true"       # 要求kube只将pod部署到包含标签gpu的node上
+  containers:
+    - name: gordondemo
+      image: zhaoweiguo/imageName
+      livenessProbe:   # 一个http get 存活探针
+        path: /        # http请求路径
+        port: 8080     # 探针连接的网络端口
+      initialDelaySeconds: 15  # k8s会在第一次探测前等待15秒
+
+
+
+
+
+
+

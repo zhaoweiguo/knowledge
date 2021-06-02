@@ -1,0 +1,80 @@
+Installing MySQL system tables...
+111102 12:19:50 [Warning] '--skip-locking' is deprecated and will be removed in a future release. Please use '--skip-external-locking' instead.
+OK
+Filling help tables...
+111102 12:19:52 [Warning] '--skip-locking' is deprecated and will be removed in a future release. Please use '--skip-external-locking' instead.
+OK
+
+To start mysqld at boot time you have to copy
+support-files/mysql.server to the right place for your system
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+To do so, start the server, then issue the following commands:
+
+/usr/local/mysql/bin/mysqladmin -u root password 'new-password'
+/usr/local/mysql/bin/mysqladmin -u root -h gordon password 'new-password'
+
+Alternatively you can run:
+/usr/local/mysql/bin/mysql_secure_installation
+
+which will also give you the option of removing the test
+databases and anonymous user created by default.  This is
+strongly recommended for production servers.
+
+See the manual for more instructions.
+
+You can start the MySQL daemon with:
+cd /usr/local/mysql ; /usr/local/mysql/bin/mysqld_safe &
+
+You can test the MySQL daemon with mysql-test-run.pl
+cd /usr/local/mysql/mysql-test ; perl mysql-test-run.pl
+
+Please report any problems with the /usr/local/mysql/bin/mysqlbug script!
+
+
+
+
+
+ls -l /usr/local/mysql
+
+dir /usr/local/mysql
+
+
+showing handles for /usr/local/mysql/mysql-test/var
+========================================
+mkdir failed, fourth time
+err: 'Permission denied'
+path: '/usr/local/mysql/mysql-test/var'
+dir: 'var'
+
+ls -l /usr/local/mysql/mysql-test
+
+ls -l /usr/local/mysql
+
+dir /usr/local/mysql
+
+
+showing handles for /usr/local/mysql/mysql-test/var
+========================================
+Couldn't create directory '/usr/local/mysql/mysql-test/var'  after 4 attempts and 2 sleep(1): No such file or directory at mysql-test-run.pl line 2303
+
+
+gordon@gordon:/usr/local/mysql/mysql-test$ sudo perl mysql-test-run.pl
+[sudo] password for gordon: 
+Logging: mysql-test-run.pl  
+MySQL Version 5.1.55
+Checking supported features...
+ - skipping ndbcluster
+ - skipping SSL, mysqld not compiled with SSL
+Collecting tests...
+ - adding combinations for binlog
+ - adding combinations for rpl
+vardir: /usr/local/mysql/mysql-test/var
+Removing old var directory...
+Creating var directory '/usr/local/mysql/mysql-test/var'...
+Installing system database...
+Using server port 57034
+
+
+
+

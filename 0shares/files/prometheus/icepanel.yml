@@ -1,0 +1,29 @@
+files:
+  - loader: k8s
+    path: cm-prometheus-config.yaml
+  - loader: k8s
+    path: deployment-1.yml
+  - loader: k8s
+    path: pod-1.yml
+  - loader: k8s
+    path: service-1.yml
+nodes:
+  - kind: ConfigMap
+    name: prometheus-config
+    plugin: kubernetes-config-map
+    position:
+      x: 248
+      y: 111
+  - kind: Deployment
+    name: deploy1
+    plugin: kubernetes-deployment
+    position:
+      x: 560
+      y: 60
+  - kind: Service
+    name: service-1
+    plugin: kubernetes-service
+    position:
+      x: 825
+      y: 40
+version: '1'

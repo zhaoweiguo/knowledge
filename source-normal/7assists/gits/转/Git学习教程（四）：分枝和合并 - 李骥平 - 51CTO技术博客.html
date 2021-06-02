@@ -1,0 +1,1052 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+<title>Git学习教程（四）：分枝和合并 - 李骥平 - 51CTO技术博客</title>
+<meta name="description" content="第四课&nbsp;分枝和合并基础知识介绍&nbsp;内容提要：创建工作分枝，合并分枝以及删除分枝&nbsp;从第一课的介绍中，我们了解到，git处理分枝和合并是非常独到的。首先，无论是创建新分枝还是分枝之间切换，都表现..">
+<meta name="keywords" content="Git学习教程（四）：分枝和合并">
+<meta http-equiv="Cache-Control" content="private">
+<!-- base href="http://fsjoy.blog.51cto.com/" -->
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/def.js"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/message.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/user_comment.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base2.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/dialog_utf8.js" type="text/javascript"></script>
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/30.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="http://fsjoy.blog.51cto.com/xmlrpc.php?rsd=1">
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/header_master_top.css" rel="stylesheet" type="text/css">
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base.css" rel="stylesheet" type="text/css">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/poptop.js"></script>
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://fsjoy.blog.51cto.com/318484/245081";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				return false;
+	}else{
+      		var url='/mod/edit_flink.php?type=addflink&uid=318484&flink=http://fsjoy.blog.51cto.com';
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://fsjoy.blog.51cto.com/318484/245081";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://fsjoy.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+</head><body>
+
+<div id="home_top">
+<div class="top_nav" style="width: 990px;">
+<div class="left" style="margin-top: 10px; width: 470px;"><a href="http://blog.51cto.com/" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/head_blog_sibebar_logo.gif" style="margin-top: -4px;" align="absmiddle"></a><a target="_blank" href="http://www.51cto.com/">51CTO首页</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16"><a href="http://blog.51cto.com/" target="_blank">51CTO博客</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16"><a href="http://home.51cto.com/?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245081">我的博客</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16">
+
+<a target="_blank" href="http://blog.51cto.com/search.php">搜索</a>
+<a href="javascript:void(0);" style="color: rgb(255, 0, 0); text-decoration: underline;" id="showMessagerDim">每日博报</a>
+</div>
+
+<div class="right" style="width: 520px;">
+<div class="more"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_shequ.gif" align="absmiddle" height="16" width="27">社区：<a target="_blank" href="http://bbs.51cto.com/">论坛</a><a target="_blank" href="http://blog.51cto.com/">博客</a><a target="_blank" href="http://down.51cto.com/">下载</a><a target="_blank" href="http://book.51cto.com/">读书</a><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">更多<img style="padding-left: 4px;" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/nav_ico1.gif" align="absmiddle"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://home.51cto.com/" target="_blank">家园</a></li>
+<li><a href="http://t.51cto.com/" target="_blank">微博</a></li>
+<li><a href="http://blog.51cto.com/" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com/" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com/" target="_blank">下载</a></li>
+<li><a href="http://selftest.51cto.com/" target="_blank">自测</a></li>
+<li><a href="http://doctor.51cto.com/" target="_blank">门诊</a></li>
+<li><a href="http://blog.51cto.com/newsletter/" target="_blank">周刊</a></li>
+<li><a href="http://book.51cto.com/" target="_blank">读书</a></li>
+<li><a href="http://g.51cto.com/" target="_blank">技术圈</a></li>
+<li><a href="http://zhidao.51cto.com/" target="_blank">知道</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+<div class="blogLogo">
+<a href="http://blog.51cto.com/blogcommend" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blogLogo01.png" height="70px;" width="161px;"></a>
+</div>
+
+
+<div class="blogName">
+<a href="http://fsjoy.blog.51cto.com/"><h1>李骥平</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://fsjoy.blog.51cto.com/">http://fsjoy.blog.51cto.com</a> <input id="txtUser" size="32" value="http://fsjoy.blog.51cto.com" type="hidden">   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" target="_blank"></a><a href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" target="_blank">【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://fsjoy.blog.51cto.com/318484/o" title="察看fsjoy1983所有原创文章">原创</a>:160</span><span><a href="http://fsjoy.blog.51cto.com/318484/t" title="察看fsjoy1983所有翻译文章">翻译</a>:56</span><span><a href="http://fsjoy.blog.51cto.com/318484/c" title="察看fsjoy1983所有转载文章">转载</a>:85</span></div>
+<div class="blogNav"><a href="http://fsjoy.blog.51cto.com/">博 客</a>|<a href="http://fsjoy.blog.51cto.com/pic/">图库</a>|<a href="http://fsjoy.blog.51cto.com/addblog.php">写博文</a>|<a href="http://51ctoblog.blog.51cto.com/all/26414/4" target="_blank">帮 助</a></div>
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="#">首页</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-1">linux</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-2">ruby</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-3">ROR</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-4">敏捷开发</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-5">扯</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-6">桌面show</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-7">Ajax on rails</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-8">design pattern</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-9">The Ruby Way </a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-10">railscast</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-11">技巧</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-12">mac</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-13">mysql</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-14">粒计算</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-15">数工</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-16">flex on rails</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+
+<script type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/fck_editorarea.css">
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+		
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("0人");
+		}
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 245081,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245081";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{  
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 0 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	})
+
+
+})
+</script>
+<script language="JavaScript" type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/group.js"></script>
+<div id="add_sys_type_div" style="width: 600px; border: 1px solid rgb(88, 176, 221); background-color: rgb(255, 255, 255); position: absolute; left: 30%; top: 300px; display: none; z-index: 255;"></div>
+<div id="add_sys_type_divs" style="width: 550px; border: 1px solid rgb(88, 176, 221); background-color: rgb(255, 255, 255); position: absolute; left: 30%; top: 300px; display: none; z-index: 255;"></div>
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><strong>fsjoy1983</strong> 的BLOG  </h2>
+</div>
+<div class="modCon">
+
+<div class="userImage"><script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/userface.html"></script><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/318484_1215083099.png" id="userface"></div>
+
+
+
+
+
+
+
+
+<div class="crumbs">
+<a href="http://home.51cto.com/index.php?s=/space/318484#message" class="writeMessage" target="_blank">写留言</a><a href="http://g.51cto.com/addgroup.php?uid=" class="inCircle" target="_blank">邀请进圈子</a><a href="http://home.51cto.com/index.php?s=/Notify/write/uid/318484" class="message" target="_blank">发消息</a> <a href="http://fsjoy.blog.51cto.com/" onclick="add_flink(318484);return false" class="joinLinks">加友情链接</a><a href="http://home.51cto.com/index.php?s=/space/318484" class="joinFriends" target="_blank">进家园 加好友</a>
+</div>
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"><a href="http://blog.51cto.com/blogcommend" target="_blank" class="operlink"><b>51cto推荐博客</b></a> <br></span>
+用户名：fsjoy1983<br>
+文章数：301<br>
+评论数：230<br>
+访问量：373761<br>
+无忧币：2235<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：3830<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：7<br>
+注册日期：2008-02-04<br>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blogno1countdown.html"></script><style type="text/css">.icon_01{background:url(http://blog.51cto.com/active/no1/images/bks_icon_01.gif) no-repeat 13px 0;padding:1px 0 1px 35px}</style></p><div class="icon_01"><a href="http://blog.51cto.com/active/no1/ing.html" target="_blank">距离博客No.1争夺赛结束还有 <span style="color: rgb(255, 0, 0);">14</span> 天 </a></div> 
+
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="http://fsjoy.blog.51cto.com/318484/65320">ubuntu主题安装说明</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/244826">Git学习教程（三）：Git..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/84541">推荐一款正则表达式生成..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/64076">linux下编译安装与卸载 t..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/245081">Git学习教程（四）：分枝..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/71269">非常全的apple系统的快捷..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/72905">mac显示隐藏文件</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/245106">Git学习教程（五）：Git标签</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method="post" action="search.php?">
+<input name="step" value="2" type="hidden">
+<input name="authorid" value="318484" type="hidden">
+<input name="sch_area" value="S" type="hidden">
+<input name="keyword" class="searchInput" type="text">
+<input value="搜 索" class="searchBtn" type="submit">
+</form></div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="myHome box">
+<div class="title"><h2 class="fl">我的技术圈(<a href="http://fsjoy.blog.51cto.com/mygroup.php" target="_blank"><b>3</b></a>)</h2>
+<a href="http://home.51cto.com/apps/group/index.php?s=/Index/index/" class="fr" target="_blank">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://g.51cto.com/netsky" target="_blank">网行天下</a>&nbsp;&nbsp;
+
+
+</li>
+
+<li><a href="http://g.51cto.com/microsoft" target="_blank">Microsoft技术</a>&nbsp;&nbsp;
+
+
+</li>
+
+<li><a href="http://g.51cto.com/ror" target="_blank">Rails on 51CTO</a>&nbsp;&nbsp;
+
+
+</li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://1746235.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://1746235.blog.51cto.com/">ddddos</a></p>
+
+</li><li><a href="http://yechen.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/1083031_1318921214.jpg"></a>
+<p><a href="http://yechen.blog.51cto.com/">yechen</a></p>
+
+</li><li><a href="http://4075321.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4075321.blog.51cto.com/">firef..</a></p>
+
+</li><li><a href="http://sinojelly.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/479153_1290771595.jpg"></a>
+<p><a href="http://sinojelly.blog.51cto.com/">sinoj..</a></p>
+
+</li><li><a href="http://3616259.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://3616259.blog.51cto.com/">zcmhz</a></p>
+
+</li><li><a href="http://4021827.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4021827.blog.51cto.com/">dldeng</a></p>
+
+</li><li><a href="http://3738455.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://3738455.blog.51cto.com/">em3308</a></p>
+
+</li><li><a href="http://1998829.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://1998829.blog.51cto.com/">yixia..</a></p>
+
+</li><li><a href="http://4263628.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4263628.blog.51cto.com/">Baron..</a></p>
+
+</li><li><a href="http://firefly222.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/899793_1291026617.jpg"></a>
+<p><a href="http://firefly222.blog.51cto.com/">唐光辉</a></p>
+
+</li><li><a href="http://virusswb.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://virusswb.blog.51cto.com/">virusswb</a></p>
+
+</li><li><a href="http://2563677.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://2563677.blog.51cto.com/">liwen..</a></p>
+
+</li></ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论 
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://4172526.blog.51cto.com/" class="operlink" target="_blank"><b>ccc07</b></a>：<a href="http://fsjoy.blog.51cto.com/318484/222100" target="_blank">您好，今天无意中看到您做的计算器..</a></li>
+
+<li>[匿名]air filters：<a href="http://fsjoy.blog.51cto.com/318484/211253" target="_blank">I wanted to thank you for this gr..</a></li>
+
+<li>[匿名]batik jogja：<a href="http://fsjoy.blog.51cto.com/318484/211253" target="_blank">wow ... This article is very nice..</a></li>
+
+<li>[匿名]51cto游客：<a href="http://fsjoy.blog.51cto.com/318484/137130" target="_blank">太谢谢了。写得很好，感谢你！</a></li>
+
+<li>[匿名]51cto游客：<a href="http://fsjoy.blog.51cto.com/318484/64076" target="_blank">对于新手来说你这篇文章就是废,什么..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://zhuyi.blog.51cto.com/2535291/773162" title="电商寒冬后，京东缺什么？" target="_blank">电商寒冬后，京东缺什么？</a></li>
+<li><a href="http://zhoujg.blog.51cto.com/1281471/771817" title="敏捷个人纸质书：第一章 源于生活和工作的敏捷个人" target="_blank">敏捷个人纸质书：第一章 源于生活..</a></li>
+<li><a href="http://eilfei2000.blog.51cto.com/2956473/771443" title="把握大都市的高度和速度 " target="_blank">把握大都市的高度和速度 </a></li>
+<li><a href="http://sunweiqin.blog.51cto.com/249712/772460" title="缅怀张孝祥老师" target="_blank">缅怀张孝祥老师</a></li>
+<li><a href="http://virusswb.blog.51cto.com/115214/771841" title="项目管理-源代码管理" target="_blank">项目管理-源代码管理</a></li>
+<li><a href="http://yaqinzhang.blog.51cto.com/1639798/771923" title="CES2012归来谈：软件为王的新一代消费电子业 " target="_blank">CES2012归来谈：软件为王的新一代..</a></li>
+<li><a href="http://wenrong.blog.51cto.com/1945908/771117" title="成功在于折腾" target="_blank">成功在于折腾</a></li>
+<li><a href="http://zhoujg.blog.51cto.com/1281471/771143" title="敏友的【敏捷个人】有感（11）: 敏捷个人线下活动有感" target="_blank">敏友的【敏捷个人】有感（11）: ..</a></li>
+<li><a href="http://ebway.blog.51cto.com/199942/771194" title="12306.cn网购火车票实战手记" target="_blank">12306.cn网购火车票实战手记</a></li>
+<li><a href="http://eilfei2000.blog.51cto.com/2956473/767196" title="新年寄语：选定目标和非功利性学习" target="_blank">新年寄语：选定目标和非功利性学习</a></li>
+<li><a href="http://xiammy.blog.51cto.com/3301816/769208" title="开年工作重点：帮助同事找到工作的价值" target="_blank">开年工作重点：帮助同事找到工作..</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://51ctoblog.blog.51cto.com/" title="51cto博客开发" target="_blank">51cto博客开发</a> <img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/tubiao3.gif" alt="本周内更新"></li>
+
+<li><a href="http://yucaiyan.blog.51cto.com/" title="" target="_blank">小于的blog</a></li>
+
+<li><a href="http://www.railsinside.com/elsewhere/100-7-barebones-rails-apps-to-kick-start-your-development-process.html" title="7p" target="_blank">7 p</a></li>
+
+<li><a href="http://www.rubyplus.org/" title="rails screen shot" target="_blank">Free Ruby and Rai..</a></li>
+
+<li><a href="http://www.javaeye.com/subject/Rails-EveryDay?page=1" title="每天一剂Rails良药系列" target="_blank">每天一剂Rails良药..</a></li>
+
+<li><a href="http://railscasts.com/" title="railscasts.com" target="_blank">railscasts.com</a></li>
+
+<li><a href="http://hideto.javaeye.com/" title="hideto的blog" target="_blank">hideto的blog</a></li>
+
+<li><a href="http://blog.csdn.net/free000" title=".net高手" target="_blank">马近飞老师的博客~</a></li>
+
+<li><a href="http://www.thoughtworks.com.cn/" title="" target="_blank">thoughtworks</a></li>
+
+<li><a href="http://www.zhangxun.com/" title="" target="_blank">张询谈敏捷</a></li>
+
+<li><a href="http://www.ruby-doc.org/core/" title="Ruby std library" target="_blank">Ruby std library</a></li>
+
+<li><a href="http://stdlib.rubyonrails.org/" title="Ruby Standard Library Documentation" target="_blank">Ruby Standard Lib..</a></li>
+
+<li><a href="http://api.rubyonrails.org/" title="Rails API" target="_blank">rails API</a></li>
+
+<li><a href="http://blog.sina.com.cn/permanentads" title="我的新浪博客" target="_blank">我的新浪博客</a></li>
+
+<li><a href="http://blackanger.blog.51cto.com/" title="" target="_blank">光蛋的blog</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://fsjoy.blog.51cto.com/318484/245081";
+    var favor_title = "Git学习教程（四）：分枝和合并";
+    var favor_fuid = "318484";
+</script>
+<script type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorbox.js"></script>
+<div class="blogRight">
+	<div class="artShow box">
+   	  <div class="share" id="share">
+      <p class="shareGo">分享到：</p>
+
+    <div class="shareItem">
+        	<ul style="">
+            <li id="m01" onclick="javascript:showMsn();"><a href="javascript:void(0);">MSN/QQ</a>
+             <div class="shareBox" id="c01" style="display: none;">
+            分享本资源给：MSN  QQ好友
+           <input class="shareInput" value="http://fsjoy.blog.51cto.com/318484/245081" name="shareText" id="shareTextQM" onclick="copyShareUrl('Git学习教程（四）：分枝和合并');" type="text">
+              <input value="" class="copyBtn" onclick="copyShareUrl('Git学习教程（四）：分枝和合并');" type="button">
+            </div><!--shareBox end-->
+            </li>
+            <li id="m02" onclick="javascript:showBBS();"><a href="javascript:void(0);">论坛</a>
+             <div class="shareBox" id="c02" style="display: none;">
+            分享本资源给：论坛好友(UBB代码)
+           <input class="shareInput" value="[url=http://fsjoy.blog.51cto.com/318484/245081][u]fsdsdfsdfsdf[/u][/url]" name="shareText" id="shareTextBBS" onclick="copyShareUrl('Git学习教程（四）：分枝和合并');" type="text">
+              <input value="" class="copyBtn" onclick="copyShareUrl('Git学习教程（四）：分枝和合并');" type="button">
+            </div><!--shareBox end-->
+            </li>
+            <li id="m03"><a href="http://www.kaixin001.com/repaste/share.php?rurl=http://fsjoy.blog.51cto.com/318484/245081&amp;rcontent=%3Cdiv+style%3D%22border-right%3A+%23aaaaaa+1px+solid%3B+padding-right%3A+5px%3B+border-top%3A+%23aaaaaa+1px+solid%3B+padding-left%3A+5px%3B+padding-bottom%3A+5px%3B+border-left%3A+%23aaaaaa+1px+solid%3B+padding-top%3A+5px%3B+border-bottom%3A&amp;rtitle=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%CB%C4%A3%A9%A3%BA%B7%D6%D6%A6%BA%CD%BA%CF%B2%A2%A1%B7" target="_blank">开心</a></li>
+            <li id="m04"><a href="http://share.renren.com/share/buttonshare.do?link=http://fsjoy.blog.51cto.com/318484/245081&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%CB%C4%A3%A9%A3%BA%B7%D6%D6%A6%BA%CD%BA%CF%B2%A2%A1%B7" target="_blank">人人</a></li>
+            <li id="m05"><a href="http://www.douban.com/recommend/?url=http://fsjoy.blog.51cto.com/318484/245081&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%CB%C4%A3%A9%A3%BA%B7%D6%D6%A6%BA%CD%BA%CF%B2%A2%A1%B7" target="_blank">豆瓣</a></li>
+            <li id="m06"><a href="http://v.t.sina.com.cn/share/share.php?url=http://fsjoy.blog.51cto.com/318484/245081&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%CB%C4%A3%A9%A3%BA%B7%D6%D6%A6%BA%CD%BA%CF%B2%A2%A1%B7&amp;pic=http://blog.51cto.com/blogtj/images/logo.gif" target="_blank">新浪微博</a></li>
+            <li id="m07">
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《Git学习教程（四）：分枝和合并》');
+</script>
+            <a href="javascript:void(0);" onclick="window.open('http://t.51cto.com/index.php?m=share&amp;url=http://fsjoy.blog.51cto.com/318484/245081&amp;type=l&amp;count=&amp;relateUid=&amp;appkey=3843950324&amp;title=' + encodetitle);">51CTO微博</a></li>
+            <li id="favor" style="margin-left: 30px;"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorite_add_small.gif" alt="一键收藏，随时查看，分享好友！" border="0"></a></li>
+            </ul>
+            </div>
+            <p class="shareMore"><a href="http://fsjoy.blog.51cto.com/all/318484">博主的更多文章&gt;&gt;</a></p>
+
+      </div>
+       <div class="modCon">
+   	  <div class="showBox">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      </div>
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align: center;">
+              <div class="showTitle">
+
+	 		<img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/artType03.jpg">
+
+
+    		    Git学习教程（四）：分枝和合并
+                </div>
+  		    </div>
+   		    <span class="artTime">2009-12-17 21:12:20</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tagindex.php?keyword=%BD%CC%B3%CC" target="_blank" class="operlink">教程</a> <a href="http://blog.51cto.com/tagindex.php?keyword=%D1%A7%CF%B0" target="_blank" class="operlink">学习</a> <a href="http://blog.51cto.com/tagindex.php?keyword=%BA%CF%B2%A2" target="_blank" class="operlink">合并</a> <a href="http://blog.51cto.com/tagindex.php?keyword=git" target="_blank" class="operlink">git</a> <a href="http://blog.51cto.com/tagindex.php?keyword=%B7%D6%D6%A6" target="_blank" class="operlink">分枝</a>
+
+	</div>
+
+			<div class="CopyrightStatement lh22">
+            原创作品，允许转载，转载时请务必以超链接形式标明文章 <a href="http://fsjoy.blog.51cto.com/318484/245081" target="_blank" style="text-decoration: underline;">原始出处</a> 、作者信息和本声明。否则将追究法律责任。<a href="http://fsjoy.blog.51cto.com/318484/245081">http://fsjoy.blog.51cto.com/318484/245081</a>
+            </div>
+
+
+            <!--正文 begin-->
+    		<div class="showContent">
+    		  <div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(70, 130, 180);" align="center"><font color="#fffafa" face="KaiTi_GB2312" size="4">第四课&nbsp; 分枝和合并基础知识介绍</font></div>
+<div>&nbsp;</div>
+<div>内容提要：创建工作分枝，合并分枝以及删除分枝</div>
+<div>&nbsp;</div>
+<div>从第一课的介绍中，我们了解到，git处理分枝和合并是非常独到的。首先，无论是创建新分枝还是分枝之间切换，都表现出一个共同的特征--快！ git 有一个独立的工作目录，专门用来存放所有分枝的内容，所以你没必要为每一个分枝再分别创建目录。</div>
+<div>这一节，我们的任务是：</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(240, 255, 240);">
+<div>
+<div>1. 创建一个新的分枝；</div>
+<div>2.在这个分枝上做一些工作；</div>
+<div>3.切换回稳定的主分枝（一般git默认的主分枝名叫master）；</div>
+<div>4.在主分枝上再做点工作；</div>
+<div>5.再切换到刚那个临时分枝完成工作；</div>
+<div>6.最后将它们合并成为一个稳定的主分枝。</div></div></div>
+<div>&nbsp;</div>
+<div>首先，查看现存的分枝，可以使用不带任何参数的'git branch'命令。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git branch<br>* master</font></div></div>
+<div>可以看到，我们现在只有一个分枝叫做'master'，*代表的意思是我们正在这个主分枝上工作。下图是在主分支上的提交历史模型，绿框表示提交，箭头指向的是它的父节点。这就是git提交数据的方式。</div>
+<div>&nbsp;</div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261052074074.png" border="0"><br>从图中可以看出，在git中，分枝都是由一些具体的提交点组成。整个分枝的历史都是这样串联起来的，一次只有一个提交点。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(112, 128, 144);">
+<div><font color="#fffafa">创建新的分枝</font></div></div>
+<div>可以用'git branch (branchname)'命令在当前分枝上创建一个新的分枝：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git branch experiment</font></div></div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261053961934.png" border="0"></div>
+<div>为了将我们的工作保存到experiment分枝而不是master分枝上，我们需要切换到experiment分枝上，执行'git checkout'命令：</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git checkout experiment<br>Switched to branch "experiment"<br>$ git branch<br><font color="#32cd32">* experiment</font><br>&nbsp; master</font></div></div>
+<div>执行完毕后，我们就切换到了新的分枝（experiment）分枝上，看到experiment前面有了*号了。现在，我们修改文件、提交就不用再担心跟master分枝混在一起了。也没必要在我们确定一切搞定之前，将experiment分枝上的变更共享了。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(112, 128, 144);" align="left"><font color="#fffafa">在多分枝上进行工作</font></div>
+<div>现在，让我们添加一个TODO文件，并修改simplegit.rb文件，然后将这些变更都提交。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ vim lib/simplegit.rb<br>$ vim TODO<br>$ git add TODO<br>$ git commit -am 'added a todo and added simplegit functions'<br>[experiment]: created 4682c32: "added a todo and added simplegit functions"<br>&nbsp;2 files changed, 10 insertions(+), 0 deletions(-)<br>&nbsp;create mode 100644 TODO</font></div></div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261054009793.png" border="0"></div>
+<div>现在，我们来看一下，整个项目中有3个文件和一个子目录。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ ls<br>README&nbsp;&nbsp;Rakefile&nbsp;TODO&nbsp;&nbsp;lib</font></div></div>
+<div>然后，我们假设需要回到原始版本来调试simplegit.rb文件。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git checkout master<br>Switched to branch "master"<br>$ ls<br>README&nbsp;&nbsp;Rakefile&nbsp;lib</font></div></div>
+<div>可以看到我们已经回到了master分枝，工作目录中也没有TODO文件，这是因为master分枝上我们就没有创建过这个文件。</div>
+<div>如果现在我们再切换到experiment分枝，我们又会看到TODO文件，并且simplegit.rb也是我们在experiment修改后的内容。</div>
+<div>&nbsp;</div>
+<div>下面这段代码是在master分枝上修改simplegit.rb文件，在文件内添加一个commit function.提交，然后再切换到experiment分枝。</div>
+<div>&nbsp;</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ vim lib/simplegit.rb <br>$ git commit -am 'added a commit function'<br>[master]: created 0b7434d: "added a commit function"<br>&nbsp;1 files changed, 4 insertions(+), 0 deletions(-)<br>$ git checkout experiment<br>Switched to branch "experiment"<br>$ ls<br>README&nbsp;&nbsp;Rakefile&nbsp;TODO&nbsp;&nbsp;lib</font></div></div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261054063106.png" border="0"></div>
+<div>很多使用git的开发者通常会同时拥有很多个分枝，每一个分枝上都会进行着某个具体功能的开发，这些开发可能持续几分钟、几小时，也可能长时间的在某个分枝上进行大规模重构的工作，并定期的将其合并到主分枝上。</div>
+<div>如果你需要在一个长期工作的分支上与其他开发者进行协作，你可以将这个分枝上传到共享服务器端。譬如，如果你想跟某人共享experiment分枝，你可以这样：</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">$ git push origin experiment</font></div>
+<div>让你的合作伙伴同步这个分枝，然后与你协同工作。当然你也可以自己保留这些分枝作为自己的工作分枝--不用上传就可以了。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(112, 128, 144);">
+<div><font color="#fffafa">合并和移除无用分枝</font></div></div>
+<div>当你在一个分枝上完成你的工作了，这时，如果你觉得所做的工作没什么意义，那么你可以忽略它并且将其移除；相反，你应该将这些工作合并到一个你
+会长期使用的分枝中（一般来说，开发者会用'master'分枝来存放稳定的代码，并行的'develop'分枝用来整合或测试变更的内容，或者将一些短
+期的分枝合并进来）。</div>
+<div>合并分枝的方法：首先切换到想要合并到的分枝下，运行'git merge'命令，（例如本例中将experiment分枝合并到master分枝的话，进入master分枝运行git merge experiment命令）如果合并顺利的话：</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git merge experiment<br>Auto-merging lib/simplegit.rb<br>Merge made by recursive.<br>&nbsp;lib/simplegit.rb |&nbsp;&nbsp;&nbsp; 1 +<br>&nbsp;1 files changed, 1 insertions(+), 0 deletions(-)</font></div></div>
+<div>&nbsp;</div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261054909028.png" border="0"></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(119, 136, 153);">
+<div><font color="#fffafa">合并冲突处理</font></div></div>
+<div>然而，有时候合并并不一定会顺利进行，如果碰到了问题，就会出现下面这些内容：</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">$ git merge experiment<br>Auto-merging lib/simplegit.rb<br>CONFLICT (content): Merge conflict in lib/simplegit.rb<br>Automatic merge failed; fix conflicts and then commit the result.</font></div>
+<div>这种情形下，提示合并冲突，你可以通过下面的方式来解决：打开提示冲突的文件，会看到冲突标记：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(220, 220, 220);">
+<div>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:lib/simplegit.rb<br>&nbsp; def commit(message)<br>&nbsp;&nbsp;&nbsp; command("git commit -m '#{message}'")<br>=======<br>&nbsp; def add(path)<br>&nbsp;&nbsp;&nbsp; command("git add #{path}")<br>&gt;&gt;&gt;&gt;&gt;&gt;&gt; experiment:lib/simplegit.rb<br>&nbsp; end</div></div>
+<div>修改完成之后，运行'git add'重新载入(re-stage)这个文件，然后合并：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git add lib/simplegit.rb<br>$ git commit<br>[master]: created 6d52a27: "Merge branch 'experiment'"</font></div></div>
+<div>&nbsp;</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(112, 128, 144);" align="left"><font color="#fffafa">多次合并</font></div>
+<div>这个问题之所以重要是因为在其他的VCS工具中多次合并实现起来是很麻烦的，但是用git，很容易解决。合并一个分枝之后，再继续在这个分枝上
+工作，然后再合并。这种情形一般是这样的：如果你有一个'development'分枝，你正在进行集成测试、合并实验中的变更，然后定期的将其合并到稳
+定的'master'分枝中。</div>
+<div>&nbsp;</div>
+<div>用我们正在进行的例子来讲，假如我们现在又切换到'experiment'分枝，做点小小的改动，然后再将其合并到'master'分枝中，整个的过程大致是这样：</div>
+<div><img onload="if(this.width>650) this.width=650;" onclick='window.open("http://blog.51cto.com/viewpic.php?refimg=" + this.src)' alt="" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/200912171261055506012.png" border="0"></div>
+<div>因为git合并是基于提交历史的快照，所以多次合并显得so easy。当你在一个分枝上做完你的工作之后，譬如例子中的'experiment'分枝，那么我们只需使用'git branch -d'命令即可删除此分枝</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00">$ git branch -d experiment</font></div>
+<div>如果分枝还没有被合并，那么执行这个命令就会将分枝上所做的工作一并删除，git是不允许你这么干的。如果你实在想删除的话，那么使用'-D'参数强行删除吧。</div>
+<div>&nbsp;</div>
+<div>这就是git中分枝和合并的所有内容，我想你理解了git的这一功能之后会觉得它确实是个非常棒的工具了。<br></div>
+    		</div><!--正文 end-->
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer"></a>
+
+            </span><div id="favourdiv" class="support01">0人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table border="0" cellpadding="0" cellspacing="0" width="720">
+  <tbody><tr>
+    <td align="right"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/icon01.png" height="16" width="15"> <span style="cursor: pointer;"><a onclick="openFavoulist();" id="favourer"></a></span></td>
+    <td align="left" width="70"><div style="line-height: 28px;" id="favourdiv" class="support01">0人</div></td>
+    <td align="left" width="60">了这篇文章</td>
+  </tr>
+</tbody></table>
+
+
+
+
+            <div class="showType">类别：<a href="http://fsjoy.blog.51cto.com/318484/d-3" class="operlink">ROR</a>┆<a class="operlink" onclick="javascript:joingroups(245081,'fsjoy');return false;">技术圈</a>(<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/joingroup.php"></script>)┆阅读(<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/header.php"></script>)┆评论(<script>document.write(replies)</script>)
+
+┆
+
+	<a href="#" onclick="javascript:dfanologin('http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245081');return false;" class="operlink">
+
+推送到技术圈</a>┆<a href="http://fsjoy.blog.51cto.com/">返回首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="http://fsjoy.blog.51cto.com/318484/244826" class="operlink" title="Git学习教程（三）：Git工作流程">Git学习教程（三）：Git工作流程</a>
+
+
+			下一篇 <a href="http://fsjoy.blog.51cto.com/318484/245106" class="operlink" title="Git学习教程（五）：Git标签">Git学习教程（五）：Git标签</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+
+
+    <div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>相关文章</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244803" title="Git学习教程（二）：配置和初始化" target="_blank">Git学习教程（二）：配置和初始化</a></li>
+
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244826" title="Git学习教程（三）：Git工作流程" target="_blank">Git学习教程（三）：Git工作流程</a></li>
+
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244397" title="Git学习教程（一）：git简介" target="_blank">Git学习教程（一）：git简介</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/230883" title="Qt学习之路(21): event()" target="_blank">Qt学习之路(21): event()</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/232314" title="Qt学习之路(23): 自定义事件" target="_blank">Qt学习之路(23): 自定义事件</a></li>
+
+
+<li><a href="http://wfyang.blog.51cto.com/65117/26690" title="js就那么回事" target="_blank">js就那么回事</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/239585" title="Qt学习之路(28): 坐标变换" target="_blank">Qt学习之路(28): 坐标变换</a></li>
+
+
+<li><a href="http://whxqwtxq.blog.51cto.com/49231/57198" title="XHTML入门学习教程:框架标签使用" target="_blank">XHTML入门学习教程:框架标签使用</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/243546" title="Qt学习之路(31): 一个简易画板的实现(QWidget)" target="_blank">Qt学习之路(31): 一个简易画板的实现(QWidget)</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/210947" title="Qt学习之路(14): 状态栏" target="_blank">Qt学习之路(14): 状态栏</a></li>
+
+
+
+</ul>
+
+
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon" id="artcomment">
+		<div>  &nbsp;</div><div>  &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+
+
+<span class="blank1"></span>
+<div class="box writeComm">
+<a name="comment"></a>
+<input name="action" value="comment" type="hidden">
+<input id="commenttid" name="tid" value="245081" type="hidden">
+<input name="com_count_ajax" id="com_count_ajax" value="1" type="hidden">
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl"><a class="mred" target="_blank" href="http://blog.51cto.com/newsletter/142/" style="color: red;">[社区周刊] Linux运维人员的前生后世！</a></span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+ <div class="modCon">
+ <div class="commForm">
+<dl>
+<dt>昵&nbsp;&nbsp;称：</dt>
+<dd>
+
+<input id="commentusername" name="username" class="commInput fl" type="text"><span><a href="http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245081" style="text-decoration: underline;">登录</a>&nbsp;&nbsp;<a href="http://ucenter.51cto.com/reg_01.php?reback=http://blog.51cto.com" target="_blank" style="text-decoration: underline;">快速注册</a></span>
+
+
+
+</dd>
+</dl>
+
+
+
+<dl id="commentyanzheng">
+
+
+<dt>验证码：</dt>
+<dd><input class="code" id="commentauthnum" name="authnum" onclick="displaysecunum();" type="text">
+
+  <img class="fl" id="secunum" onclick="refimg()" style="display: none;" height="29" width="78"><p class="fl"><span style="display: none;" id="spanfont">点击图片可刷新验证码</span><span style="display: inline;" id="clickfont">请点击后输入验证码</span><span class="pl5"><a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank" style="text-decoration: underline;">博客过2级，无需填写验证码</a></span></p></dd>
+</dl>
+<dl>
+<dt>内&nbsp;&nbsp;容：</dt>
+<dd>
+<textarea class="writeCommCon f12" id="commentcontent" name="content"></textarea>
+</dd>
+</dl>
+</div>
+<div class="writeCommBot">
+  <input class="commBtn fl" name="submit" id="commentsubmit" value="" onclick="commentSubmitend2()" type="button">
+
+ <p class="fl" style="display: none;"><input class="fl" name="favour" id="favour" checked="checked" value="1" type="checkbox"><span class="fl">同时赞一个</span></p>
+
+</div>
+<span class="blank"></span>
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+
+<iframe id="iframe1" name="iframe1" height="0" width="0"></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + "http://fsjoy.blog.51cto.com/318484/245081";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://fsjoy.blog.51cto.com/318484/245081" + "][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + "http://fsjoy.blog.51cto.com/318484/245081";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + "http://fsjoy.blog.51cto.com/318484/245081" + "][u]" + title + "[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open ('http://blog.51cto.com/mod/favourlist.php?tid=245081','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script><h1></h1>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1_002.js"></script>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery.js"></script>
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_top.css" rel="stylesheet" type="text/css">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_top_list.html" type="text/javascript" language="javascript"></script>
+
+
+
+
+
+
+
+<div class="clear"></div>
+
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://www.51cto.com/" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/index.php" charset="utf-8"></script>
+<div style="display: none;">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.js"></script><script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.php"></script>
+
+<iframe src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E5%88%86%E6%9E%9D%E5%92%8C%E5%90%88%E5%B9%B6%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/pageview.html" frameborder="0" height="0" scrolling="no" width="0"></iframe>
+</div>
+</body></html>

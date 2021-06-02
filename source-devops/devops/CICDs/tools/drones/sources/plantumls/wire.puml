@@ -1,0 +1,325 @@
+@startuml
+
+(rpc.Client) --> (manager.BuildManager)
+
+(registry.External) --> (core.RegistryService)
+(registry.FileSource)  --> (core.RegistryService)
+(registry.EndpointSource) --> (core.RegistryService)
+(registry.staticController) --> (core.RegistryService)
+
+(secret.External) --> (core.SecretService)
+
+(validator.Remote) --> (core.ValidateService)
+
+(webhook.sender) --> (core.WebhookSender)
+
+
+card provideClient
+(config.Config)---> provideClient
+provideClient ---> (*scm.Client)
+
+
+card provideLicense
+card NewService
+(*scm.Client) --> provideLicense
+(config.Config) --> provideLicense
+provideLicense --> (*core.License)
+
+(core.UserStore) --> NewService
+(core.RepositoryStore) --> NewService
+(core.BuildStore) --> NewService
+(*core.License) --> NewService
+NewService --> (core.LicenseService)
+
+card provideLogin
+card provideRefresher
+(config.Config) --> provideLogin
+provideLogin --> (login.Middleware)
+(config.Config) --> provideRefresher
+provideRefresher --> (*oauth2.Refresher)
+
+card provideAdmissionPlugin
+(*scm.Client) --> provideAdmissionPlugin
+(orgs core.OrganizationService) --> provideAdmissionPlugin
+(core.UserService) --> provideAdmissionPlugin
+(config spec.Config) --> provideAdmissionPlugin
+provideAdmissionPlugin --> (core.AdmissionService)
+
+card provideConfigPlugin
+(*scm.Client) --> provideConfigPlugin
+(core.FileService) --> provideConfigPlugin
+(spec.Config) --> provideConfigPlugin
+provideConfigPlugin --> (core.ConfigService)
+
+card provideConvertPlugin
+(*scm.Client) --> provideConvertPlugin
+(spec.Config) --> provideConvertPlugin
+
+card provideRegistryPlugin
+(spec.Config) --> provideRegistryPlugin
+provideRegistryPlugin --> (core.RegistryService)
+
+card provideSecretPlugin
+(spec.Config) --> provideSecretPlugin
+provideSecretPlugin --> (core.SecretService)
+
+card provideValidatePlugin
+(spec.Config) --> provideValidatePlugin
+provideValidatePlugin --> (core.ValidateService)
+
+card provideWebhookPlugin
+(spec.Config) --> provideWebhookPlugin
+(*core.System) --> provideWebhookPlugin
+provideWebhookPlugin --> (core.WebhookSender)
+
+card provideRunner
+(manager.BuildManager) --> provideRunner
+(core.SecretService) --> provideRunner
+(core.RegistryService) --> provideRunner
+(config.Config) --> provideRunner
+provideRunner --> (runner.Runner)
+
+
+card provideScheduler
+(core.StageStore) --> provideScheduler
+(config.Config) --> provideScheduler
+provideScheduler --> (core.Scheduler)
+
+card provideRouter
+(api.Server) --> provideRouter
+(web.Server) --> provideRouter
+(rpcHandlerV1) --> provideRouter
+(rpcHandlerV2) --> provideRouter
+(healthzHandler) -->provideRouter 
+(*metric.Server) -->provideRouter
+provideRouter --> (*chi.Mux)
+
+card provideHealthz
+provideHealthz --> healthzHandler
+
+card provideRPC
+(manager.BuildManager) --> provideRPC
+(config.Config) --> provideRPC
+provideRPC --> rpcHandlerV1
+
+card provideRPC2
+(manager.BuildManager) --> provideRPC2
+(config.Config) --> provideRPC2
+provideRPC2 --> rpcHandlerV2
+
+card provideServer
+(*chi.Mux) --> provideServer
+(config.Config) --> provideServer
+provideServer --> (server.Server)
+
+card provideServerOptions
+(config.Config) --> provideServerOptions
+provideServerOptions --> (secure.Options)
+
+card provideMetric
+(core.Session) --> provideMetric
+(config.Config) --> provideMetric
+provideMetric --> (*metric.Server)
+
+card cancelerNew
+(core.BuildStore) -> cancelerNew
+(core.Pubsub) -> cancelerNew
+(core.RepositoryStore) -> cancelerNew
+(core.Scheduler) -> cancelerNew
+(core.StageStore) -> cancelerNew
+(core.StatusService) -> cancelerNew
+(core.StepStore) -> cancelerNew
+(core.UserStore) -> cancelerNew
+(core.WebhookSender) -> cancelerNew
+cancelerNew --> (core.Canceler)
+
+card CommitNew
+(*scm.Client) --> CommitNew
+(core.Renewer) --> CommitNew
+CommitNew --> (core.CommitService)
+
+card SchedulerNew
+(core.CommitService) --> SchedulerNew
+(core.CronStore) --> SchedulerNew
+(core.RepositoryStore) --> SchedulerNew
+(core.UserStore) --> SchedulerNew
+(core.Triggerer) --> SchedulerNew
+SchedulerNew --> (cron.Scheduler)
+
+card LogStreamNew
+LogStreamNew --> (core.LogStream)
+card PubsubNew
+PubsubNew --> (core.Pubsub)
+
+card LinkerNew
+(*scm.Client) --> LinkerNew
+LinkerNew--> (core.Linker)
+
+card HookParserNew
+(*scm.Client) --> HookParserNew
+HookParserNew--> (core.HookParser)
+
+card Renewer
+(*oauth2.Refresher) --> Renewer
+(core.UserStore) --> Renewer
+Renewer --> (core.Renewer)
+
+card TriggererNew
+(core.Canceler) -> TriggererNew
+(core.ConfigService) -> TriggererNew
+(core.ConvertService) -> TriggererNew
+(core.CommitService) -> TriggererNew
+(core.StatusService) -> TriggererNew
+(core.BuildStore) -> TriggererNew
+(core.Scheduler) -> TriggererNew
+(core.RepositoryStore) -> TriggererNew
+(core.UserStore) -> TriggererNew
+(core.ValidateService) -> TriggererNew
+(core.WebhookSender) --> TriggererNew
+TriggererNew --> (core.TriggererNew)
+
+card UserServiceNew
+(*scm.Client) --> UserServiceNew
+(core.Renewer) --> UserServiceNew
+UserServiceNew --> core.UserService
+
+card provideContentService
+(*scm.Client) --> provideContentService
+(core.Renewer) --> provideContentService
+provideContentService --> (core.FileService)
+
+card provideHookService
+(*scm.Client) --> provideHookService
+(core.Renewer) --> provideHookService
+(config.Config) --> provideHookService
+provideHookService --> (core.HookService)
+
+
+card provideNetrcService
+(*scm.Client) --> provideNetrcService
+(core.Renewer) --> provideNetrcService
+(config.Config) --> provideNetrcService
+provideNetrcService --> (core.NetrcService)
+
+card provideOrgService
+(*scm.Client) --> provideOrgService
+(core.Renewer) --> provideOrgService
+provideOrgService --> (core.OrganizationService)
+
+card provideRepositoryService
+(*scm.Client) --> provideRepositoryService
+(core.Renewer) --> provideRepositoryService
+(config.Config) --> provideRepositoryService
+provideRepositoryService --> (core.RepositoryService)
+
+card provideSession
+(core.UserStore) --> provideSession
+(config.Config) --> provideSession
+provideSession --> (core.Session)
+
+card provideStatusService
+(*scm.Client) --> provideStatusService
+(core.Renewer) --> provideStatusService
+(config.Config) --> provideStatusService
+provideStatusService --> (core.StatusService)
+
+card provideSyncer
+(core.RepositoryStore) --> provideSyncer
+(core.UserStore) --> provideSyncer
+(core.Batcher) --> provideSyncer
+(config.Config) --> provideSyncer
+provideSyncer --> (core.Syncer)
+
+card provideSystem
+config.Config --> provideSystem
+provideSystem --> (*core.System)
+
+card provideDatadog
+(core.UserStore) --> provideDatadog
+(core.RepositoryStore) --> provideDatadog
+(core.BuildStore) --> provideDatadog
+(*core.System) --> provideDatadog
+(*core.License) --> provideDatadog
+(config.Config) --> provideDatadog
+provideDatadog --> (sink.Datadog)
+
+card provideDatabase
+(config.Config) --> provideDatabase
+provideDatabase --> (*db.DB)
+
+card provideEncrypter
+(config.Config) --> provideEncrypter
+provideEncrypter --> (encrypt.Encrypter)
+
+card provideBuildStore
+(*db.DB) --> provideBuildStore
+provideBuildStore --> (core.BuildStore)
+
+card provideLogStore
+(*db.DB) --> provideLogStore
+(config.Config)  --> provideLogStore
+provideLogStore --> (core.LogStore)
+
+card provideStageStore
+(*db.DB) -> provideStageStore
+provideStageStore--> (core.StageStore)
+
+card provideRepoStore
+(*db.DB) -> provideRepoStore
+provideRepoStore--> (core.RepositoryStore)
+
+card provideUserStore
+(*db.DB) -> provideUserStore
+provideUserStore --> (core.UserStore)
+
+card provideBatchStore
+(*db.DB) --> provideBatchStore
+(config.Config) --> provideBatchStore
+provideBatchStore --> (core.Batcher)
+
+card CronStoreNew
+(*db.DB) -> CronStoreNew
+CronStoreNew --> (core.CronStore)
+
+card PermStoreNew
+(*db.DB) -> PermStoreNew
+PermStoreNew --> (core.PermStore)
+
+card SecretStoreNew
+(*db.DB) --> SecretStoreNew
+(encrypt.Encrypter) --> SecretStoreNew
+SecretStoreNew --> (core.SecretStore)
+
+card GlobalSecretStoreNew
+(*db.DB) --> GlobalSecretStoreNew
+(encrypt.Encrypter) --> GlobalSecretStoreNew
+GlobalSecretStoreNew --> (core.GlobalSecretStore)
+
+card StepStoreNew
+(*db.DB) -> StepStoreNew
+StepStoreNew --> (core.StepStore)
+
+
+
+card newApplication
+(cron.Scheduler) --> newApplication
+(sink.Datadog) --> newApplication
+(runner.Runner) --> newApplication
+(server.Server) --> newApplication
+(core.UserStore) --> newApplication
+newApplication --> application
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+

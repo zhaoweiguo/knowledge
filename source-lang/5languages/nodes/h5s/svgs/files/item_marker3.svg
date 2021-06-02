@@ -1,0 +1,22 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker 
+      id="markerDemo2"
+      viewBox="0 0 12 12"
+      refX= "6"
+      refY="6"
+      markerUnits="strokeWidth"
+      markerWidth="12"
+      markerHeight="12"
+      orient="auto">
+     <path d="M2,2 L10,6 L2,10 L4,6 L2,2" fill="black"></path>
+    </marker>
+  </defs>
+
+  <path 
+    d="M20,70 T80,100 T160,80 T300,120 T200,90"     
+    stroke="blue" stroke-width="2" fill="transparent"
+    marker-start="url(#markerDemo2)"
+    marker-mid="url(#markerDemo2)"
+    marker-end="url(#markerDemo2)"></path>
+</svg>

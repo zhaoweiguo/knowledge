@@ -1,0 +1,20 @@
+001AI相关
+#########
+
+
+.. toctree::
+   :name: ai
+   :titlesonly:
+   :caption: AI
+
+   001ais/normal
+   001ais/library
+   001ais/framework
+   001ais/algorithm
+   001ais/deep_learning
+   001ais/opensource
+   001ais/math
+   001ais/question
+
+
+

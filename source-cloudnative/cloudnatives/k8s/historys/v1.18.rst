@@ -1,0 +1,26 @@
+1.18版本
+########
+
+* Release Note [1]_
+* 发布时间: 2020年03月26日
+
+
+
+
+
+API相关弃用如下::
+
+    所有资源的API apps/v1beta1和apps/v1beta2都将弃用，请使用apps/v1代替。
+    Daemonsets/Deployments/Replicasets资源的API extensions/v1beta1将被弃用，请使用apps/v1代替。
+    Networkpolicies资源的API extensions/v1beta1将被弃用，请使用networking.k8s.io/v1代替。
+    Podsecuritypolicies资源的API extensions/v1beta1将被弃用，请使用policy/v1beta1代替。
+
+
+
+参考
+====
+
+.. [1] https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md
+
+
+

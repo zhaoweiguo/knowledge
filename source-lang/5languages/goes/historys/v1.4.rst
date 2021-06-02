@@ -1,0 +1,24 @@
+v1.4(released 2014-12)
+######################
+
+* 该版本发布了 Android 官方支持包 golang.org/x/mobile ，可以使用 Go 代码编写简单的 Android 应用。
+* 该版本把之前很多 C 和汇编语言编写的运行时转换为 Go 实现。
+* 该版本由于使用了更精确的垃圾收集器，堆栈大小减少了 10~30%。
+* Go 的项目代码管理工具从 Mercurial 切换为 Git，项目也从 Google Code 迁移到了GitHub。
+* 该版本还发布了 go generate 命令，扫描 //go:generate 指令提供的信息生成代码，简化了代码生成方式。
+
+
+
+Internal packages
+=================
+
+* `the design document <https://golang.org/s/go14internal>`_
+
+* 作用::
+  
+    Can not be imported by packages outside the source subtree
+
+
+
+
+

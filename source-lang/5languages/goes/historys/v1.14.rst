@@ -1,0 +1,29 @@
+go1.14 (released 2020/02/25)
+############################
+
+* 该版本主要改进了 toolchain, runtime, libraries。
+* 该版本支持 go Modules 在生产环境使用。
+
+
+* 官网说明 [1]_
+
+* Most of its changes are in the implementation of the toolchain, runtime, and libraries
+* Go Mod正式可在生产环境使用
+* Go 1.14 includes a new package, hash/maphash, which provides hash functions on byte sequences. 
+
+Environment variables
+=====================
+
+GOINSECURE::
+
+    Instructs the go command to not require an HTTPS connection, 
+        and to skip certificate validation,
+        when fetching certain modules directly from their origins
+    Like the existing GOPRIVATE variable, GOINSECURE is a comma-separated list of glob patterns
+
+
+
+
+
+
+.. [1] https://golang.org/doc/go1.14

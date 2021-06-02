@@ -1,0 +1,6 @@
+cron.Scheduler --> newApplication .
+sink.Datadog --> newApplication .
+runner.Runner --> newApplication .
+server.Server --> newApplication .
+core.UserStore --> newApplication .
+newApplication --> application .

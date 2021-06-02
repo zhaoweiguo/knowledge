@@ -1,0 +1,55 @@
+
+var start = 1;
+
+var _html = '<div class="blogpopMain"><div class="l">'
+          + '<a href="http://blog.51cto.com/zt/93" target="_blank"><img src="http://blog.51cto.com/image/blog_top/upload/1328246536_index.jpg" width="105" height="105" /></a>'
+          + '<p><a href="http://blog.51cto.com/zt/93" target="_blank">OSPF协议手册</a></p></div>'
+          + '<div class="r"><h4 style="text-align:left;"><a href="http://beniao.blog.51cto.com/389148/770635" target="_blank">2011年，痛并快乐着</a></h4>'
+          + '<ul>'
+          + '<li><a href="http://ebway.blog.51cto.com/199942/771194" target="_blank">12306.cn网购火车票实战手记</a></li>'
+          + '<li><a href="http://joyale.blog.51cto.com/2698460/770882" target="_blank">岁末思考，展望龙年：IT行业观察篇</a></li>'
+          + '<li><a href="http://luckcy.blog.51cto.com/1037681/770513" target="_blank">请向孩子直述事情的本质原因</a></li>'
+          + '<li><a href="http://news.51cto.com/art/201201/312880.htm" target="_blank">慈善：充下载豆，捐助白血病朋友！</a></li>'
+          + '</ul>'
+          + '</div></div>'
+          + '';
+
+jQuery('#showMessagerDim').show();
+
+jQuery(function(){
+//window.onload=function(){
+   if(get_cookie('blog_top')==''&&start==1){
+//	 show_pop();
+	    jQuery.messager.showblogtop('', _html);
+        var date=new Date();
+	    var day = 1328630400000;//
+	    date.setTime(day);
+	    var test = date.getTime();
+	    document.cookie="blog_top=yes;domain=.blog.51cto.com;expires="+date.toGMTString()+";path=/;";
+    }
+	jQuery("#showMessagerDim").click(function(){
+		jQuery.messager.showblogtop('', _html);
+		//removeIframe();
+	});
+//}
+});
+
+
+function get_cookie(Name) {
+    var search = Name + "=";
+    var returnvalue = "";
+    if (document.cookie.length > 0) {
+        offset = document.cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+
+            end1 = document.cookie.indexOf(";", offset);
+
+            if (end1 == -1)
+            end1 = document.cookie.length;
+            returnvalue=unescape(document.cookie.substring(offset, end1));
+        }
+    }
+    return returnvalue;
+}
+

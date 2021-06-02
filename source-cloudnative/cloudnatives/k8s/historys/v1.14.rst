@@ -1,0 +1,13 @@
+1.14版本
+########
+
+* Release Note [1]_
+* 发布时间: 2019年03月25日
+
+
+参考
+====
+
+* 解读1: https://yq.aliyun.com/articles/696486
+
+.. [1] https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md

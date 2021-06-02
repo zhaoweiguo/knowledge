@@ -1,0 +1,79 @@
+@startuml
+
+autonumber
+participant 客户端 as c
+participant 服务端 as s
+
+c -> s: ClientHello
+note over c
+可用的版本号
+当前时间
+客户端随机数
+会话 id
+可用的密码套件清单
+可用的压缩方式清单
+end note
+
+c <- s: ServerHello
+note over s
+使用的版本号
+当前时间
+服务器随机数
+会话 id
+使用的密码套件
+使用的压缩方式
+end note
+c <- s: Certificate
+note over s
+证书清单
+end note
+
+c <- s: ServerKeyExchange
+note over s
+1. RSA:
+    公钥密码参数
+        N: modulus
+        E: exponent
+    散列值
+2. Diffie-Hellman 密码交换
+    密码交换参数
+        P: prime modulus
+        G: generator
+    散列值
+end note
+
+c <- s: CertificateRequest
+note over s
+证书类型清单
+认证机构名称清单
+end note
+
+c <- s: ServerHelloDone
+
+c -> s: Certificate
+note over c
+证书清单
+end note
+
+c -> s: ClientKeyExchange
+note over c
+1. RSA:
+    经过加密的预备主密码
+2. Diffie-Hellman 密钥交换
+    客户端的 Y(即:G^x mod P)
+end note
+
+c -> s: CertificateVerify
+note over c
+数字签名
+end note
+
+c -> s: ChangeCipherSpec
+
+c -> s: Finished
+
+c <- s: ChangeCipherSpec
+
+c <- s: Finished
+
+@enduml

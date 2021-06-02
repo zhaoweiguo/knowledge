@@ -1,0 +1,171 @@
+#! -*- mode: erlang -*-
+
+1,最基本的resources模块有：
+    1.1, include webmachine.hrl文件
+    1.2, init/1方法和to_html/2方法
+    这个模块只能处理最简单的GET的http請求(详见testwm_resource模块)
+
+2,Dispatching 
+	2.1 dispatch map data是3元或4元的tuple，格式：{pathspec, resource, args} or {pathspec, guard, resource, args}
+	具体说明：
+		pathspec:是一列表，格式[string, atom, star]，三种元素组成！其中star格式为'*'
+			如何进行匹配的呢？原理如下：
+				請求后webmachine会把url根据"/"进行separate,然后匹配上面的dispatch map data.其中string类型需要完全匹配，非'*'atom类型匹配任一个，而'*'则匹配任意个！
+		guard:是一个一个参数的函数，格式为fun my_guard/1或者{module, my_fun}(注：fun module:my_fun/1)
+		resource:是原子类型，指定哪个模块来进行处理！
+		args:参数列表，list类型。它会被作为参数，传入到上面resource指定的模块的init/1函数中！
+	2.2 dispatch map data的数据会默认从priv/dispatch.conf文件里读取!
+		它实际是默认找到这个文件路径，然后用file:consult得到这个文件里的内容！这块可以通过修改根sup文件里面的内容来修改这个文件对应目录！
+	2.3 单说说不明白，举几个例子：
+	假设你請求页面"http://HostName:Port/web/gordon/test/abc.html?name=gordon"!而你的dispatch这样写：
+	例一，
+		Url: "http://HostName:Port/web"
+		dispatch: {["web"], test_web, []}
+		说明：这儿的pathspec是["web"]， resource是test_web, args是[].如上面确定Url和dispatch后，系统会自动调用test_web:init([])方法！(这儿参数为空！)
+		方法：
+			wrq:disp_path： ""
+			wrq:path: "/a"
+			wrq:path_info: []
+			wrq:path_	tokens: []
+	例二,
+		Url: "http://HostName:Port/web/gordon/b/c/d"
+		dispatch: {["web", name, '*'], test_web, []}
+		方法：
+			wrq:disp_path: "b/c/d"
+			wrq:path: "/web/gordon/b/c/d"
+			wrq:path_info: [{name, "gordon"}]
+			wrq:path_tokens: ["b", "c", "d"]
+			
+3, 约定格式
+	在具体的介绍前先确定下格式，webmachine类型的模块所有function都是如下格式(init/1函数除外):
+		f(ReqData, Context) -> {Result, ReqData, Context}
+	参数说明：
+		ReqData: 它是http請求的对象，里面存放着所有http請求的数据！(它实际上应该是webmachine对mochiweb中的Reqest和Response实例化对象(就这样理解吧，用OOA)的封装)！
+		Context: webmachine留给你用的， 为方便你进行扩展功能！webmachine不对它进行处理，如果你不对它进行处理，它进来什么样，出去就是什么样！
+		Result: 这个就是你返回的結果了！
+
+4, Type:
+    再确定下变量的基本类型，主要有下面几种(其他常用的就不说了)
+	4.1 string(): 字符串类型
+	4.2 rd(): opaque record的简称！实质就是ReqData，即前面说的webmachine的請求对象！
+	4.3 streambody(): 
+	4.4 mochiwebheaders():
+5, Requst:
+	所有有关請求的方法都被集成到wrq模块里了！其实wrq模块就是处理mochiweb_request和mochiweb_response对象的API。
+	下面具体说下它对应的方法！
+	5.1 method(rd())-> 'DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'TRACE'
+		client請求的http method
+	5.2 version(rd())-> {integer(), integer()} 
+		client請求的http 版本,一般是{1, 1}即：http version 1.1
+	5.3 peer(rd()): string()
+		client的IP地址
+	5.4 disp_path(rd())-> string()
+		这个方法是三个路径方法之一， 剩下两个就是下面俩。这个方法前面介绍过(Dispatching部分)!
+		它的意思是指前面dispatching匹配完成之后，剩下的部分！dispatching改变，它也跟着变化
+	5.5 path(rd): string()
+		这个方法是得到URI中host:port之后，但不包括query字符串的部分！
+	5.6 raw_path(rd()): string()
+		得到全部的請求URI
+	5.7 path_info(atom(), rd())->'undefined', string()
+		得到在dispatching配置{pathspec, resource, args} 中，pathspec中对应atom格式对应的值！
+	5.8 path_info(atom()) ->any()
+		得到在dispatching配置{pathspec, resource, args} 中，pathspec中对应atom格式对就的所有值！
+	5.9 path_tokens(rd()) ->list()
+		得到把disp_path(rd())所出数据按"/"split后的列表
+	5.10 get_req_header(string(), rd()) ->'undefined', string()
+		查询incoming request header的值
+	5.11 req_headers(rd()) ->mochiheaders()
+		得到incoming HTTP headers.
+	5.12 req_body(rd()) ->'undeinfed', binary()
+		得到incoming request body
+	5.13 stream_req_body(rd(), integer()) ->streambody()
+		以streamed格式返回incoming request body,最大不能超过integer()参数对应的值！
+	5.14 get_cookie_value(string(), rd()) ->string()
+		得到对应cookie的值
+	5.15 req_cookie(rd()) -> string()
+		得到所有cookie的值
+	5.16 get_qs_value(string(), rd()) ->'undefined', string()
+		得到根据key得到query string中value的值
+	5.17 get_qs_value(string(), string(), rd()) ->string()
+		和上面函数一样， 不过它的第二个参数是当得值为'undefined'时的默认值！
+	5.18 req_qs(rd()) ->[string(), string()].
+		得到query string的key/value列表
+	5.19 get_resp_header(string(), rd()) ->string()
+		Look up the current value of an outgoing request header.???
+	5.20 resp_redirect(rd()) ->bool()
+		the last value passed to do_redirect, false otherwise – if true, then some responses will be 303 instead of 2xx where applicable
+	5.21 resp_header(rd()) ->mochiheaders()
+		The outgoing HTTP headers. 和get_resp_header/2对应
+	5.22 resp_body(rd()) ->'undefined', binary()
+		The outgoing response body, if one has been set. Usually, append_to_response_body is the best way to set this.
+	5.23 app_root(rd()) ->string()
+		Indicates the “height” above the requested URI that this resource is dispatched from. Typical values are “.” , “..” , “../..” and so on.
+
+6, Requst Modification functions
+	6.1 set_req_header(string(), string(), rd()) ->rd()
+		Given a header name and value, set an outgoing request header to that value.
+	6.2 append_to_response_body(binary(), rd()) ->rd()
+		Append the given value to the body of the outgoing response.
+	6.3 do_redirect(bool(), rd()) ->rd()
+		see resp_redirect/1, this function is to set that value.
+	6.4 set_disp_path(string(), rd()) ->rd()
+		the disp_path is the only path that can be changed during the request. This function will do it!
+    6.5 set_req_body(binary(), rd()) -> rd()
+        Replace the incoming request body with this for the rest of  the processing.
+    6.6 set_resp_body(binary(), rd()) ->rd()
+        set the outgoing response body to this value
+    6.7 set_resp_body(streambody(), rd()) ->rd()
+        use this streamed body to produce the outgoing response body on demand.
+    6.8 set_resp_headers([{string(), string()}, rd()] -> rd()
+        Given a list of two-tuples of {headername, value}, set those outgoing response headers.
+    6.9 remove_resp_header(string(), rd()) -> rd()
+        Removed the named outgoing response header.
+
+
+7, Webmachine Resource
+    7.1 include_lib 文件
+       -include_lib("webmachine/include/webmachine.hrl").
+    7.2 init/1 function
+       这是个必备函数，返回值一般是{ok, Context},其中这个Context变量就是前面我们说的webmachine不会做任何操作，
+         留给用户作扩展功能用的变量！这个变量是在这个fun init/1 中被初使化。
+       另一种返回值是{{trace, Dir}, Context}，这种是用于调试用的，具体察看后面的调试模块介绍！
+    7.3 格式
+       如上面<3, 约定格式>说写
+    7.4 Halting Resources
+       {error,Err::term()}:立即终止这次請求，返回500Internal Server Error, response body 里包含Err term.
+       {halt,Code::integer()}:立即终止这次請求，返回請求代码Code，It is the responsibility of the resource 
+           to ensure that all necessary response header and body elements are filled in ReqData in order to make that response code valid.
+    下面是对这些函数的具体描述！
+
+8, Resource Functions
+    8.1 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                              
+
+
+
+
+
+
+
+
+
+
+
+
+
+

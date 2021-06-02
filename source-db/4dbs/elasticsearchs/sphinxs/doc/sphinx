@@ -1,0 +1,55 @@
+libmysqlclient16-dev:这是开发路径查询时用的，安装mysql之后最好安装上这个！
+
+--prefix=/path
+--with-mysql=/path
+--with-pgsql=/path
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#ln -s /tmp/mysql.sock /var/lib/mysql/mysql.sock即可
+
+
+1、查询计算机内所有与mysql有关的进程
+ps -A|grep mysql
+2、将查到的进程全部杀死
+kill [PID]
+注：[PID]为你查到的进程的进程号
+3、重启mysql服务
+/etc/init.d/mysql restart
+或者
+service mysql restart
+
+
+
+我们需要脚本能够自动运行，以实现，delta索引每5分钟重新建立，和main索引只在午夜2：30时重新建立。
+
+使用crontab 命令 这有俩个地方可作参考 crontab  crontab文件
+crontab -e 来编辑 crontab文件，如果之前没有使用，会是一个空的文件。写下下面两条语句
+*/30 * * * *  /bin/sh /usr/local/sphinx/etc/build_delta_index.sh > /dev/null 2>&1
+30 2 * * * /bin/sh /usr/local/sphinx/etc/build_main_index.sh > /dev/null 2>&1
+
+第一条是表示每30分钟运行 /usr/local/sphinx/etc/下的build_delta_index.sh 脚本，输出重定向。
+第二条是表示 每天的 凌晨2：30分运行 /usr/local/sphinx/etc下的build_main_inde.sh 脚本，输出重定向。
+关于前面的 5个值的设置，在上面的crontab文件中有详细的描述。关于重定向的解释，请看最上面的Crontab笔记 ，也有crontab的介绍。
+
+保存好后：重新启动服务
+ 
+[root@test1 init.d]# service crond stop
+[root@test1 init.d]# service crond start
+或者
+/etc/init.d/crontab   start
+
+到现在为止，如果脚本写的没有问题，那么build_delta_index.sh将每30分钟运行一次，而build_main_index.sh将在凌晨2:30分才运行。
+

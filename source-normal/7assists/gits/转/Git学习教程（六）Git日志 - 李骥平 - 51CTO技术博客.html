@@ -1,0 +1,1101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+<title>Git学习教程（六）Git日志 - 李骥平 - 51CTO技术博客</title>
+<meta name="description" content="第六课Git日志内容提要：浏览项目历史，查询指定提交内容，图形化显示分枝和合并...gitlog是git中最常用的一个命令，执行之后，会显示该项目的提交历史。如果命令不加任何参数，那么就会显示目前所在分枝上，从..">
+<meta name="keywords" content="Git学习教程（六）Git日志">
+<meta http-equiv="Cache-Control" content="private">
+<!-- base href="http://fsjoy.blog.51cto.com/" -->
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/def.js"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/message.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/user_comment.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base2.js" type="text/javascript"></script>
+<script language="javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/dialog_utf8.js" type="text/javascript"></script>
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/30.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="http://fsjoy.blog.51cto.com/xmlrpc.php?rsd=1">
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/header_master_top.css" rel="stylesheet" type="text/css">
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base.css" rel="stylesheet" type="text/css">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/poptop.js"></script>
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://fsjoy.blog.51cto.com/318484/245261";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				return false;
+	}else{
+      		var url='/mod/edit_flink.php?type=addflink&uid=318484&flink=http://fsjoy.blog.51cto.com';
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://fsjoy.blog.51cto.com/318484/245261";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://fsjoy.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+</head><body>
+
+<div id="home_top">
+<div class="top_nav" style="width: 990px;">
+<div class="left" style="margin-top: 10px; width: 470px;"><a href="http://blog.51cto.com/" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/head_blog_sibebar_logo.gif" style="margin-top: -4px;" align="absmiddle"></a><a target="_blank" href="http://www.51cto.com/">51CTO首页</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16"><a href="http://blog.51cto.com/" target="_blank">51CTO博客</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16"><a href="http://home.51cto.com/?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245261">我的博客</a><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top: -4px;" align="absmiddle" height="25" width="16">
+
+<a target="_blank" href="http://blog.51cto.com/search.php">搜索</a>
+<a href="javascript:void(0);" style="color: rgb(255, 0, 0); text-decoration: underline;" id="showMessagerDim">每日博报</a>
+</div>
+
+<div class="right" style="width: 520px;">
+<div class="more"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_shequ.gif" align="absmiddle" height="16" width="27">社区：<a target="_blank" href="http://bbs.51cto.com/">论坛</a><a target="_blank" href="http://blog.51cto.com/">博客</a><a target="_blank" href="http://down.51cto.com/">下载</a><a target="_blank" href="http://book.51cto.com/">读书</a><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">更多<img style="padding-left: 4px;" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/nav_ico1.gif" align="absmiddle"></a>            </div>            <span id="login_status"><div class="login" id="login_status"></div>    </span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+<li><a href="http://home.51cto.com/" target="_blank">家园</a></li>
+<li><a href="http://t.51cto.com/" target="_blank">微博</a></li>
+<li><a href="http://blog.51cto.com/" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com/" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com/" target="_blank">下载</a></li>
+<li><a href="http://selftest.51cto.com/" target="_blank">自测</a></li>
+<li><a href="http://doctor.51cto.com/" target="_blank">门诊</a></li>
+<li><a href="http://blog.51cto.com/newsletter/" target="_blank">周刊</a></li>
+<li><a href="http://book.51cto.com/" target="_blank">读书</a></li>
+<li><a href="http://g.51cto.com/" target="_blank">技术圈</a></li>
+<li><a href="http://zhidao.51cto.com/" target="_blank">知道</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+<div class="blogLogo">
+<a href="http://blog.51cto.com/blogcommend" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blogLogo01.png" height="70px;" width="161px;"></a>
+</div>
+
+
+<div class="blogName">
+<a href="http://fsjoy.blog.51cto.com/"><h1>李骥平</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://fsjoy.blog.51cto.com/">http://fsjoy.blog.51cto.com</a> <input id="txtUser" size="32" value="http://fsjoy.blog.51cto.com" type="hidden">   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" target="_blank"></a><a href="http://fsjoy.blog.51cto.com/rss.php?uid=318484" target="_blank">【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://fsjoy.blog.51cto.com/318484/o" title="察看fsjoy1983所有原创文章">原创</a>:160</span><span><a href="http://fsjoy.blog.51cto.com/318484/t" title="察看fsjoy1983所有翻译文章">翻译</a>:56</span><span><a href="http://fsjoy.blog.51cto.com/318484/c" title="察看fsjoy1983所有转载文章">转载</a>:85</span></div>
+<div class="blogNav"><a href="http://fsjoy.blog.51cto.com/">博 客</a>|<a href="http://fsjoy.blog.51cto.com/pic/">图库</a>|<a href="http://fsjoy.blog.51cto.com/addblog.php">写博文</a>|<a href="http://51ctoblog.blog.51cto.com/all/26414/4" target="_blank">帮 助</a></div>
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="#">首页</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-1">linux</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-2">ruby</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-3">ROR</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-4">敏捷开发</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-5">扯</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-6">桌面show</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-7">Ajax on rails</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-8">design pattern</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-9">The Ruby Way </a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-10">railscast</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-11">技巧</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-12">mac</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-13">mysql</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-14">粒计算</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-15">数工</a></li>|<li><a href="http://fsjoy.blog.51cto.com/318484/d-16">flex on rails</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+
+<script type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1_002.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/fck_editorarea.css">
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+		
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("0人");
+		}
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 245261,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245261";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{  
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 0 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	})
+
+
+})
+</script>
+<script language="JavaScript" type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/group.js"></script>
+<div id="add_sys_type_div" style="width: 600px; border: 1px solid rgb(88, 176, 221); background-color: rgb(255, 255, 255); position: absolute; left: 30%; top: 300px; display: none; z-index: 255;"></div>
+<div id="add_sys_type_divs" style="width: 550px; border: 1px solid rgb(88, 176, 221); background-color: rgb(255, 255, 255); position: absolute; left: 30%; top: 300px; display: none; z-index: 255;"></div>
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><strong>fsjoy1983</strong> 的BLOG  </h2>
+</div>
+<div class="modCon">
+
+<div class="userImage"><script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/userface.html"></script><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/318484_1215083099.png" id="userface"></div>
+
+
+
+
+
+
+
+
+<div class="crumbs">
+<a href="http://home.51cto.com/index.php?s=/space/318484#message" class="writeMessage" target="_blank">写留言</a><a href="http://g.51cto.com/addgroup.php?uid=" class="inCircle" target="_blank">邀请进圈子</a><a href="http://home.51cto.com/index.php?s=/Notify/write/uid/318484" class="message" target="_blank">发消息</a> <a href="http://fsjoy.blog.51cto.com/" onclick="add_flink(318484);return false" class="joinLinks">加友情链接</a><a href="http://home.51cto.com/index.php?s=/space/318484" class="joinFriends" target="_blank">进家园 加好友</a>
+</div>
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"><a href="http://blog.51cto.com/blogcommend" target="_blank" class="operlink"><b>51cto推荐博客</b></a> <br></span>
+用户名：fsjoy1983<br>
+文章数：301<br>
+评论数：230<br>
+访问量：373769<br>
+无忧币：2235<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：3830<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：7<br>
+注册日期：2008-02-04<br>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blogno1countdown.html"></script><style type="text/css">.icon_01{background:url(http://blog.51cto.com/active/no1/images/bks_icon_01.gif) no-repeat 13px 0;padding:1px 0 1px 35px}</style></p><div class="icon_01"><a href="http://blog.51cto.com/active/no1/ing.html" target="_blank">距离博客No.1争夺赛结束还有 <span style="color: rgb(255, 0, 0);">14</span> 天 </a></div> 
+
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="http://fsjoy.blog.51cto.com/318484/65320">ubuntu主题安装说明</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/244826">Git学习教程（三）：Git..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/84541">推荐一款正则表达式生成..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/64076">linux下编译安装与卸载 t..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/245081">Git学习教程（四）：分枝..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/71269">非常全的apple系统的快捷..</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/72905">mac显示隐藏文件</a></li>
+<li><a href="http://fsjoy.blog.51cto.com/318484/245106">Git学习教程（五）：Git标签</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method="post" action="search.php?">
+<input name="step" value="2" type="hidden">
+<input name="authorid" value="318484" type="hidden">
+<input name="sch_area" value="S" type="hidden">
+<input name="keyword" class="searchInput" type="text">
+<input value="搜 索" class="searchBtn" type="submit">
+</form></div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="myHome box">
+<div class="title"><h2 class="fl">我的技术圈(<a href="http://fsjoy.blog.51cto.com/mygroup.php" target="_blank"><b>3</b></a>)</h2>
+<a href="http://home.51cto.com/apps/group/index.php?s=/Index/index/" class="fr" target="_blank">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://g.51cto.com/netsky" target="_blank">网行天下</a>&nbsp;&nbsp;
+
+
+</li>
+
+<li><a href="http://g.51cto.com/microsoft" target="_blank">Microsoft技术</a>&nbsp;&nbsp;
+
+
+</li>
+
+<li><a href="http://g.51cto.com/ror" target="_blank">Rails on 51CTO</a>&nbsp;&nbsp;
+
+
+</li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://1746235.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://1746235.blog.51cto.com/">ddddos</a></p>
+
+</li><li><a href="http://yechen.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/1083031_1318921214.jpg"></a>
+<p><a href="http://yechen.blog.51cto.com/">yechen</a></p>
+
+</li><li><a href="http://4075321.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4075321.blog.51cto.com/">firef..</a></p>
+
+</li><li><a href="http://sinojelly.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/479153_1290771595.jpg"></a>
+<p><a href="http://sinojelly.blog.51cto.com/">sinoj..</a></p>
+
+</li><li><a href="http://3616259.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://3616259.blog.51cto.com/">zcmhz</a></p>
+
+</li><li><a href="http://4021827.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4021827.blog.51cto.com/">dldeng</a></p>
+
+</li><li><a href="http://3738455.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://3738455.blog.51cto.com/">em3308</a></p>
+
+</li><li><a href="http://1998829.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://1998829.blog.51cto.com/">yixia..</a></p>
+
+</li><li><a href="http://4263628.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://4263628.blog.51cto.com/">Baron..</a></p>
+
+</li><li><a href="http://firefly222.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/899793_1291026617.jpg"></a>
+<p><a href="http://firefly222.blog.51cto.com/">唐光辉</a></p>
+
+</li><li><a href="http://virusswb.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://virusswb.blog.51cto.com/">virusswb</a></p>
+
+</li><li><a href="http://2563677.blog.51cto.com/"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/face.jpg"></a>
+<p><a href="http://2563677.blog.51cto.com/">liwen..</a></p>
+
+</li></ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论 
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://4172526.blog.51cto.com/" class="operlink" target="_blank"><b>ccc07</b></a>：<a href="http://fsjoy.blog.51cto.com/318484/222100" target="_blank">您好，今天无意中看到您做的计算器..</a></li>
+
+<li>[匿名]air filters：<a href="http://fsjoy.blog.51cto.com/318484/211253" target="_blank">I wanted to thank you for this gr..</a></li>
+
+<li>[匿名]batik jogja：<a href="http://fsjoy.blog.51cto.com/318484/211253" target="_blank">wow ... This article is very nice..</a></li>
+
+<li>[匿名]51cto游客：<a href="http://fsjoy.blog.51cto.com/318484/137130" target="_blank">太谢谢了。写得很好，感谢你！</a></li>
+
+<li>[匿名]51cto游客：<a href="http://fsjoy.blog.51cto.com/318484/64076" target="_blank">对于新手来说你这篇文章就是废,什么..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://zhuyi.blog.51cto.com/2535291/773162" title="电商寒冬后，京东缺什么？" target="_blank">电商寒冬后，京东缺什么？</a></li>
+<li><a href="http://zhoujg.blog.51cto.com/1281471/771817" title="敏捷个人纸质书：第一章 源于生活和工作的敏捷个人" target="_blank">敏捷个人纸质书：第一章 源于生活..</a></li>
+<li><a href="http://eilfei2000.blog.51cto.com/2956473/771443" title="把握大都市的高度和速度 " target="_blank">把握大都市的高度和速度 </a></li>
+<li><a href="http://sunweiqin.blog.51cto.com/249712/772460" title="缅怀张孝祥老师" target="_blank">缅怀张孝祥老师</a></li>
+<li><a href="http://virusswb.blog.51cto.com/115214/771841" title="项目管理-源代码管理" target="_blank">项目管理-源代码管理</a></li>
+<li><a href="http://yaqinzhang.blog.51cto.com/1639798/771923" title="CES2012归来谈：软件为王的新一代消费电子业 " target="_blank">CES2012归来谈：软件为王的新一代..</a></li>
+<li><a href="http://wenrong.blog.51cto.com/1945908/771117" title="成功在于折腾" target="_blank">成功在于折腾</a></li>
+<li><a href="http://zhoujg.blog.51cto.com/1281471/771143" title="敏友的【敏捷个人】有感（11）: 敏捷个人线下活动有感" target="_blank">敏友的【敏捷个人】有感（11）: ..</a></li>
+<li><a href="http://ebway.blog.51cto.com/199942/771194" title="12306.cn网购火车票实战手记" target="_blank">12306.cn网购火车票实战手记</a></li>
+<li><a href="http://eilfei2000.blog.51cto.com/2956473/767196" title="新年寄语：选定目标和非功利性学习" target="_blank">新年寄语：选定目标和非功利性学习</a></li>
+<li><a href="http://xiammy.blog.51cto.com/3301816/769208" title="开年工作重点：帮助同事找到工作的价值" target="_blank">开年工作重点：帮助同事找到工作..</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://51ctoblog.blog.51cto.com/" title="51cto博客开发" target="_blank">51cto博客开发</a> <img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/tubiao3.gif" alt="本周内更新"></li>
+
+<li><a href="http://yucaiyan.blog.51cto.com/" title="" target="_blank">小于的blog</a></li>
+
+<li><a href="http://www.railsinside.com/elsewhere/100-7-barebones-rails-apps-to-kick-start-your-development-process.html" title="7p" target="_blank">7 p</a></li>
+
+<li><a href="http://www.rubyplus.org/" title="rails screen shot" target="_blank">Free Ruby and Rai..</a></li>
+
+<li><a href="http://www.javaeye.com/subject/Rails-EveryDay?page=1" title="每天一剂Rails良药系列" target="_blank">每天一剂Rails良药..</a></li>
+
+<li><a href="http://railscasts.com/" title="railscasts.com" target="_blank">railscasts.com</a></li>
+
+<li><a href="http://hideto.javaeye.com/" title="hideto的blog" target="_blank">hideto的blog</a></li>
+
+<li><a href="http://blog.csdn.net/free000" title=".net高手" target="_blank">马近飞老师的博客~</a></li>
+
+<li><a href="http://www.thoughtworks.com.cn/" title="" target="_blank">thoughtworks</a></li>
+
+<li><a href="http://www.zhangxun.com/" title="" target="_blank">张询谈敏捷</a></li>
+
+<li><a href="http://www.ruby-doc.org/core/" title="Ruby std library" target="_blank">Ruby std library</a></li>
+
+<li><a href="http://stdlib.rubyonrails.org/" title="Ruby Standard Library Documentation" target="_blank">Ruby Standard Lib..</a></li>
+
+<li><a href="http://api.rubyonrails.org/" title="Rails API" target="_blank">rails API</a></li>
+
+<li><a href="http://blog.sina.com.cn/permanentads" title="我的新浪博客" target="_blank">我的新浪博客</a></li>
+
+<li><a href="http://blackanger.blog.51cto.com/" title="" target="_blank">光蛋的blog</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://fsjoy.blog.51cto.com/318484/245261";
+    var favor_title = "Git学习教程（六）Git日志";
+    var favor_fuid = "318484";
+</script>
+<script type="text/javascript" src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorbox.js"></script>
+<div class="blogRight">
+	<div class="artShow box">
+   	  <div class="share" id="share">
+      <p class="shareGo">分享到：</p>
+
+    <div class="shareItem">
+        	<ul style="">
+            <li id="m01" onclick="javascript:showMsn();"><a href="javascript:void(0);">MSN/QQ</a>
+             <div class="shareBox" id="c01" style="display: none;">
+            分享本资源给：MSN  QQ好友
+           <input class="shareInput" value="http://fsjoy.blog.51cto.com/318484/245261" name="shareText" id="shareTextQM" onclick="copyShareUrl('Git学习教程（六）Git日志');" type="text">
+              <input value="" class="copyBtn" onclick="copyShareUrl('Git学习教程（六）Git日志');" type="button">
+            </div><!--shareBox end-->
+            </li>
+            <li id="m02" onclick="javascript:showBBS();"><a href="javascript:void(0);">论坛</a>
+             <div class="shareBox" id="c02" style="display: none;">
+            分享本资源给：论坛好友(UBB代码)
+           <input class="shareInput" value="[url=http://fsjoy.blog.51cto.com/318484/245261][u]fsdsdfsdfsdf[/u][/url]" name="shareText" id="shareTextBBS" onclick="copyShareUrl('Git学习教程（六）Git日志');" type="text">
+              <input value="" class="copyBtn" onclick="copyShareUrl('Git学习教程（六）Git日志');" type="button">
+            </div><!--shareBox end-->
+            </li>
+            <li id="m03"><a href="http://www.kaixin001.com/repaste/share.php?rurl=http://fsjoy.blog.51cto.com/318484/245261&amp;rcontent=%3Ch1+style%3D%22border-right%3A+%23aaaaaa+1px+solid%3B+padding-right%3A+5px%3B+border-top%3A+%23aaaaaa+1px+solid%3B+padding-left%3A+5px%3B+padding-bottom%3A+5px%3B+border-left%3A+%23aaaaaa+1px+solid%3B+padding-top%3A+5px%3B+border-bottom%3A+&amp;rtitle=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%C1%F9%A3%A9Git%C8%D5%D6%BE%A1%B7" target="_blank">开心</a></li>
+            <li id="m04"><a href="http://share.renren.com/share/buttonshare.do?link=http://fsjoy.blog.51cto.com/318484/245261&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%C1%F9%A3%A9Git%C8%D5%D6%BE%A1%B7" target="_blank">人人</a></li>
+            <li id="m05"><a href="http://www.douban.com/recommend/?url=http://fsjoy.blog.51cto.com/318484/245261&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%C1%F9%A3%A9Git%C8%D5%D6%BE%A1%B7" target="_blank">豆瓣</a></li>
+            <li id="m06"><a href="http://v.t.sina.com.cn/share/share.php?url=http://fsjoy.blog.51cto.com/318484/245261&amp;title=%D2%BB%C6%AA%BA%DC%B0%F4%B5%C4%B2%A9%CE%C4%B7%D6%CF%ED%B8%F8%B4%F3%BC%D2%A3%BA%A1%B6Git%D1%A7%CF%B0%BD%CC%B3%CC%A3%A8%C1%F9%A3%A9Git%C8%D5%D6%BE%A1%B7&amp;pic=http://blog.51cto.com/blogtj/images/logo.gif" target="_blank">新浪微博</a></li>
+            <li id="m07">
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《Git学习教程（六）Git日志》');
+</script>
+            <a href="javascript:void(0);" onclick="window.open('http://t.51cto.com/index.php?m=share&amp;url=http://fsjoy.blog.51cto.com/318484/245261&amp;type=l&amp;count=&amp;relateUid=&amp;appkey=3843950324&amp;title=' + encodetitle);">51CTO微博</a></li>
+            <li id="favor" style="margin-left: 30px;"><a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorite_add_small.gif" alt="一键收藏，随时查看，分享好友！" border="0"></a></li>
+            </ul>
+            </div>
+            <p class="shareMore"><a href="http://fsjoy.blog.51cto.com/all/318484">博主的更多文章&gt;&gt;</a></p>
+
+      </div>
+       <div class="modCon">
+   	  <div class="showBox">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      </div>
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align: center;">
+              <div class="showTitle">
+
+	 		<img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/artType03.jpg">
+
+
+    		    Git学习教程（六）Git日志
+                </div>
+  		    </div>
+   		    <span class="artTime">2009-12-18 12:47:51</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tagindex.php?keyword=%C8%D5%D6%BE" target="_blank" class="operlink">日志</a> <a href="http://blog.51cto.com/tagindex.php?keyword=%BD%CC%B3%CC" target="_blank" class="operlink">教程</a> <a href="http://blog.51cto.com/tagindex.php?keyword=%D1%A7%CF%B0" target="_blank" class="operlink">学习</a> <a href="http://blog.51cto.com/tagindex.php?keyword=git" target="_blank" class="operlink">git</a>
+
+	</div>
+
+			<div class="CopyrightStatement lh22">
+            原创作品，允许转载，转载时请务必以超链接形式标明文章 <a href="http://fsjoy.blog.51cto.com/318484/245261" target="_blank" style="text-decoration: underline;">原始出处</a> 、作者信息和本声明。否则将追究法律责任。<a href="http://fsjoy.blog.51cto.com/318484/245261">http://fsjoy.blog.51cto.com/318484/245261</a>
+            </div>
+
+
+            <!--正文 begin-->
+    		<div class="showContent">
+    		  <h1 style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(30, 144, 255);" align="center"><font color="#fffafa">第六课 Git 日志</font></h1>
+<div>内容提要：浏览项目历史，查询指定提交内容，图形化显示分枝和合并...</div>
+<hr color="#dcdcdc" size="1" width="100%">
+<div>'git log'是git中最常用的一个命令，执行之后，会显示该项目的提交历史。如果命令不加任何参数，那么就会显示目前所在分枝上，从最后一次提交开始，按时间顺序依次向前排列的所有提交历史记录。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div>
+<div><font color="#fffafa">$ git log<br>commit 166ae0c4d3f420721acbb115cc33848dfcc2121a<br>Author: Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#fffafa">schacon@gmail.com</font></a><font color="#fffafa">&gt;<br>Date:&nbsp;&nbsp; Sun Feb 8 16:50:43 2009 -0800</font></div>
+<div><font color="#fffafa">&nbsp;&nbsp;&nbsp; started write support</font></div>
+<div><font color="#fffafa">commit 9fceb02d0ae598e95dc970b74767f19372d61af8<br>Author: Magnus Chacon &lt;</font><a href="mailto:mchacon@gmail.com"><font color="#fffafa">mchacon@gmail.com</font></a><font color="#fffafa">&gt;<br>Date:&nbsp;&nbsp; Sun Apr 27 20:43:35 2008 -0700</font></div>
+<div><font color="#fffafa">&nbsp;&nbsp;&nbsp; updated rakefile</font></div>
+<div><font color="#fffafa">commit 964f16d36dfccde844893cac5b347e7b3d44abbc<br>Author: Magnus Chacon &lt;</font><a href="mailto:mchacon@gmail.com"><font color="#fffafa">mchacon@gmail.com</font></a><font color="#fffafa">&gt;<br>Date:&nbsp;&nbsp; Sun Apr 27 20:34:23 2008 -0700</font></div>
+<div><font color="#fffafa">&nbsp;&nbsp;&nbsp; commit the todo</font></div></div></div>
+<div>上面显示了3次提交，对于每一次的提交都会显示四方面内容，分别是：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(255, 250, 250);" align="left">*提交的校验和<br>*作者信息（作者名和email地址） <br>*提交日期 <br>*提交信息</div>
+<div>&nbsp;</div>
+<div>这是git日志默认输出的提交历史的内容格式。多数情况下，这样输出还是比较完美的。然而，有时候你只是想看到某个分枝上的最后几条提交信息，或者某些感兴趣的数据，只要在'git log'命令后面加上相应的参数，它就可以做更多有意义的事情。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(47, 79, 79);">
+<div><font color="#fffafa">日志输出格式</font></div></div>
+<div>通过'git log'命令还能有很多种可选的输出格式。</div>
+<div>&nbsp;</div>
+<div><strong>显示补丁</strong></div>
+<div><strong></strong>&nbsp;</div>
+<div>你可以查看每一次提交条目的补丁内容，只需要在'git log'后加上-p选项，这在代码复查时很管用--在合并到你的某个分枝之前查看是其他作者提交了什么内容，或者是看看在最后发布之前所做的修改。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log -p<br>commit 0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc<br>Author: Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt;<br>Date:&nbsp;&nbsp; Sun Feb 8 18:29:31 2009 -0800</font> 
+<div><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; added a commit function</font></div>
+<div><font color="#00ff00" face="Courier New">diff --git a/lib/simplegit.rb b/lib/simplegit.rb<br>index dd6b7b3..c75a3e6 100644<br>--- a/lib/simplegit.rb<br>+++ b/lib/simplegit.rb<br>@@ -9,6 +9,10 @@ class SimpleGit<br>&nbsp;&nbsp;&nbsp;&nbsp; command("git status")<br>&nbsp;&nbsp; end</font></div>
+<div><font color="#00ff00" face="Courier New">+&nbsp; def commit(message)<br>+&nbsp;&nbsp;&nbsp; command("git commit -m '#{message}'")<br>+&nbsp; end<br>+<br>&nbsp;&nbsp; def show(treeish = 'master')<br>&nbsp;&nbsp;&nbsp;&nbsp; command("git show #{treeish}")<br>&nbsp;&nbsp; end</font></div>
+<div><font color="#00ff00" face="Courier New">commit 166ae0c4d3f420721acbb115cc33848dfcc2121a<br>Author: Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt;<br>Date:&nbsp;&nbsp; Sun Feb 8 16:50:43 2009 -0800</font></div>
+<div><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; started write support</font></div>
+<div><font color="#00ff00" face="Courier New">diff --git a/lib/simplegit.rb b/lib/simplegit.rb<br>index dd6b7b3..e7dfaa9 100644<br>--- a/lib/simplegit.rb<br>+++ b/lib/simplegit.rb<br>@@ -9,6 +9,10 @@ class SimpleGit<br>&nbsp;&nbsp;&nbsp;&nbsp; command("git status")<br>&nbsp;&nbsp; end</font></div>
+<div><font color="#00ff00" face="Courier New">+&nbsp; def add(path)<br>+&nbsp;&nbsp;&nbsp; command("git add #{path}")<br>+&nbsp; end<br>+<br>&nbsp;&nbsp; def show(treeish = 'master')<br>&nbsp;&nbsp;&nbsp;&nbsp; command("git show #{treeish}")<br>&nbsp;&nbsp; end</font></div></div></div>
+<div>内容相当的冗长，但是这些输出都是分页的，所以一旦你得到了你需要的信息，后面的提交内容就可以都跳过了。</div>
+<div>&nbsp;</div>
+<div><strong>查看统计数字</strong><br></div>
+<div>你可以通过执行'git log -stat'命令，来显示被修改文件的修改统计信息，添加或删除了多少行。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">$ git log --stat<br>commit 0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc<br>Author: Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt;<br>Date:&nbsp;&nbsp; Sun Feb 8 18:29:31 2009 -0800</font></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; added a commit function</font></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">&nbsp;lib/simplegit.rb |&nbsp;&nbsp;&nbsp; 4 ++++<br>&nbsp;1 files changed, 4 insertions(+), 0 deletions(-)</font></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">commit 166ae0c4d3f420721acbb115cc33848dfcc2121a<br>Author: Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt;<br>Date:&nbsp;&nbsp; Sun Feb 8 16:50:43 2009 -0800</font></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; started write support</font></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">&nbsp;lib/simplegit.rb |&nbsp;&nbsp;&nbsp; 4 ++++<br>&nbsp;1 files changed, 4 insertions(+), 0 deletions(-)</font></div>
+<div><strong></strong>&nbsp;</div>
+<div><strong>调整显示格式</strong></div>
+<div><strong></strong>&nbsp;</div>
+<div>使用'git log --pretty=format'命令，可以将提交历史显示成你想要的格式。这里format的可选项包括：oneline，short，medium，full，fuller，email，raw。每种格式都有侧重的显示相关内容。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=raw<br>commit 0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc<br>tree dbcff814ec9fbbd3487171a7eaca73cf0069ba53<br>parent 85211d1138cb91f25c0633d361ff5f6e00677bc5<br>author Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt; 1234146571 -0800<br>committer Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt; 1234146571 -0800</font> 
+<div><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; added a commit function</font></div>
+<div><font color="#00ff00" face="Courier New">commit 166ae0c4d3f420721acbb115cc33848dfcc2121a<br>tree e67636948570e27a9c2bf2699ecafadf729c3efc<br>parent 9fceb02d0ae598e95dc970b74767f19372d61af8<br>author Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt; 1234140643 -0800<br>committer Scott Chacon &lt;</font><a href="mailto:schacon@gmail.com"><font color="#00ff00" face="Courier New">schacon@gmail.com</font></a><font color="#00ff00" face="Courier New">&gt; 1234140643 -0800</font></div>
+<div><font color="#00ff00" face="Courier New">&nbsp;&nbsp;&nbsp; started write support</font></div></div></div>
+<div>这里，最常用的一种格式是'oneline', 每一行表示一次提交，一行内容包括校验和与提交信息两项内容。这种显示格式可以很简洁的显示大量的提交信息。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline<br>0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc added a commit function<br>166ae0c4d3f420721acbb115cc33848dfcc2121a started write support<br>9fceb02d0ae598e95dc970b74767f19372d61af8 updated rakefile<br>964f16d36dfccde844893cac5b347e7b3d44abbc commit the todo<br>8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme<br>a5f4a0daa9b13bb85283461ddaba6e589e34ccb5 added cat-file</font></div></div>
+<div><strong></strong>&nbsp;</div>
+<div><strong>自定义格式</strong><br></div>
+<div>如果你希望git输出自定义的提交信息，你可以使用这样的命令：git log --pretty=format:"(format)".可以在""内自定义字符串与Git变量相结合的显示格式，在输出时，git会自动的将变量的位置输出为所需内容。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=format:"The author of %h was %an, %ar%nThe title was &gt;&gt;%s&lt;&lt;%n"<br>The author of 0b7434d was Scott Chacon, 18 hours ago<br>The title was &gt;&gt;added a commit function&lt;&lt;</font> 
+<div><font color="#00ff00" face="Courier New">The author of 166ae0c was Scott Chacon, 20 hours ago<br>The title was &gt;&gt;started write support&lt;&lt;</font></div>
+<div><font color="#00ff00" face="Courier New">The author of 9fceb02 was Magnus Chacon, 10 months ago<br>The title was &gt;&gt;updated rakefile&lt;&lt;</font></div>
+<div><font color="#00ff00" face="Courier New">The author of 964f16d was Magnus Chacon, 10 months ago<br>The title was &gt;&gt;commit the todo&lt;&lt;</font></div>
+<div><font color="#00ff00" face="Courier New">The author of 8a5cbc4 was Scott Chacon, 5 months ago<br>The title was &gt;&gt;updated readme&lt;&lt;</font></div></div></div>
+<div>更多详细自定义格式方法可以参考 <a href="http://www.kernel.org/pub/software/scm/git/docs/git-log.html" target="_blank">git log docs</a> 。<br></div>
+<div><strong>分枝拓扑图</strong></div>
+<div><strong></strong>&nbsp;</div>
+<div>还有一个日志输出选项是-graph，这个选项与--pretty=oneline结合不仅可以显示提交历史而且还会显示图形化的分枝拓扑</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div>
+<div><font color="#00ff00">$ git log --pretty=oneline --graph<br>*&nbsp;&nbsp; 15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch 'experiment'<br>|\&nbsp; <br>| * a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support<br>* |&nbsp;&nbsp; 4a447f750f910445e38338aadef48f3038b35d2b sweet<br>|\ \&nbsp; <br>| |/&nbsp; <br>| * 0d52aaab4479697da7686c15f77a3d64d9165190 one more thing<br>* |&nbsp;&nbsp; 6d52a271eda8725415634dd79daabbc4d9b6008e Merge branch 'experiment'<br>|\ \&nbsp; <br>| |/&nbsp; <br>| * 4682c3261057305bdd616e23b64b0857d832627b added a todo file<br>| * ebe0d698d3def0ec43f9b883857717de8c405d96 removed the todo file<br>| * 166ae0c4d3f420721acbb115cc33848dfcc2121a started write support<br>* | 0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc added a commit function<br>* | 85211d1138cb91f25c0633d361ff5f6e00677bc5 removed todo file<br>|/&nbsp; <br>* 9fceb02d0ae598e95dc970b74767f19372d61af8 updated rakefile</font></div></div></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(112, 128, 144);">
+<div><font color="#fffafa">提交查询过滤器</font></div></div>
+<div><br>利用提交查询过滤器可以查询经过某些条件限制后得到的提交信息。<br><strong></strong></div>
+<div><strong>日期区间<br></strong></div>
+<div>'git log'命令后如果跟-before和-after选项，就会显示两个日期之间的提交条目。日期格式也有不同的可选格式。例如，我想查看1月26号之后，2个星期之前的提交内容，可以运行：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00">$ git log --before="2 weeks ago" --after="2009-01-26" --pretty=oneline<br>dfb047b9e4f7f66c5322ef642f21fd92b0a975e3 Mention "local convention" rule in t<br>25655221745fd27d5da3bda7ad0fe49f2005d776 Windows: Revert to default paths and<br>35fb0e8633217f602360a9987af51c4b960e7850 Compute prefix at runtime if RUNTIME<br>8e3462837b0ace04357503a3f58802cc2231df29 Modify setup_path() to only add git_<br>2fb3f6db96492b680899f9e40f434eeb4c778a84 Add calls to git_extract_argv0_path(<br>2cd72b0b290e40fb4d6a925ce26603503f01aa09 git_extract_argv0_path(): Move check<br>4dd47c3b867f51211d0dc4474dab0fee5ca614da Refactor git_set_argv0_path() to git<br>026fa0d5ad9538ca76838070861531c037d7b9ba Move computation of absolute paths f</font></div></div>
+<div><strong></strong>&nbsp;</div>
+<div><strong>贡献者过滤器</strong></div>
+<div>&nbsp;</div>
+<div>git还可以通过贡献者过滤器来查看某个作者发起的提交。在commit对象中实际上存在两个人的记录--一个是作者(author)，也就是做原始提交的人。第二个人名是提交者(committer)，就是提交到仓库中的人。在这里找不到合适的翻译，所以把二者统称为<strong>贡献者</strong>。一般情况下，所指的都是同一个人，但是在某些情况下就不是了--譬如，有一个作者将他写的东西email给项目持有人，这个项目持有人就是提交者(committer)，项目持有人将作者提交的东西提交到git仓库中。</div>
+<div>&nbsp;</div>
+<div>大多数情况搜索的是作者，当然你可以通过-author或者-committer加名字的方式来搜索相应的提交条目。下面这个例子我们是执行命令来查找作者名（author）为Johannes Schindelin，在过去两周内的所有提交条目：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00">$ git log --author=johannes.schindelin --since="14 days ago" --pretty=oneline<br>26be15f09db15d2b53a13d0f184d77fb54367f33 filter-branch: do not consider diver<br>e1e4389832f32bb6ce029d6a6b110aa9ec768ea8 apply: fix access to an uninitialize<br>418566b6fdcc0eb1b5549d0742366aa13a7ff277 Fix 'git diff --no-index' with a non<br>f7951e1d97aeb7b3ed359faeab5edf9e870ec8a5 Simplify t3412<br>37e5c8f46042510176a71d73c903c44214e09815 Simplify t3411<br>4bd03d15e495086a38470b59447296db4c235cb9 Simplify t3410<br>008849689e04e774aa7b194cd690405761e2383a test-lib.sh: introduce test_commit()<br>03af0870a0e6d551a31eb830d5c2682b82ae0ac6 lib-rebase.sh: Document what set_fak<br>29a03348a336f28025c824436a713cb9cb01b7a6 t3404 &amp; t3411: undo copy&amp;paste<br>b8469ad0578d6b84ec92752a5f8df3ca5828af77 test-path-utils: Fix off by one, fou<br>f265458f6116a0c03200477ae3b839f2a75bf0fa get_sha1_basic(): fix invalid memory</font><br></div></div>
+<div>你可以指定完整人名或email地址来搜索，你也可以使用这些值的部分内容来查询，譬如，搜索Junio Hamano作者的提交内容，可以执行下面的任意一条语句：</div><a href="mailto:--author=gitster@pobox.com">
+</a><div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><a href="mailto:--author=gitster@pobox.com"><font color="#00ff00" face="Courier New">$ git log --author=Junio<br>$ git log --author=Hamano<br>$ git log --author="Junio C Hamano"<br>$ git log </font></a><a href="mailto:--author=gitster@pobox.com"><font color="#00ff00" face="Courier New">--author=gitster@pobox.com</font></a><a href="mailto:--author=gitster@pobox.com"></a></div>
+<div>我们甚至还可以通过'gmail.com'来搜索，结果就是email主机地址为gmail.com的贡献者所作提交的内容。</div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --author=gmail --pretty=format:"%ae" | wc -l<br>&nbsp;1348<br>$ git log --author=gmail --pretty=format:"%ae" | sort -u | wc -l<br>&nbsp;&nbsp;&nbsp;&nbsp; 113</font></div></div>
+<div>从这两个命令执行之后的结果看到，Git源码项目有113个gmail账户的作者贡献的1348个补丁。有趣的是，没有一个作者使用hotmail账户，但是有81个补丁来自'.mil'（都出自一个人）。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00">$ git log --author='\.mil' --pretty=format:"%ae" | wc -l<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 81</font></div></div>
+<div><br><strong>查找提交信息</strong></div><strong></strong>
+<div><br>如果你对“提交信息”更感兴趣，你可以通过提交信息里面的某个字符串来查找相应的提交。例如，下面是搜索在提交信息中含有'c90'的所有提交内容。<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --grep='C90' --pretty=oneline<br>8c9e7947c2a76fb21bda11816c544d50e271156d http-push.c: squelch C90 warnings.</font><br></div></div>
+<div><strong></strong>&nbsp;</div>
+<div><strong>文件历史</strong><br></div>
+<div>还有的时候，你希望查看某个指定文件的提交历史。譬如你希望查看'notes.c'文件每一次的提交历史，你可以运行：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline -- notes.c <br>22a3d060937072b0f197a8084af879c753c68fe7 git-notes: fix printing of multi-lin<br>2dd625d022074bb677bdd5caa5146cabaf726123 Speed up git notes lookup<br>879ef2485d6ced20845ca626ecb45a9b65aa3a70 Introduce commit notes</font></div></div>
+<div><br>你还可以对文件目录进行这样的操作，譬如你想查看't/lib-httpd'目录的提交历史：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline --all -- t/lib-httpd/<br>466ddf90c2f270b973d141f20e912f743743331c http-push: when making directories, <br>603fb1168218a813f1b0816b1208c5d0c92cf29d Avoid apache complaining about lack <br>faa4bc35a05ddb1822f3770cd8c51859e3b929ee http-push: add regression tests</font><br></div></div>
+<div>&nbsp;</div>
+<div>也可以加入多个查询项目，譬如要查看't/lib-httpd'目录或notes.c文件的提交历史：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline -- t/lib-httpd/ notes.c<br>7b75b331f6744fbf953fe8913703378ef86a2189 Merge branch 'js/notes'<br>466ddf90c2f270b973d141f20e912f743743331c http-push: when making directories, <br>22a3d060937072b0f197a8084af879c753c68fe7 git-notes: fix printing of multi-lin<br>2dd625d022074bb677bdd5caa5146cabaf726123 Speed up git notes lookup<br>879ef2485d6ced20845ca626ecb45a9b65aa3a70 Introduce commit notes<br>603fb1168218a813f1b0816b1208c5d0c92cf29d Avoid apache complaining about lack <br>faa4bc35a05ddb1822f3770cd8c51859e3b929ee http-push: add regression tests</font><br></div></div>
+<div><strong></strong>&nbsp;</div>
+<div><strong>其他选项</strong><br></div>
+<div>很多时候想查看未合并的提交历史记录，所以你可以加上'--no-merges'选项<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);" align="left"><font color="#00ff00" face="Courier New">$ git log --grep='C90' --pretty=oneline --no-merges<br>8c9e7947c2a76fb21bda11816c544d50e271156d http-push.c: squelch C90 warnings.<br>8f1d2e6f49ee51ac062ab38337a6a70dd1998def [PATCH] Compilation: zero-length arr<br>01c6ad29bd1b647d4fd1acea54e374c740ec3c10 [PATCH] Fix strange timezone handlin</font><br></div>
+<div>还可以在查看日志命令最后加上-N来查看满足条件的最近的N条历史记录：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline --no-merges -5 <br>621f1b4bcf40f1469fc59202248df35619e33c82 GIT 1.6.2-rc0<br>7851386948dce72c739bcdfe08f069afe4f5ea45 emacs: Remove the no longer maintain<br>5a7b3bf5275adf86fdd23f8824562b88c8a20e33 git.el: Add some notes about Emacs v<br>6c4f70d5b2fb8f9275ca85e0927f00b8bc892819 git.el: Use integer instead of chara<br>efd49f50fc087df2ad46f194ca848c5335f4cca9 git.el: Set a regexp for paragraph-s</font></div></div>
+<hr color="#dcdcdc" size="1" width="100%">
+<div>&nbsp;</div>
+<div>如果下面是我们的提交历史：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log --pretty=oneline --graph<br>* 9fceb02d0ae598e95dc970b74767f19372d61af8 updated rakefile<br>* 964f16d36dfccde844893cac5b347e7b3d44abbc commit the todo<br>* 8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme<br>* a5f4a0daa9b13bb85283461ddaba6e589e34ccb5 added cat-file<br>* 310154e3c7db47d8bac935c2c43aee6afac11aae updated README formatting and adde<br>* f7f3f6dd8fd3fa40f052427c32785a0fa01aaa5f changed my name a bit<br>* 710f0f8d2cdf5af87033b9ec08859a505f9a6af5 added ls-files<br>* c110d7ff8cfb86fd5cce9a8aee462678dbb4ef9b made the ls-tree function recursiv<br>* ce9b0d5551762048735dd67917046b44176317e0 limiting log to 30</font></div></div>
+<div>我们希望只看到提交信息为'added Is-files'之后，'updated readme'之前的提交历史，我们可以这样指定查询：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">[master]$ git log --pretty=oneline 710f0f..8a5cbc<br>8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme<br>a5f4a0daa9b13bb85283461ddaba6e589e34ccb5 added cat-file<br>310154e3c7db47d8bac935c2c43aee6afac11aae updated README formatting and added <br>f7f3f6dd8fd3fa40f052427c32785a0fa01aaa5f changed my name a bit</font><br></div></div>
+<div>如果你在查找一个分枝上的提交时，这样做非常管用。譬如，你目前在'master'分枝上，并且想查看'experiment'分枝上还没有合并的提交记录的话，可以这样：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log master..experiment --pretty=oneline<br>f6b98e46bdf64454d7c6ab76d617237118799d7b git-web--browse: Fix check for /bin/<br>df487baa30924a36ade38ada4f77379236dcce0f Merge branch 'maint'<br>a9ee90d7ff9f3854b3096b4abbdc2013708704f5 completion: Get rid of tabbed indent<br>cf9957875c3a27b6ae4593e1fa9d4dabbde68433 completion: Fix GIT_PS1_SHOWDIRTYSTA<br>7e1100e9e939c9178b2aa3969349e9e8d34488bf gitweb: add $prevent_xss option to p</font></div></div>
+<div><br>这就告诉你，如果现在合并的话，那么所有列出的这些提交都会被合并。你也可以不写某一端的分枝名，git会判断你目前正在哪个分枝上，所以，如果你在master分枝上的话，下面的命令执行结果和上面的一样：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log ..experiment --pretty=oneline</font></div></div>
+<div><br>如果你在experiment分枝上，也想看到相同的信息，即还没有合并到master的提交，可以运行：<br></div>
+<div style="border: 1px solid rgb(170, 170, 170); padding: 5px; background-color: rgb(0, 0, 0);">
+<div><font color="#00ff00" face="Courier New">$ git log master.. --pretty=oneline</font></div></div>
+<div>&nbsp;</div>
+<div>这一节讲的都是很常用的命令，下一课将深入剖析这些内容，但是这一节课最关键的是记住这些命令和它的作用。</div>
+<div><br>&nbsp;</div>
+    		</div><!--正文 end-->
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer"></a>
+
+            </span><div id="favourdiv" class="support01">0人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table border="0" cellpadding="0" cellspacing="0" width="720">
+  <tbody><tr>
+    <td align="right"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/icon01.png" height="16" width="15"> <span style="cursor: pointer;"><a onclick="openFavoulist();" id="favourer"></a></span></td>
+    <td align="left" width="70"><div style="line-height: 28px;" id="favourdiv" class="support01">0人</div></td>
+    <td align="left" width="60">了这篇文章</td>
+  </tr>
+</tbody></table>
+
+
+
+
+            <div class="showType">类别：<a href="http://fsjoy.blog.51cto.com/318484/d-3" class="operlink">ROR</a>┆<a class="operlink" onclick="javascript:joingroups(245261,'fsjoy');return false;">技术圈</a>(<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/joingroup.php"></script>)┆阅读(<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/header.php"></script>)┆评论(<script>document.write(replies)</script>)
+
+┆
+
+	<a href="#" onclick="javascript:dfanologin('http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245261');return false;" class="operlink">
+
+推送到技术圈</a>┆<a href="http://fsjoy.blog.51cto.com/">返回首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="http://fsjoy.blog.51cto.com/318484/245106" class="operlink" title="Git学习教程（五）：Git标签">Git学习教程（五）：Git标签</a>
+
+
+			下一篇 <a href="http://fsjoy.blog.51cto.com/318484/245465" class="operlink" title="Git学习教程（七） Git差异比对">Git学习教程（七） Git差异比对</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+
+
+    <div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>相关文章</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/245081" title="Git学习教程（四）：分枝和合并" target="_blank">Git学习教程（四）：分枝和合并</a></li>
+
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244826" title="Git学习教程（三）：Git工作流程" target="_blank">Git学习教程（三）：Git工作流程</a></li>
+
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244803" title="Git学习教程（二）：配置和初始化" target="_blank">Git学习教程（二）：配置和初始化</a></li>
+
+
+<li><a href="http://fsjoy.blog.51cto.com/318484/244397" title="Git学习教程（一）：git简介" target="_blank">Git学习教程（一）：git简介</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/232314" title="Qt学习之路(23): 自定义事件" target="_blank">Qt学习之路(23): 自定义事件</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/230883" title="Qt学习之路(21): event()" target="_blank">Qt学习之路(21): event()</a></li>
+
+
+<li><a href="http://wfyang.blog.51cto.com/65117/26690" title="js就那么回事" target="_blank">js就那么回事</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/239585" title="Qt学习之路(28): 坐标变换" target="_blank">Qt学习之路(28): 坐标变换</a></li>
+
+
+<li><a href="http://devbean.blog.51cto.com/448512/243546" title="Qt学习之路(31): 一个简易画板的实现(QWidget)" target="_blank">Qt学习之路(31): 一个简易画板的实现(QWidget)</a></li>
+
+
+<li><a href="http://whxqwtxq.blog.51cto.com/49231/57198" title="XHTML入门学习教程:框架标签使用" target="_blank">XHTML入门学习教程:框架标签使用</a></li>
+
+
+
+</ul>
+
+
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon" id="artcomment">
+		<div>  &nbsp;</div><div>  &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+
+
+<span class="blank1"></span>
+<div class="box writeComm">
+<a name="comment"></a>
+<input name="action" value="comment" type="hidden">
+<input id="commenttid" name="tid" value="245261" type="hidden">
+<input name="com_count_ajax" id="com_count_ajax" value="1" type="hidden">
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl"><a class="mred" target="_blank" href="http://blog.51cto.com/newsletter/142/" style="color: red;">[社区周刊] Linux运维人员的前生后世！</a></span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+ <div class="modCon">
+ <div class="commForm">
+<dl>
+<dt>昵&nbsp;&nbsp;称：</dt>
+<dd>
+
+<input id="commentusername" name="username" class="commInput fl" type="text"><span><a href="http://home.51cto.com/index.php?reback=http%253A%252F%252Ffsjoy.blog.51cto.com%252F318484%252F245261" style="text-decoration: underline;">登录</a>&nbsp;&nbsp;<a href="http://ucenter.51cto.com/reg_01.php?reback=http://blog.51cto.com" target="_blank" style="text-decoration: underline;">快速注册</a></span>
+
+
+
+</dd>
+</dl>
+
+
+
+<dl id="commentyanzheng">
+
+
+<dt>验证码：</dt>
+<dd><input class="code" id="commentauthnum" name="authnum" onclick="displaysecunum();" type="text">
+
+  <img class="fl" id="secunum" onclick="refimg()" style="display: none;" height="29" width="78"><p class="fl"><span style="display: none;" id="spanfont">点击图片可刷新验证码</span><span style="display: inline;" id="clickfont">请点击后输入验证码</span><span class="pl5"><a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank" style="text-decoration: underline;">博客过2级，无需填写验证码</a></span></p></dd>
+</dl>
+<dl>
+<dt>内&nbsp;&nbsp;容：</dt>
+<dd>
+<textarea class="writeCommCon f12" id="commentcontent" name="content"></textarea>
+</dd>
+</dl>
+</div>
+<div class="writeCommBot">
+  <input class="commBtn fl" name="submit" id="commentsubmit" value="" onclick="commentSubmitend2()" type="button">
+
+ <p class="fl" style="display: none;"><input class="fl" name="favour" id="favour" checked="checked" value="1" type="checkbox"><span class="fl">同时赞一个</span></p>
+
+</div>
+<span class="blank"></span>
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+
+<iframe id="iframe1" name="iframe1" height="0" width="0"></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + "http://fsjoy.blog.51cto.com/318484/245261";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://fsjoy.blog.51cto.com/318484/245261" + "][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + "http://fsjoy.blog.51cto.com/318484/245261";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + "http://fsjoy.blog.51cto.com/318484/245261" + "][u]" + title + "[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open ('http://blog.51cto.com/mod/favourlist.php?tid=245261','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script><h1></h1>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1.js"></script>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery.js"></script>
+<link href="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_top.css" rel="stylesheet" type="text/css">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_top_list.html" type="text/javascript" language="javascript"></script>
+
+
+
+
+
+
+
+<div class="clear"></div>
+
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://www.51cto.com/" target="_blank"><img src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/index.php" charset="utf-8"></script>
+<div style="display: none;">
+<script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.js"></script><script src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.php"></script>
+
+<iframe src="Git%E5%AD%A6%E4%B9%A0%E6%95%99%E7%A8%8B%EF%BC%88%E5%85%AD%EF%BC%89Git%E6%97%A5%E5%BF%97%20-%20%E6%9D%8E%E9%AA%A5%E5%B9%B3%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/pageview.html" frameborder="0" height="0" scrolling="no" width="0"></iframe>
+</div>
+</body></html>

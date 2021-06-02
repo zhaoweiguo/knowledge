@@ -1,0 +1,43 @@
+
+
+
+
+Sphinx was specially designed to integrate well with SQL databases and scripting languages.
+???????
+Sphinx is an acronym which is officially decoded as SQL Phrase Index
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************************************************
+ERROR: cannot find MySQL include files.
+
+Check that you do have MySQL include files installed.
+The package name is typically 'mysql-devel'.
+
+If include files are installed on your system, but you are still getting
+this message, you should do one of the following:
+
+1) either specify includes location explicitly, using --with-mysql-includes;
+2) or specify MySQL installation root location explicitly, using --with-mysql;
+3) or make sure that the path to 'mysql_config' program is listed in
+   your PATH environment variable.
+
+To disable MySQL support, use --without-mysql option.
+******************************************************************************
+
+
+./configure --without-mysql --prefix /opt/sphinx/
+
+
+
+
+

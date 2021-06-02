@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  labels:
+    alicloud-pvname: d-2zeetkf4u46w1vj3r2jf
+  name: d-2zeetkf4u46w1vj3r2jf
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi  #  定义PV的大小
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: disk-ssd-ruler-eureka0
+    namespace: default
+    resourceVersion: '17424586'
+    uid: 279661cb-c3df-11e9-802c-6a93fcf53165
+  persistentVolumeReclaimPolicy: Delete   # 声明被释放后，pv将会被清理、删除
+  storageClassName: disk
+status:
+  phase: Bound
+
+
+
+
+
+

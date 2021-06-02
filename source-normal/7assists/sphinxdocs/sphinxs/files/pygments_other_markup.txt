@@ -1,0 +1,34 @@
+Apache config files
+Bash shell scripts
+BBCode
+CMake
+CSS
+Debian control files
+Diff files
+DTD
+Gettext catalogs
+Gnuplot script
+Groff markup
+HTML
+HTTP sessions
+INI-style config files
+IRC logs (irssi style)
+Lighttpd config files
+Makefiles
+MoinMoin/Trac Wiki markup
+[mysql]MySQL
+[nginx]Nginx config files
+POV-Ray scenes
+Ragel
+Redcode
+ReST
+SQL, also MySQL, SQLite
+Squid configuration
+TeX
+tcsh
+Vim Script
+Windows batch files
+XML
+XSLT
+YAML
+

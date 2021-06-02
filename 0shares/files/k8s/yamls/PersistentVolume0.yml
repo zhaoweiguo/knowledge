@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  labels:
+    alicloud-pvname: d-2zeetkf4u46w1vj3r2jf
+  name: d-2zeetkf4u46w1vj3r2jf
+spec:
+  accessModes:
+    - ReadWriteOnce     #  可以被单个客户端挂载为读写模式, 也可以被多个客户端挂载为只读模式
+    - ReadOnlyMany
+  capacity:
+    storage: 20Gi
+  flexVolume:
+    driver: alicloud/disk
+    fsType: ext4
+    options:
+      volumeId: d-2zeetkf4u46w1vj3r2jf
+  persistentVolumeReclaimPolicy: Retain   # 声明被释放后，pv将会被保留(不清理和删除)
+  storageClassName: disk
+status:
+  phase: Available

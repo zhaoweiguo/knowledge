@@ -1,0 +1,45 @@
+@startuml
+
+
+card SchedulerNew
+(core.CommitService) --> SchedulerNew
+(core.CronStore) --> SchedulerNew
+(core.RepositoryStore) --> SchedulerNew
+(core.UserStore) --> SchedulerNew
+(core.Triggerer) --> SchedulerNew
+SchedulerNew --> (cron.Scheduler)
+
+card provideDatadog
+(core.UserStore) --> provideDatadog
+(core.RepositoryStore) --> provideDatadog
+(core.BuildStore) --> provideDatadog
+(*core.System) --> provideDatadog
+(*core.License) --> provideDatadog
+(config.Config) --> provideDatadog
+provideDatadog --> (sink.Datadog)
+
+card provideRunner
+(manager.BuildManager) --> provideRunner
+(core.SecretService) --> provideRunner
+(core.RegistryService) --> provideRunner
+(config.Config) --> provideRunner
+provideRunner --> (runner.Runner)
+
+card provideServer
+(*chi.Mux) --> provideServer
+(config.Config) --> provideServer
+provideServer --> (server.Server)
+
+card provideUserStore
+(*db.DB) -> provideUserStore
+provideUserStore --> (core.UserStore)
+
+card newApplication
+(cron.Scheduler) --> newApplication
+(sink.Datadog) --> newApplication
+(runner.Runner) --> newApplication
+(server.Server) --> newApplication
+(core.UserStore) --> newApplication
+newApplication --> application
+
+@enduml

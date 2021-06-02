@@ -1,0 +1,181 @@
+[client]
+port		= 3306
+socket		= /tmp/mysql.sock
+
+# 查看: SHOW VARIABLES LIKE 'character%';
+default-character-set   =   utf8    # 默认字符集
+
+[mysqld]
+user        = mysql
+port		= 3306
+socket		= /tmp/mysql.sock
+
+basedir     = /usr/local/mysql-5.5.21
+datadir     = /data/mysql/3306/data
+pid-file    = /data/mysql/3306/mysql.pid
+
+#================================================
+#   已经熟悉的参数 start
+#================================================
+
+max_connections = 500   # 默认是100如果太小会造成登录失败，报"Too many connections"错误
+max_connect_errors = 500    # 默认是10， 太小会造成‘host_name’ is blocked错误
+
+tmp_table_size=200M     # 默认是16M，太小会造成MySQL占CPU多
+
+
+wait_timeout = 600      # 逾期時間(单位s), 太长会造成show processlist太多, 间接造成"Too many connections"错误
+interactive_timeout = 600
+
+skip-name-resolve  # 
+
+#---日志参数----------------------------------------
+
+log-error = /data/mysql/3306/logs/error.log         # 错误日志参数
+
+#日志存放形式
+#also can be FILE,TABLE or TABLE or NONE
+log_output=FILE
+
+# 二进制日志
+log-bin = /data/mysql/3306/logs/binlog/<log-bin>    #二进制日志参数
+#log-bin = /data/mysql/3306/logs/binlog/master-bin    #主MySQL实例
+binlog_cache_size = 4M
+binlog_format = MIXED       # binlog格式MIXED, STATEMENT, ROW
+
+# 表示的是binlog 能够使用的最大cache 内存大小
+max_binlog_cache_size = 8M
+max_binlog_size = 1G
+
+# 慢查询日志
+slow_query_log = 1  #是否启用慢查询日志
+slow_query_log_file = /data/mysql/3306/logs/slow.log   # 慢查询日志, 也可以用--slow-query-log-file代替, 亦即原来的log-slow-queries选项
+long_query_time=2                   # 慢查询时间
+
+# 基本日志
+#general_log = 1 #是否开启基本日志
+#general_log_file = /data/mysql/3306/logs/log.log             #查询日志也可以用--general-log-file代替,　亦即原来--log选项
+
+#log-update = /data/mysql/3306/logs/update.log   #更新日志
+
+#---默认的一些参数----------------------------------
+skip-external-locking     # 
+key_buffer_size = 384M
+# server接受的数据包大小
+max_allowed_packet = 1M
+table_open_cache = 512
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 16M
+myisam_sort_buffer_size = 128M
+thread_cache_size = 8
+
+#【重要】 查询缓存每次对应DB发生变化都要重建索引,建议设置为0
+query_cache_size = 32M
+# Try number of CPU's*2 for thread_concurrency
+thread_concurrency = 8
+
+
+
+#---innodb参数---------------------------------------
+innodb_data_home_dir = /data/mysql/3306/data
+innodb_data_file_path = ibdata1:10M:autoextend
+innodb_log_group_home_dir = /data/mysql/3306/data
+
+# You can set .._buffer_pool_size up to 50 - 80 %
+# of RAM but beware of setting memory usage too high
+# 【重要】缓冲池是数据和索引缓存的地方
+innodb_buffer_pool_size = 256M
+
+innodb_additional_mem_pool_size = 20M
+
+# Set .._log_file_size to 25 % of buffer pool size
+#【重要】它的值和ib_logfile0和ib_logfile1的值相同,不然重启失败
+innodb_log_file_size = 64M
+
+#【重要】设定每个innodb有一个数据文件
+#set global innodb_file_per_table=ON;
+#alter table xxx engine='innodb'; //重新生成表
+innodb_file_per_table   = 1
+
+# 
+innodb_force_recovery = 1
+
+# 禁止域名解析
+skip_name_resolve
+
+#【重要】决定了为尚未执行的事务分配的缓存
+innodb_log_buffer_size = 8M
+#【重要】1:每次同步到磁盘,2:每秒同步一次, 0:系统崩溃时丢失数据
+innodb_flush_log_at_trx_commit = 1
+
+innodb_lock_wait_timeout = 50 # 默认50锁等待时间(超过这个时间报Lock wait timeout exceeded; try restarting transaction)
+
+#---其他参数------------------------------------------
+slow_launch_time = 1    # 这个参数跟慢查询日志没有任何关系, 它代表的是thread create的一个阈值, 如果thread create的时间超过了该值, 则变量slow_launch_threads会加1(slow_query_thread的值也是一个system overload的反映)
+#bind-address       = 127.0.0.1  #绑定ip地址
+
+
+#================================================
+#   复制用参数 start
+#================================================
+server-id = 1
+
+# binlog在每N次binlog写入后与硬盘同步
+sync_binlog = <N>
+
+#---主MySQL参数----------------------------------
+
+# 复制忽略DB
+binlog-ignore-db = mysql
+binlog-ignore-db = test
+
+# 复制指定DB
+binlog_do_db = <DB>
+
+#---从MySQL参数----------------------------------
+replicate-ignore-db = mysql
+replicate-ignore-db = test
+
+relay_log = /data/mysql/3306/logs/relaylog/<log-bin>    #从二进制日志参数
+read_only = 1      #普通用户只读选项
+
+
+# 复制用参数 end ================================
+
+
+
+
+#log-slave-updates
+
+
+# 自动删除指定天数前的binlog日志
+expire_logs_days = 7
+
+bulk_insert_buffer_size = 64M
+
+myisam_max_sort_file_size = 10G
+myisam_repair_threads = 1
+myisam_recover
+
+
+character-set-server = utf8
+
+
+[mysqldump]
+quick
+max_allowed_packet = 32M
+
+[mysql]
+no-auto-rehash
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[myisamchk]
+key_buffer_size = 256M
+sort_buffer_size = 256M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout

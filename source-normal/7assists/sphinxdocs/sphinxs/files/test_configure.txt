@@ -1,0 +1,12 @@
+
+  --enable-gcov           Enable GCOV code coverage (requires LTP) - FOR DEVELOPERS ONLY!!
+  --enable-debug          Compile with debugging symbols
+  --with-layout=TYPE      Set how installed files will be laid out.  Type can
+                          be either PHP or GNU [PHP]
+  --with-config-file-path=PATH
+                          Set the path in which to look for php.ini [PREFIX/lib]
+  --with-config-file-scan-dir=PATH
+                          Set the path where to scan for configuration files
+  --enable-safe-mode      Enable safe mode by default
+  --with-exec-dir[=DIR]   Only allow executables in DIR under safe-mode
+

@@ -1,0 +1,14 @@
+v1.20版本
+#########
+
+
+* Release Note [1]_
+* 发布时间: 2020年12月09日
+
+
+参考
+====
+
+.. [1] https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md
+
+

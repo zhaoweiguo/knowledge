@@ -1,0 +1,23 @@
+@startuml
+actor 用户
+agent 代理
+artifact artifact
+boundary boundary
+card 卡版
+cloud 云
+component 组件
+control 控制
+database 数据库
+entity 实例
+file 文件
+folder 文件夹
+frame frame
+interface  interface
+node node
+package package
+queue queue
+stack stack
+rectangle rectangle
+storage storage
+usecase usecase
+@enduml

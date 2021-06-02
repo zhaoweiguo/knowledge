@@ -1,0 +1,60 @@
+@import url("nature.css");
+
+.unsure {
+    background-color: yellow; 
+}
+
+.kbd {
+    background: none repeat scroll 0 0 #faf6f6;
+    border-color: #eedddd #bbaaaa #bbaaaa #eeeedd;
+    border-style: solid;
+    border-width: 1px 2px 2px 1px;
+    padding: 0 1px;
+}
+
+div.topic-with-figure {
+    background-color: white;
+}
+
+div.this-chapter-covers {
+    background-color: #ffffee;
+}
+
+a.reference>em {
+    font-style: normal;
+}
+
+p {
+    text-indent: 2em;
+}
+
+p.compound-middle,
+p.compound-last,
+p.topic-title,
+p.rubric,
+table.footnote p,
+li p.first,
+li div.first p.compound-first {
+    text-indent: 0em;
+}
+
+table.footnote {
+    font-size: 90%;
+}
+
+span.pre, tt.literal {
+    background-color: transparent;
+}
+
+.listing-caption {
+    background-color: #c8d5e3;
+    padding: 5px 0 5px 10px;
+}
+
+table>caption {
+    line-height: 3em;
+}
+
+em.menuselection {
+    font-style: normal;
+}

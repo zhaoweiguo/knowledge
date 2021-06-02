@@ -1,0 +1,7 @@
+v4.0 [1]_
+#########
+
+
+
+
+.. [1] https://github.com/etcd-io/etcd/blob/master/CHANGELOG-4.0.md

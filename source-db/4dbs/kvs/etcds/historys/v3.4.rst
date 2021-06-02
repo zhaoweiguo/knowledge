@@ -1,0 +1,76 @@
+v3.4 [1]_
+#########
+
+v3.4.14 (2020-11-25)
+====================
+
+Package clientv3::
+
+    Fix auth token invalid after watch reconnects. 
+        https://github.com/etcd-io/etcd/pull/12264
+    Get AuthToken automatically when clientConn is ready.
+
+Go::
+
+    Compile with Go 1.12.17.
+
+
+
+
+v3.4.0 (2019-08-30)
+===================
+
+Improved::
+
+    Add Raft learner: etcd#10725, etcd#10727, etcd#10730.
+    Rewrite client balancer with new gRPC balancer interface.
+    Add backoff on watch retries on transient errors.
+    ...
+
+Breaking Changes::
+
+    Rewrite client balancer with new gRPC balancer interface.
+    Migrate dependency management tool from glide to Go module.
+    Make etcd --enable-v2=false default.
+    Make embed.DefaultEnableV2 false default.
+
+Security, Authentication::
+
+    Support TLS cipher suite whitelisting.
+    Add etcd --host-whitelist flag, etcdserver.Config.HostWhitelist, 
+        and embed.Config.HostWhitelist, to prevent "DNS Rebinding" attack.
+        https://en.wikipedia.org/wiki/DNS_rebinding
+    Support etcd --cors in v3 HTTP requests (gRPC gateway).
+    Support ttl field for etcd Authentication JWT token.
+    Allow empty token provider in etcdserver.ServerConfig.AuthToken.
+    Fix TLS reload when certificate SAN field only includes IP addresses but no domain names.
+
+Package embed::
+
+    Add embed.Config.CipherSuites to specify a list of supported cipher suites for TLS handshake
+    Add embed.Config.InitialElectionTickAdvance to enable/disable initial election tick fast-forward.
+    Define embed.CompactorModePeriodic for compactor.ModePeriodic.
+
+Package pkg/adt::
+
+    Change pkg/adt.IntervalTree from struct to interface.
+
+Package raft::
+
+    Fix deadlock during PreVote migration process.
+    Add raft.ErrProposalDropped.
+    Improve Raft becomeLeader and stepLeader by keeping track of latest pb.EntryConfChange index.
+
+Go::
+
+    Require Go 1.12+.
+    Compile with Go 1.12.9 including Go 1.12.8 security fixes.
+
+
+
+
+
+
+
+
+.. [1] https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.4.md

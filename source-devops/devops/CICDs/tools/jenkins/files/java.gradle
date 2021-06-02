@@ -1,0 +1,59 @@
+pipeline {
+    agent {
+        docker { // 下载 maven:3-apline Docker镜像,并将该镜像作为单独的容器运行
+            image 'maven:3-alpine'    // 在Docker中本地运行相互独立的Jenkins和Maven容器
+            args '-v /root/.m2:/root/.m2' 
+            // Maven容器成为了Jenkins用来运行你的流水线项目的 agent 
+            // 这个容器寿命很短——它的寿命只是你的流水线的执行时间
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
+            }
+        }
+
+        stage('Deploy') {   // 超时,循环
+            steps {
+                timeout(time: 3, unit: 'MINUTES') {
+                    retry(5) {
+                        sh './flakey-deploy.sh'
+                    }
+                }
+            }
+        }
+        post {      // 状态判断
+            always {
+                echo 'This will always run'
+            }
+            success {
+                echo 'This will run only if successful'
+            }
+            failure {
+                echo 'This will run only if failed'
+            }
+            unstable {
+                echo 'This will run only if the run was marked as unstable'
+            }
+            changed {
+                echo 'This will run only if the state of the Pipeline has changed'
+                echo 'For example, if the Pipeline was previously failing but is now successful'
+            }
+        }
+    }
+}

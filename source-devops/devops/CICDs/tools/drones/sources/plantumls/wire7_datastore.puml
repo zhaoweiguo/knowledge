@@ -1,0 +1,60 @@
+@startuml
+
+card provideDatabase
+(config.Config) --> provideDatabase
+provideDatabase --> (*db.DB)
+
+card provideEncrypter
+(config.Config) --> provideEncrypter
+provideEncrypter --> (encrypt.Encrypter)
+
+card provideBuildStore
+(*db.DB) --> provideBuildStore
+provideBuildStore --> (core.BuildStore)
+
+card provideLogStore
+(*db.DB) --> provideLogStore
+(config.Config)  --> provideLogStore
+provideLogStore --> (core.LogStore)
+
+card provideStageStore
+(*db.DB) -> provideStageStore
+provideStageStore--> (core.StageStore)
+
+card provideRepoStore
+(*db.DB) -> provideRepoStore
+provideRepoStore--> (core.RepositoryStore)
+
+card provideUserStore
+(*db.DB) -> provideUserStore
+provideUserStore --> (core.UserStore)
+
+card provideBatchStore
+(*db.DB) --> provideBatchStore
+(config.Config) --> provideBatchStore
+provideBatchStore --> (core.Batcher)
+
+card CronStoreNew
+(*db.DB) -> CronStoreNew
+CronStoreNew --> (core.CronStore)
+
+card PermStoreNew
+(*db.DB) -> PermStoreNew
+PermStoreNew --> (core.PermStore)
+
+card SecretStoreNew
+(*db.DB) --> SecretStoreNew
+(encrypt.Encrypter) --> SecretStoreNew
+SecretStoreNew --> (core.SecretStore)
+
+card GlobalSecretStoreNew
+(*db.DB) --> GlobalSecretStoreNew
+(encrypt.Encrypter) --> GlobalSecretStoreNew
+GlobalSecretStoreNew --> (core.GlobalSecretStore)
+
+card StepStoreNew
+(*db.DB) -> StepStoreNew
+StepStoreNew --> (core.StepStore)
+
+
+@enduml

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-poststart-hook 
+spec:
+  containers:
+  - image: luksa/kubia
+    name: kubia
+    lifecycle:
+      preStop:
+        httpGet:        # This is a pre-stop hook that performs an HTTP GET request.
+          port: 8080    # The request is sent to http://POD_IP:8080/shutdown.
+          path: shutdown
+
+

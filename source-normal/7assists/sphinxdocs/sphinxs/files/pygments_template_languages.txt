@@ -1,0 +1,10 @@
+Cheetah templates
+Django/Jinja templates
+ERB (Ruby templating)
+Genshi (the Trac template language)
+JSP (Java Server Pages)
+Myghty (the HTML::Mason based framework)
+Mako (the Myghty successor)
+Smarty templates (PHP templating)
+Tea
+
