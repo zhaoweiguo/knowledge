@@ -8,11 +8,6 @@
     :language: sh
     :linenos:
 
-实例
 
-
-.. literalinclude:: /files/shells/demo_practice1.sh
-    :language: sh
-    :linenos:
 
 

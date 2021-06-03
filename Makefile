@@ -22,6 +22,7 @@ items = normal architecture protocol newtech cloudnative db devops lang open sec
 
 
 default:
+	sh ./link.sh on
 	for item in $(items); do \
 		echo "=============================>"; \
 		echo "===>Build begin... in $$item" ;\
@@ -30,14 +31,17 @@ default:
 		echo ;\
 		echo "===>Build finished. The HTML pages are in $(BUILDDIR)/html/$$item." ;\
 	done
+	sh ./link.sh off
 
 normal architecture protocol newtech cloudnative db devops lang open secure sys testing:
+		sh ./link.sh on $@
 		@echo "=============================>"
 		@echo "===> Build Begin: $@ ..."
 		@echo
 		$(SPHINXBUILD) -b html $(DOCTREES)$@ $(ALLSPHINXOPTS)-$@ $(BUILDDIR)/html/$@
 		@echo
 		@echo "===>Build finished. The HTML pages are in $$(BUILDDIR)/html/$@."
+		sh ./link.sh off $@
 
 
 

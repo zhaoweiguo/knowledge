@@ -17,4 +17,5 @@ shell基本用法
    normals/shell_variable
    normals/shell_test
    normals/shell_shift
+   normals/shell_param
    normals/shell_tmp
