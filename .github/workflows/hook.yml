@@ -25,7 +25,7 @@ jobs:
 
     - name: Clone documentation repo
       run: |
-        git clone https://github.com/zhaoweiguo/knowledge.zhaoweiguo.com.git  --branch main --single-branch knowledge
+        git clone https://github.com/zhaoweiguo/knowledge.zhaoweiguo.com.git  --branch master --single-branch knowledge
         rm -rf ./knowledge/*
         cp -r build ./knowledge/
         cp -r index.html ./knowledge/
