@@ -10,12 +10,6 @@ jobs:
     name: Hook
     runs-on: ubuntu-latest
     steps:
-    # - name: Hook
-    #   uses: jasongitmail/fast-webhook@v1
-    #   with:
-    #     url: ${{ secrets.WEBHOOK_URL }}
-    #     json: '{"path":"/var/www/knowledge", "branch": "master", "actions": ["pull", "make"]}'
-
 
     - name: Start
       uses: actions/checkout@v2
@@ -27,7 +21,7 @@ jobs:
       uses: zhaoweiguo/sphinx-action@master
       with:
         docs-folder: "source/"
-        build-command: "sphinx-build -b html . _build"
+        build-command: "make"
 
     - name: Clone documentation repo
       run: |
