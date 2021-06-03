@@ -20,7 +20,7 @@ jobs:
     - name: Sphinx Build
       uses: zhaoweiguo/sphinx-action@master
       with:
-        docs-folder: "/"
+        docs-folder: "./"
         build-command: "make"
 
     - name: Clone documentation repo
