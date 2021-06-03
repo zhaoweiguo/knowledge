@@ -20,14 +20,15 @@ jobs:
     - name: Sphinx Build
       uses: zhaoweiguo/sphinx-action@master
       with:
-        docs-folder: "source/"
+        docs-folder: "/"
         build-command: "make"
 
     - name: Clone documentation repo
       run: |
         git clone https://github.com/zhaoweiguo/knowledge.zhaoweiguo.com.git  --branch main --single-branch knowledge
         rm -rf ./knowledge/*
-        cp -r source/_build/* ./knowledge/
+        cp -r build ./knowledge/
+        cp -r index.html ./knowledge/
         cd ./knowledge
         git config --local user.email "zhaoweiguo@github.com"
         git config --local user.name "zhaoweiguo"
