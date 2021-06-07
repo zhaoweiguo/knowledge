@@ -1,6 +1,7 @@
 DevOps相关服务
 ################
 
+* `首页 <../../../index.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -11,6 +12,7 @@ DevOps相关服务
    devops/normal
    devops/CICD
    devops/observable
+   devops/notice
    devops/jumpserver
 
 

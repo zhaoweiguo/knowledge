@@ -12,8 +12,10 @@ Shell文档
 .. toctree::
    :maxdepth: 1
 
-   shells/shell_example
+   shells/normal-type
+   shells/normal-statement
    shells/normal
+   shells/shell_example
    shells/question
    shells/shell_expect
    shells/make

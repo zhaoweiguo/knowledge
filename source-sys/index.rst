@@ -6,8 +6,7 @@
 :作者: 新溪-gordon <programfan.info#gmail.com>
 :时间: 2012-01-30
 
-内容:
-
+* `首页 <../../../index.html>`_
 
 .. toctree::
    :maxdepth: 2

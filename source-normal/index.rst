@@ -8,6 +8,7 @@
 :作者: 新溪-gordon
 :日期: 2012-06-29
 
+* `首页 <../../../index.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -33,7 +34,6 @@
    :caption: 通用知识
 
    2core
-   6common
    7assist
    8tool
    9other

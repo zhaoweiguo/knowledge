@@ -120,7 +120,7 @@ Richardson `成熟度模型 <https://martinfowler.com/articles/richardsonMaturit
 
 第 3 级成熟度：Hypermedia Controls::
 
-    关键词: HATEOAS, 超文本驱动
+    关键词: HATEOAS, 超文本驱动, HAL
 
     希望能达到这样一种效果:
       除了第一个请求是由你在浏览器地址栏输入的信息所驱动的之外，

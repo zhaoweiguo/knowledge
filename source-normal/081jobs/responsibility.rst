@@ -7,6 +7,7 @@
    responsibilities/CTO
    responsibilities/architect
    responsibilities/leader
+   responsibilities/SRE
 
 
 

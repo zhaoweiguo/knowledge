@@ -134,6 +134,8 @@ G
 H
 ---
 
+* HAL: Hypertext Application Language(HTTP REST)
+* HATEOAS: Hypermedia as the Engine of Application State(HTTP REST)
 * HMAC: Hash-based Message Authentication Code(security)
 * HOTP: HMAC-Based One-time Password(security, rfc4226)
 * HTTP: HyperText Transfer Protocol 
@@ -287,7 +289,7 @@ S
 * SOA: service oriented architecture
 * SOAP: Simple Object Access Protocol
 * SPA: Single Page web Application(单页面应用):不刷新页面, 动态变更html
-* SRE: Site Reliability Engineering(网站可靠性工程师)
+* SRE: Site Reliability Engineering(网站可靠性工程师, job)
 * SRP: Single Responsibility Principle(单一职责原则, microservice)
 * SSL: Security Socket Layer
 * SSO: Single Sign-On(单点登录)

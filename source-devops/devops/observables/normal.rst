@@ -1,6 +1,8 @@
 常用
 ####
 
+* 可观测性: Observability
+* 可控制性: Controllability
 
 通常一个线上问题的定位流程是：通过 Metric 发现问题，根据 Trace 定位到问题模块，根据模块具体的日志定位问题原因。
 Logging，Metrics 和 Tracing 有各自专注的部分::

@@ -18,7 +18,10 @@
 
 
 
+::
 
+    数据存储隔离(DSS, Data Storage Segregation)原则
+    单一职责原则(SRP, Single Responsibility Principle)
 
 
 

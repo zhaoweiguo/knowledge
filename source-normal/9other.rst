@@ -15,6 +15,8 @@
    9others/framework
    9others/concept
    9others/political
+   9others/version
+   9others/injection
    9others/other
 
 

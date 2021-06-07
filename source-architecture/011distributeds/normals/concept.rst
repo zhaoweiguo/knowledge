@@ -33,9 +33,16 @@
     之所以称为悲观并发控制，是因为它主要用于数据争用激烈的环境中，以及发生并发冲突时用锁保护数据的成本低于回滚事务的成本的环境中。
 
 
+
 .. image:: /images/concepts/concurrency1.png
 
 
+::
+
+    MVCC: Multi-Version Concurrency Control
+    LBCC: Lock-Based Concurrency Control
+    注：LBCC与MVCC相对的，是基于锁的并发控制，
+    深入理解 etcd：基于原理解析: https://www.cnblogs.com/Serverlessops/p/12556518.html
 
 
 

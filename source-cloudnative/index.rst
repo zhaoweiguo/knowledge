@@ -1,6 +1,7 @@
 云原生相关知识
 ################
 
+* `首页 <../../../index.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -8,10 +9,10 @@
    :titlesonly:
    :caption: 关键知识
 
-   cloudnatives/docker
-   cloudnatives/k8s
-   cloudnatives/prometheus
-   cloudnatives/servicemesh
+   docker
+   k8s
+   prometheus
+   servicemesh
 
 
 

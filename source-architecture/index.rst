@@ -1,6 +1,7 @@
 基础架构相关服务
 ################
 
+* `首页 <../../../index.html>`_
 
 .. toctree::
    :maxdepth: 2
@@ -8,10 +9,10 @@
    :titlesonly:
    :caption: 关键知识
 
-   architectures/010architecture
-   architectures/011distributed
-   architectures/012microservice
-   architectures/013dataanalysis
+   010architecture
+   011distributed
+   012microservice
+   013dataanalysis
 
 
 

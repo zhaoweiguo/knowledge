@@ -41,6 +41,21 @@
 .. image:: /images/collects/fames/Tony-Hoare.png
 
 
+.. _person_Richardson:
+
+
+Richardson， REST 成熟度
+
+
+.. _person_Martin-Fowler:
+
+Martin Fowler::
+
+    《Mocks Aren’t Stubs》
+
+
+
+
 
 
 

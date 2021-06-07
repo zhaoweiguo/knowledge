@@ -2,7 +2,10 @@
 ##############
 
 
-引用，链接::
+引用, 链接
+==========
+
+::
 
 
     链接:
@@ -13,7 +16,16 @@
     .. _SO: http://stackoverflow.com/
 
 
-站内链接::
+* 链接: `链接显示名1 <http://blog.programfan.info/>`_
+* 链接: `链接显示名2 <../../../../../../../index.html>`_
+* 链接: `链接显示名3 </index.html>`_
+
+
+
+站内链接
+========
+
+::
 
         :ref:`链接显示，右面是文件开头的索引 <header_1>`
 
@@ -33,7 +45,10 @@
     This is the text of the section.
     It refers to the section itself, see :ref:`my-reference-label`.
 
-下载专用::
+下载专用
+========
+
+::
 
     :download:`图片/文件下载 <image/photo.jpg>`
 
@@ -41,7 +56,10 @@
     注意这种引用方式在生成 pdf 文件时链接会无效
 
 
-图片引用(:ref:`参考 <sphinx_img>`)::
+图片引用
+========
+
+(:ref:`参考 <sphinx_img>`)::
 
     .. _my-figure:
 

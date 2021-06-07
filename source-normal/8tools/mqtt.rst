@@ -1,4 +1,4 @@
-Emqtt文档
+MQTT 协议
 ===============
 
 
@@ -12,7 +12,7 @@ Emqtt文档
    :maxdepth: 1
 
 
-   mqtts/mqtt_normal
+   mqtts/normal
    mqtts/mqtt_emq
    mqtts/mqtt_protocol
    mqtts/mqtt_mosquitto

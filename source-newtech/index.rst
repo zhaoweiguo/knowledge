@@ -1,8 +1,7 @@
 关键技术
 ########
 
-
-内容:
+* `首页 <../../../index.html>`_
 
 
 .. toctree::
@@ -11,11 +10,11 @@
    :titlesonly:
    :caption: 关键技术
 
-   newtechs/001ai
-   newtechs/002blockchain
-   newtechs/003iot
-   newtechs/005G
-   newtechs/006vr
+   001ai
+   002blockchain
+   003iot
+   005G
+   006vr
 
 
 
