@@ -6,8 +6,9 @@
    :maxdepth: 1
 
    theorys/cap
-   theorys/csp
-   theorys/flp
+   theorys/FLP
+   theorys/DLS
+   theorys/CSP
    theorys/Actor
    theorys/Raft
    theorys/Paxos

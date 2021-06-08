@@ -15,6 +15,8 @@
    laws/ruleofthree
    laws/Clarke's3laws
    laws/KISS_Principle
+   laws/DRY_Principle
+   laws/SOLID_Principles
    laws/Occam'sRazor
 
 

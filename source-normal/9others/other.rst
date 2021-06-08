@@ -48,6 +48,17 @@ GraphQL
 其他
 ====
 
+* 平行分布式文件系统: Lustre::
+    
+    Lustre 是源自 Linux 和 Cluster 的混成词
+    通常用于大型计算机集群和超级电脑
+    一个开源的并行文件系统，支持领导级别的 HPC 仿真环境的许多要求
+
+Openflow 协议::
+
+    一种网络通信协议，属于数据链路层，
+    能够控制网上交换器或路由器的转发平面（forwarding plane），借此改变网络数据包所走的网络路径
+
 
 feedly.com——Read more, know more.
 类似Google Reader的RSS阅读器

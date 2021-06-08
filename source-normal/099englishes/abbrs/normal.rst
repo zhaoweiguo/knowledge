@@ -60,6 +60,7 @@ C
 * CGI: Common Gateway Interface(通用网关接口)
 * CI: Continuous integration(持续集成)
 * CNN: Convolutional Neural Network, convnet(卷积神经网络, AI)
+* CORS: Cross-Origin Resource Sharing(跨源资源共享, http, 安全, vulnerability)
 * COTS: Commercial Off-The-Shelf(“商用现成品或技术” 或者 “商用货架产品”)
 * CQRS: Command Query Responsibility Seperation(命令查询职责分离)
 * CRI: Container Runtime Interface(容器运行时接口, k8s)

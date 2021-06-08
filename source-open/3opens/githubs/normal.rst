@@ -1,6 +1,11 @@
 基本
 ####
 
+GitHub 状态
+===========
+
+* https://www.githubstatus.com/
+
 高Rank的项目
 ============
 

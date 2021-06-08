@@ -12,6 +12,7 @@
    foundations/OUC
    foundations/OpenJS
    foundations/Linux
+   foundations/other
 
 
 * 从个人的角度来说，参与开源能够塑造个人品牌、认识各地的开发者、促进世界范围内的合作、提升个人技术、思考，以及交流能力等等。

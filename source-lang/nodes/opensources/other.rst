@@ -63,5 +63,12 @@ momentjs::
   JavaScript 日期处理类库
 
 
+pdf 相关::
+
+    pdf.js
+
+其他::
+
+    浏览器兼容性查询工具: https://caniuse.com/
 
 

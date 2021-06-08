@@ -1,3 +1,5 @@
+.. _principle_KISS:
+
 KISS principle
 ##############
 
