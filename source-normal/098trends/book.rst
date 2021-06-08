@@ -9,10 +9,12 @@
    books/deep-learning-with-python
    books/how-networks-work
    books/building-microservices
-   books/bitcoin-and-cryptocurrency-technologies
-   books/network_equipment
    books/microservice_design_principle_and_architecture
-   books/microservice_governance
+   books/microservice-governance
+   books/SRE
+
+   books/the-site-reliability-workbook
+   books/bitcoin-and-cryptocurrency-technologies
    books/other
 
 

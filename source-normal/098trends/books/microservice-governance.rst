@@ -2,7 +2,7 @@
 ############################
 
 
-.. image:: ./microservice_governance.jpeg
+.. image:: ./microservice-governance.jpeg
 
 简介::
 

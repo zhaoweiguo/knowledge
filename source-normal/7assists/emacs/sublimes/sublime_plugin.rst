@@ -6,6 +6,7 @@ sublime插件相关
 .. toctree::
    :maxdepth: 1
 
+   plugins/normal
    plugins/plugin_git
    plugins/plugin_html
    plugins/plugin_plantuml

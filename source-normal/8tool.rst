@@ -12,6 +12,7 @@
 .. toctree::
    :maxdepth: 1
 
+   8tools/mqtt
    8tools/wireshark
    8tools/vpn
    8tools/tmp

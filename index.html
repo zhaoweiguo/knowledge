@@ -31,8 +31,8 @@
             <div class="container h-100">
               <div class="d-flex h-100 align-items-center">
                 <div style="margin:auto;text-align:center;">
-                    <h1 class="text-primary" style="font-size:2.8rem;margin-bottom:1.2rem;"></h1>
-                    <p class="text-primary sub-heading"></p>
+                    <h1 class="text-primary" style="font-size:2.8rem;margin-bottom:1.2rem;">我的个人知识体系</h1>
+                    <p class="text-primary sub-heading">👇👇👇详细内容参见👇👇👇</p>
                     
                 </div>
                 
@@ -352,21 +352,22 @@
     }
 
     .cover{
-      margin-top: -80px;
-      height: 870px;
+      margin-top: -40px;
+      height: 370px;
       background: rgba(0,0,0,0.2);
       background-image: url('./0shares/_static/images/covers/landscape.png');
-      background-image: linear-gradient(rgba(0, 123, 251, 0.2), rgba(206, 204, 204, 0.0)), url('./0shares/_static/images/covers/landscape.png');
-          background-position: center;
-          background-attachment: fixed;
+      background-position: center;
+      background-attachment: fixed;
+      background-size: cover;
+      clip-path: polygon(0 0, 100% 0, 100% 70%, 0 90%);
+      /*
+      background-image: url('https://dev-roadmap.gitcode.host/images/roadmap.png');
+      background-image: linear-gradient(rgba(0, 123, 251, 0.2), rgba(206, 204, 204, 0.0)), url('https://dev-roadmap.gitcode.host/images/roadmap.png');
+      background-position: center;
+      background-attachment: fixed;
       background-size: cover;
       clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
-      /*background-image: url('https://dev-roadmap.gitcode.host/images/roadmap.png');
-      background-image: linear-gradient(rgba(0, 123, 251, 0.2), rgba(206, 204, 204, 0.0)), url('https://dev-roadmap.gitcode.host/images/roadmap.png');
-          background-position: center;
-          background-attachment: fixed;
-      background-size: cover;
-      clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);*/
+      */
        
     }
   
@@ -376,13 +377,14 @@
     100% { background-size: 100% auto; }
   }
     .cover .sub-heading{
-      opacity: .8;
+      /*color: #FF0000 !important;*/
+      opacity: .9;
       font-size: 1.2rem;
     } 
     @media screen and (max-width: 650px){
         .cover{
             margin-top: -20px;
-            height: 900px;
+            height: 300px;
             clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
             background-size: 1400px;
             background-repeat:repeat;

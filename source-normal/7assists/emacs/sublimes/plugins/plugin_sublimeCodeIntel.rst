@@ -1,6 +1,10 @@
 SublimeCodeIntel插件
 ####################
 
+作用::
+
+    代码间调转
+
 Install CodeIntelPermalink::
 
     $ pip install -U CodeIntel
@@ -36,7 +40,12 @@ Shortcuts for jump to definition have changed::
       * Manual CodeIntel = ``Control+Shift+space``
   
   
-* Online - https://www.sublimecodeintel.com/docs/welcome/
-* Git - https://github.com/SublimeCodeIntel/SublimeCodeIntel
+* Online: https://www.sublimecodeintel.com/docs/welcome/
+* GitHub: https://github.com/SublimeCodeIntel/SublimeCodeIntel
+
+
+
+
+
 
 

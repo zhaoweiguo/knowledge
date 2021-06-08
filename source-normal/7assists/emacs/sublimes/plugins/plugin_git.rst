@@ -1,7 +1,7 @@
 git/github集成工具插件
 ===========================
 
-开源地址:https://github.com/divmain/GitSavvy
+* 开源地址: https://github.com/divmain/GitSavvy
 
 查看帮助::
 
