@@ -1,14 +1,17 @@
+.. _index_cloudnative:
+
 云原生相关知识
 ################
 
 * `首页 <../../../index.html>`_
 
 .. toctree::
-   :maxdepth: 2
-   :name: core
+   :numbered: 3
+   :name: cloudnative
    :titlesonly:
-   :caption: 关键知识
+   :caption: 云原生
 
+   normal
    docker
    k8s
    prometheus

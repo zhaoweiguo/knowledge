@@ -1,3 +1,5 @@
+.. _index-architecture:
+
 基础架构相关服务
 ################
 
@@ -13,6 +15,7 @@
    011distributed
    012microservice
    013dataanalysis
+   014governance
 
 
 

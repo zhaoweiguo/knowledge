@@ -2,7 +2,7 @@
 ################
 
 * RRDtool http://oss.oetiker.ch/rrdtool/
-* :ref:`Graphite <graphite>`  
+* 关联: `Graphite`  
 * Kdb+  http://kx.com/
 * Druid http://druid.io/
 * KairosDB  http://kairosdb.github.io/

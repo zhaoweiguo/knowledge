@@ -2,12 +2,61 @@
 ######
 
 
-说明 [1]_::
+SSL/TLS::
 
-  TLS/SSL 协议属于「加解密」算法中的复合算法
-  SSL v1.0, SSL v2.0因安全原因没有公开
-  1996年公开了v3.0版
-  而SSL v3.1版就是TLS1.0版
+    通信协议
+       层次化的协议
+       TLS 记录协议(TLS record protocol)
+       TLS 握手协议(TLS handshake protocol)
+      * 握手协议
+      * 密码规格变更协议
+      * 警告协议
+      * 应用数据协议
+    对 SSL/TLS 攻击
+       对各密码技术攻击
+       OpenSSL 心脏出血漏洞
+       SSL3.0漏洞与 POODLE攻击
+       PREAK攻击
+      * 美国密码管制
+       对伪随机数生成器的攻击
+       利用证书的时间差进行攻击
+
+Cipher Suites
+=============
+
+默认项::
+
+    秘钥交换算法：RSA
+    签名算法：RSA
+    模式：CBC
+
+authentication (认证) 算法::
+
+    RSA/DSA/ECDSA 3 种
+
+encryption加密算法::
+
+    主流趋势是使用 aes
+    RC4（不建议使用）
+    3DES（不建议使用）
+    DES(已经被淘汰)
+
+message authentication code 算法::
+
+    消息认证码 简称 MAC
+    主流有 sha256,sha384,sha1, 等
+    tls 中使用了 HMAC 模式，而不是原始的 sha256,sha1 等
+
+key exchange (密钥交换) 算法::
+
+    主流有两种：DH 和 ECDH
+    现在普遍流行 PFS，把 DH, ECDH 变成 DHE，ECDHE
+
+
+
+
+SSL/TLS
+=======
 
 SSL提供了3种功能::
 
@@ -15,14 +64,28 @@ SSL提供了3种功能::
   数据完整性
   身份认证
 
-摘要算法的特点 [2]_::
+核心::
 
-  1.不同的数据,即使是一字节改变,其摘要的结果变化非常大
-  2.无论摘要的输入长度是多少,其输出是固定长度,对于MD5而言输出16字节;对于SHA1而言,输出20字节
-  3.无法从摘要的结果中得出原文.只有输入相同的明文数据经过相同的摘要算法才能得到相同的结果
+    在不安全信道上构建安全信道
+    所谓安全包括身份认证、数据完整性、数据加密性
+
+说明::
+
+    非对称算法在 SSL 中的运用就是为了协商一个密钥
+    密钥的目的就是为了后续数据能够被加密
+    加密密钥有且只有通信双方知道
 
 
-证书包含的几点重要信息 [3]_::
+说明::
+
+  TLS/SSL 协议属于「加解密」算法中的复合算法
+  SSL v1.0, SSL v2.0因安全原因没有公开
+  1996年公开了v3.0版
+  而SSL v3.1版就是TLS1.0版
+
+
+
+证书包含的几点重要信息::
 
   拥有者(颁发给谁)
   颁发者(谁颁发)
@@ -38,7 +101,7 @@ SSL提供了3种功能::
   浏览器是内置许多可信任的根书,只要是拿这些根证书签发的证书,浏览器默认都信任
   同样，如果服务器需要认证客户端的身份，那么客户端必须提供自己的证书，然后服务器验证这个证书，这个就是双向认证
 
-关于密钥交换和协商 [4]_::
+关于密钥交换和协商::
 
   //密钥协商和交换是SSL的一个关键,也是SSL性能消耗大的地方
   //而需要消耗如此高性能的直接原因就是:客户端和服务器希望安全的交换或者协商出一个密钥
@@ -50,7 +113,7 @@ SSL提供了3种功能::
   3.把加密后的「密码」发给服务端
   4.服务端用私钥解密，得到「密码」
 
-保证数据的完整性 [5]_::
+保证数据的完整性::
 
   保证后续加密的数据不被篡改,SSL需要辨别数据是否被篡改的能力
   摘要派上用场
@@ -107,13 +170,14 @@ PFS 反映到密钥协商过程中，就是::
 
 
 
-原文链接:
+参考
+====
 
-.. [1] `TLS/SSL 协议详解(1) 前言 <https://blog.csdn.net/mrpre/article/details/77866773/>`_
-.. [2] `TLS/SSL 协议详解 (2) SSL有关的密码学原理 <https://blog.csdn.net/mrpre/article/details/77866824>`_
-.. [3] `TLS/SSL 协议详解(3) 运用密码学原理构建安全信道1 <https://blog.csdn.net/mrpre/article/details/77866856>`_
-.. [4] `TLS/SSL 协议详解 (4) 运用密码学原理构建安全信道2 <https://blog.csdn.net/mrpre/article/details/77866961>`_
-.. [5] `TLS/SSL 协议详解 (5) 运用密码学原理构建安全信道3 <https://blog.csdn.net/mrpre/article/details/77867008>`_
+* `TLS/SSL 协议详解(1) 前言 <https://blog.csdn.net/mrpre/article/details/77866773/>`_
+* `TLS/SSL 协议详解 (2) SSL有关的密码学原理 <https://blog.csdn.net/mrpre/article/details/77866824>`_
+* `TLS/SSL 协议详解(3) 运用密码学原理构建安全信道1 <https://blog.csdn.net/mrpre/article/details/77866856>`_
+* `TLS/SSL 协议详解 (4) 运用密码学原理构建安全信道2 <https://blog.csdn.net/mrpre/article/details/77866961>`_
+* `TLS/SSL 协议详解 (5) 运用密码学原理构建安全信道3 <https://blog.csdn.net/mrpre/article/details/77867008>`_
 
 
 

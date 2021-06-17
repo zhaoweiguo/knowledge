@@ -99,10 +99,28 @@ DeFi工具网站
 
 * Dai Stats: https://daistats.com
 
+钱包
+====
+
+* A crypto wallet & gateway to blockchain apps: https://metamask.io/
+
+
+goerli
+======
+
+
+* https://goerli.etherscan.io/
+* 当前状态: https://stats.goerli.net/
 
 
 
+其他
+====
 
+* Ethereum Name Service: https://app.ens.domains/ ::
+  
+    a distributed, open, and extensible naming system based on the Ethereum blockchain. 
+    ENS eliminates the need to copy or type long addresses.
 
 
 

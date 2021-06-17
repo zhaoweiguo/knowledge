@@ -3,7 +3,7 @@
 nomad
 #####
 
-* 由公司 :ref:`HashiCorp <hashicorp>`
+* 由公司 :ref:`HashiCorp <index-key>`
 * 官网: https://learn.hashicorp.com/nomad
 * 官网2: https://nomadproject.io/
 * github: https://github.com/hashicorp/nomad

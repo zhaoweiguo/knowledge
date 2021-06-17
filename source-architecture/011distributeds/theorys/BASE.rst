@@ -3,6 +3,14 @@
 BASE
 ####
 
+
+::
+
+    Basic Availability，Soft-state，Eventual Consistency
+    牺牲掉对一致性的约束（但实现最终一致性），来换取一定的可用性
+
+
+
 BASE 理论是对 CAP 理论的延伸，核心思想是即使无 由故到强一致性，应用可以采用适合的方式达到最终一致性 。
 eBay 的架构师丹·普里斯特( Dan Pritchett )通过对大规模分布式系统的实践总结，在 ACM 上发表文章提出 BASE 理论。
 BASE 是指::

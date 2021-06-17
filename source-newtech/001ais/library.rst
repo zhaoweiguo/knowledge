@@ -9,7 +9,7 @@
    libraries/normal
    libraries/ipython
    libraries/jupyter
-   libraries/numpy
+   libraries/NumPy
    libraries/pandas
    libraries/matplotlib
    libraries/scipy

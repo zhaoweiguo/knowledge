@@ -8,9 +8,9 @@
    :maxdepth: 1
 
    consensus/normal
-   consensus/paxos
+   consensus/Paxos
    consensus/zab
-   consensus/raft
+   consensus/Raft
 
 
 

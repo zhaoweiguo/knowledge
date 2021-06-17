@@ -1,7 +1,7 @@
 常见问题
 ########
 
-* :ref:`阿里SLB限制导致service一直pending <ali_slb_limit>`
+* :ref:`阿里SLB限制导致service一直pending <index-open>`
 
 Job has reached the specified backoff limit
 ===========================================
@@ -115,7 +115,7 @@ Job has reached the specified backoff limit
 
 
 * 参考: https://github.com/gliderlabs/docker-alpine/issues/367
-* :ref:`nsswitch.conf <nsswitch.conf>`
+* :ref:`nsswitch.conf <index-sys>`
 
 
 job执行失败但没有一个执行失败的pod

@@ -1,4 +1,4 @@
-.. _1linux:
+.. _index-sys:
 
 操作系统相关
 =================================
@@ -11,14 +11,13 @@
 .. toctree::
    :maxdepth: 2
 
-   1systems/linux_command
-   1systems/linux_file
-   1systems/core
-   1systems/os
-   1systems/normal
-   1systems/shell
-   1systems/tune
-   1systems/gpu
-   1systems/history
-   1systems/other
+   command
+   linux_file
+   core
+   os
+   normal
+   shell
+   gpu
+   history
+   other
 

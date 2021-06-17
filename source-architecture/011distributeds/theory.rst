@@ -5,15 +5,15 @@
 .. toctree::
    :maxdepth: 1
 
-   theorys/cap
+   theorys/CAP
    theorys/FLP
    theorys/DLS
    theorys/CSP
    theorys/Actor
-   theorys/Raft
-   theorys/Paxos
    theorys/Gossip
    theorys/BASE
+   theorys/ACID
+   theorys/UUID
    theorys/consistent_hash
 
 

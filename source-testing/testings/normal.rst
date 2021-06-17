@@ -1,12 +1,15 @@
 常用
 ####
 
+金字塔::
 
-.. toctree::
-   :maxdepth: 1
+    端到端测试
+    契约测试
+    服务测试(组件测试)
+    集成测试
+    单元测试(Unit testing)
 
-   normals/terminology
-   normals/code_coverage
+
 
 
 

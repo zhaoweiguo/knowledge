@@ -1,7 +1,7 @@
 #!/bin/bash
 
-items=(normal architecture protocol newtech cloudnative db devops lang open secure sys testing);
-shares=(_static _themes images files plantuml.jar conf.py);
+items=(architecture around assist cloudnative db devops key lang manager newtech normal open protocol secure sys testing theory tool tune);
+shares=(_static _themes images files conf.py plantuml.jar);
 
 my_usage() {
   echo "-----------------用法-----------------------"

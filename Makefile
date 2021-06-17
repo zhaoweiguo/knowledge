@@ -15,10 +15,10 @@ ALLSPHINXOPTS = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 # the i18n builder cannot share the environment and doctrees with the others
 I18NSPHINXOPTS = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) source
 
-# architecture
-items = normal architecture protocol newtech cloudnative db devops lang open secure sys testing
+# source-xxxx
+items = architecture around assist cloudnative db devops key lang manager newtech normal open protocol secure sys testing theory tool tune
 
-.PHONY: architecture protocol newtech normal help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
+.PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext
 
 
 default:
@@ -33,7 +33,7 @@ default:
 	done
 	bash ./link.sh off
 
-normal architecture protocol newtech cloudnative db devops lang open secure sys testing:
+$(items):
 		bash ./link.sh on $@
 		@echo "=============================>"
 		@echo "===> Build Begin: $@ ..."
@@ -43,8 +43,12 @@ normal architecture protocol newtech cloudnative db devops lang open secure sys 
 		@echo "===>Build finished. The HTML pages are in $$(BUILDDIR)/html/$@."
 		bash ./link.sh off $@
 
+clean:
+	-rm -rf $(BUILDDIR)/*
 
 
+
+# 下面代码已经不用，仅用作参考
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  html       to make standalone HTML files"
@@ -66,9 +70,6 @@ help:
 	@echo "  changes    to make an overview of all changed/added/deprecated items"
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
-
-clean:
-	-rm -rf $(BUILDDIR)/*
 
 html:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html

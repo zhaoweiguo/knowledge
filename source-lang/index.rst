@@ -1,4 +1,4 @@
-.. _5language:
+.. _index_lang:
 
 语言相关文档
 =================================
@@ -10,7 +10,7 @@
 
 
 .. toctree::
-   :maxdepth: 1
+   :numbered: 3
 
    erlang
    golang

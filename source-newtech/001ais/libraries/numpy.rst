@@ -1,6 +1,6 @@
 .. _numpy:
 
-numpy
+NumPy
 #####
 
 * 官网 [1]_

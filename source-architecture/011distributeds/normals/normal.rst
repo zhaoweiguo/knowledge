@@ -41,7 +41,7 @@
     不考虑传输成本（Transport cost is zero）
     网络是同质化的（The network is homogeneous）
 
-* :ref:`RPC协议 <rpc>`
+* :ref:`RPC协议 <index-protocol>`
 
 
 一致性

@@ -43,8 +43,9 @@ CSP vs Actor
 不同::
 
     Actor第一类对象为执行实体(actor)，CSP第一类对象为通信介质(channel)
-    Actor中实体和通信介质是紧耦合的，一个Actor持有一个Mailbox，而CSP中process和channel是解耦的，没有从属关系。
-    从这一层来说，CSP更加灵活
+    Actor中实体和通信介质是紧耦合的，一个Actor持有一个Mailbox，
+        而CSP中process和channel是解耦的，没有从属关系。
+        从这一层来说，CSP更加灵活
 
     Actor模型中actor是主体，mailbox是匿名的，CSP模型中channel是主体，process是匿名的。
     从这一层来说，由于Actor不关心通信介质，底层通信对应用层是透明的。因此在分布式和容错方面更有优势

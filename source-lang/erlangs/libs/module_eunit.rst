@@ -4,7 +4,7 @@ eunit
 * doc [1]_ 
 * guide [2]_
 * rebar3相关参见 :ref:`rebar3 <rebar3_eunit>`
-* 测试相关参见 :ref:`testing <testing>`
+* 测试相关参见 :ref:`testing <index-testing>`
 
 Eunit是Erlang的单元测试工具,Eunit建立在面向对象的单元测试Junit之上,接合了函数和并发式语言的特点
 

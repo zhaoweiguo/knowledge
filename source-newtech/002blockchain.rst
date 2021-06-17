@@ -12,8 +12,8 @@
    002blockchains/normal
    002blockchains/consensus
    002blockchains/application
-   002blockchains/bitcoin
-   002blockchains/ethereum
+   002blockchains/1bitcoin
+   002blockchains/2ethereum
    002blockchains/coin
    002blockchains/other
 

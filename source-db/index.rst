@@ -1,4 +1,4 @@
-.. _4sql:
+.. _index-db:
 
 数据库相关文档
 =================================
@@ -10,7 +10,7 @@
 * `首页 <../../../index.html>`_
 
 .. toctree::
-   :maxdepth: 1
+   :numbered: 3
 
    normal
    kv
