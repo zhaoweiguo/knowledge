@@ -1,13 +1,1 @@
-<!--
-  如图例所示，画布上有一条对角线，中间有两个椭圆弧被对角线切开(x radius = 30, y radius = 50)。
-  第一个椭圆弧的x-axis-rotation（x轴旋转角度）是0，所以弧形所在的椭圆是正置的（没有倾斜）。
-  在第二个椭圆弧中，x-axis-rotation设置为-45，所以这是一个旋转了45度的椭圆，并以短轴为分割线，形成了两个对称的弧形
--->
-<svg width="320px" height="320px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 315
-           L 110 215
-           A 30 50 0 0 1 162.55 162.45
-           L 172.55 152.45
-           A 30 50 -45 0 1 215.1 109.9
-           L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" version="1.1"><path fill="green" fill-opacity=".5" stroke="#000" stroke-width="2" d="M10 315 L 110 215 A 30 50 0 0 1 162.55 162.45 L 172.55 152.45 A 30 50 -45 0 1 215.1 109.9 L 315 10"/></svg>
