@@ -6,8 +6,8 @@
    :maxdepth: 1
 
    public-keys/normal
+   public-keys/SM2
    public-keys/RSA
-   public-keys/GPG
    public-keys/DH
    public-keys/EC
 

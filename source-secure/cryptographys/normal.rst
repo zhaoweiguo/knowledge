@@ -1,26 +1,24 @@
 其他
 ####
 
+密码学::
 
-PGP::
-
-    信任网(web of trust)
-     要点: 不依赖认证机构，而是建立每个人间的信任关系
-     场景:
-    * 1. 通过自己的数字签名确认
-    * 2. 通过自己完全信任的人的数字签名确认
-    * 3. 通过自己有限信任的多个人的数字签名确认
-
-其他
-====
+    * 块加密算法 block cipher: AES, Serpent, 
+    * 流加密算法 stream cipher: RC4，ChaCha20 
+    * Hash 函数 hash funtion:MD5，sha1，sha256，sha512 , ripemd 160，poly1305 
+    * 消息验证码函数 message authentication code: HMAC-sha256，AEAD 
+    * 密钥交换 key exchange: DH，ECDH，RSA，PFS 方式的（DHE，ECDHE）
+    * 公钥加密 public-key encryption: RSA，rabin-williams 
+    * 数字签名算法 signature algorithm:RSA，DSA，ECDSA (secp256r1 , ed25519) 
+    * 密码衍生函数 key derivation function: TLS-12-PRF (SHA-256) , bcrypto，scrypto，pbkdf2 
+    * 随机数生成器 random number generators: /dev/urandom 
 
 历史::
 
     密码
      恺撒密码(Caesar cipher)
      简单替换密码
-     Enigma
-    * 二战、德国
+     Enigma: 二战、德国
     破译密码
      暴力攻击
      频率分析
@@ -87,21 +85,12 @@ PGP::
     Data origin authentication
     抗抵赖性
 
-密码学
-======
-
-
-* 块加密算法 block cipher: AES, Serpent, 
-* 流加密算法 stream cipher: RC4，ChaCha20 
-* Hash 函数 hash funtion:MD5，sha1，sha256，sha512 , ripemd 160，poly1305 
-* 消息验证码函数 message authentication code: HMAC-sha256，AEAD 
-* 密钥交换 key exchange: DH，ECDH，RSA，PFS 方式的（DHE，ECDHE）
-* 公钥加密 public-key encryption: RSA，rabin-williams 
-* 数字签名算法 signature algorithm:RSA，DSA，ECDSA (secp256r1 , ed25519) 
-* 密码衍生函数 key derivation function: TLS-12-PRF (SHA-256) , bcrypto，scrypto，pbkdf2 
-* 随机数生成器 random number generators: /dev/urandom 
 
 
 
+参考
+====
+
+https://blog.csdn.net/mrpre/category_9270159.html
 
 

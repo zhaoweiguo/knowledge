@@ -9,8 +9,8 @@
    010architectures/normal
    010architectures/design_mode
    010architectures/history
+   010architectures/architecture_design
    010architectures/graph
-   010architectures/other
 
 
 

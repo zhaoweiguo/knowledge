@@ -8,6 +8,8 @@
 
    normals/normal
    normals/mfa
+   normals/hacker
+   normals/DNS
 
 
 

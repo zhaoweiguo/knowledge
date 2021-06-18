@@ -6,6 +6,7 @@
 
    normals/normal
    normals/tmp
+   normals/other
 
 
 

@@ -44,6 +44,9 @@ $(items):
 		bash ./link.sh off $@
 
 clean:
+	bash ./link.sh off
+
+cleandeep:
 	-rm -rf $(BUILDDIR)/*
 
 

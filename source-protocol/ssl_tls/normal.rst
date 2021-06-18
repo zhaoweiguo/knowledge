@@ -1,6 +1,20 @@
 基本
 ######
 
+简介::
+
+    由数字签名和公钥组成
+    认证业务准则(Certification Practice Statement, CPS)
+
+     RFC 5280, X.509 证书
+
+    扩展名:
+     .DER 扩展名
+     .PEM 扩展名
+     .CRT 扩展名
+     .CER扩展名
+     .KEY 扩展名
+
 
 SSL/TLS::
 

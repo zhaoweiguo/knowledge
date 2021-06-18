@@ -12,9 +12,8 @@
 
    normal
    vulnerability
-   hacker
-   DNS
    cryptography
+   trust_network
    cryptotool
 
 

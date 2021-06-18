@@ -7,6 +7,7 @@
    :maxdepth: 1
 
    symmetric-keys/normal
+   symmetric-keys/SM4
    symmetric-keys/AES
    symmetric-keys/DES
    symmetric-keys/RC4
