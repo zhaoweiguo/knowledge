@@ -16,8 +16,8 @@ plantuml [1]_
 
 
 * 安装本质是下载plantuml.jar文件 [2]_
-* 站内链接: :ref:`plantuml的sublime插件 <sublime-plantuml>`
-* 站内链接: :ref:`plantuml的sphinx插件 <sphinx-plantuml>`
+* 站内链接: `plantuml的sublime插件 <sublime-plantuml>`
+* 站内链接: `plantuml的sphinx插件 <sphinx-plantuml>`
 
 
 .. [1] http://plantuml.com/zh/

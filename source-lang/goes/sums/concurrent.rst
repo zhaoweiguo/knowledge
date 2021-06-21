@@ -237,7 +237,7 @@ RWMutex(读写锁)::
 相关
 ====
 
-:ref:`CSP(Communicating Sequential Processes) <index-key>`
+* 链接: ``CSP(Communicating Sequential Processes) <index-key>``
 
 
 参考

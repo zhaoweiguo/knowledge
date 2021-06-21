@@ -772,7 +772,7 @@ k8s工具
 * 反向代理: https://github.com/fatedier/frp
 * Cloud Native Tunnel for APIs: https://github.com/inlets/inlets
   
-* :ref:`文件传输 <index-sys>` https://github.com/schollz/croc
+* 站内链接: ``文件传输 <index-sys>`` https://github.com/schollz/croc
 
 
 

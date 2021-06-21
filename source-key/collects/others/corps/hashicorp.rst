@@ -3,7 +3,7 @@
 hashicorp
 #########
 
-* :ref:`nomad <index-cloudnative>`
+* 站内链接: ``nomad <index-cloudnative>``
 
 
 .. image:: /images/collects/corps/hashicorp.png

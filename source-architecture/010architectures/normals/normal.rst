@@ -24,7 +24,7 @@
     单一职责原则(SRP, Single Responsibility Principle)
 
 
-
+架构师的核心能力：抽象，提炼，把握关键，预测未来，当然还有沟通（撕逼）
 
 
 

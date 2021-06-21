@@ -5,19 +5,25 @@
 
 复杂度的6个来源::
 
-    1. 高性能
-    2. 高可用
-    3. 可扩展性
-    4. 低成本
-    5. 安全
-    6. 规模
+    1. 高性能: High Performance
+    2. 高可用: High Availability
+    3. 可扩展性: Extension
+    4. 低成本: Low Cost
+    5. 安全: Security
+    6. 规模: Scalability
 
 
 
 .. toctree::
    :maxdepth: 1
 
-   purposes/performance
+   purposes/1performance
+   purposes/2availability
+   purposes/3extension
+   purposes/4lowcost
+   purposes/5security
+   purposes/6scalability
+   purposes/7other
 
 
 
@@ -65,11 +71,21 @@
     需要保证异常的时候，不要丢失所有数据即可（丢失几个或者几十个学生的信息问题不大）
 
 
-.. figure:: /images/architectures/design_demo_school.jpg
+.. figure:: /images/architectures/designs/design_demo_school.jpg
 
    学生管理系统架构图
 
 
+其他
+====
+
+
+架构设计中最为重要的是考虑各种非功能性需求，同样的功能但不同的非功能性需求设计方案会有很大的不同，比如登陆系统，功能都是相同，但一个要求是 100/s，另一个是 10w/s，，这两个架构是完全不一样。在实际情况下在安全性上的考虑会弱些，需要借助于专门的安全团队去进行评估和提供建议，架构师更多的精力在性能、容量、高可用、扩展性等方面。通俗的说法是功能需求和质量需求。
+
+
+集群的方式部署呢？有没有一个评估的方法论::
+
+    对单机进行性能测试，获得单机性能的极限数据，当业务实际性能达到极限的 80% 时，开始考虑扩容
 
 
 

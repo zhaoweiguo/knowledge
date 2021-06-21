@@ -31,6 +31,13 @@
 * `疫情过后，我们的工作模式可能会产生哪些变化？ <https://developer.aliyun.com/article/746994>`_
 
 
+其他
+====
+
+* STAR 面试法，situation, task, action, result
+
+
+
 未来
 ====
 

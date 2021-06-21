@@ -6,7 +6,7 @@
 
 .. image:: /images/alis/dbs/mongodbs/mongo_struct.png
 
-* 详见 :ref:`这儿 <index-db>`
+* 详见 链接:``这儿 <index-db>``
 
 
 

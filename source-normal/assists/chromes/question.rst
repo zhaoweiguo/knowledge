@@ -93,7 +93,7 @@
 其他相关
 ========
 
-:ref:`Your connection is not private <mac_chrome_question>`
+* 链接: ``Your connection is not private <mac_chrome_question>``
 
 
 

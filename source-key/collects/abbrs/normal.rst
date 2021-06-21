@@ -160,7 +160,8 @@ I
 * IOE: IBM, Oracle, EMC 
 * IP: Internet Protocol(network-protocol)
 * IPC: Inter-Process Communication
-* ISO: International Organization of Standardization 
+* ISO: International Organization of Standardization
+* ISP: Interface Segregation Principle(接口隔离原则, SOLID)
 * IX: Internet eXchange(互联网交换中心, network-protocol)
 
 J
@@ -195,6 +196,7 @@ M
 * MSA: Micro-Service Architecture, 微服务架构(对应CBA)
 * MSE: Mean Squared Error(均方误差, math)
 * MSL: Maximum Segment Lifetime(报文最大生存时间)
+* LSP: Liskov Substitution Principle(Liskov替换原则, SOLID)
 * MSS: Maximum Segment Size(最大分段大小, network-protocol)
 * MTBF: Mean Time Between Failure，平均无故障时间(平均故障间隔时间)
 * MTU: Maximum Transfer Unit (最大传输单元, network-protocol)
@@ -216,6 +218,7 @@ O
 
 * OCC: Optimistic Concurrency Control(乐观并发控制, transaction)
 * OCI: Open Container Initiative-based(开放式容器计划, k8s)
+* OCP: Open-Closed Principle(开闭原则, SOLID)
 * OCR: Optical Character Recognition(光学文字识别)
 * OMO: Online Merge Offline
 * OOM: OutOfMemory
@@ -255,6 +258,7 @@ Q
 
 * QoE: Quality of experience
 * QoS: Quality of Service
+* QPS: Query Per Second(每秒请求数，一般指读取，TPS)
 
 R
 ----
@@ -290,13 +294,15 @@ S
 * SNMP: Simple Network Management Protocol
 * SOA: service oriented architecture
 * SOAP: Simple Object Access Protocol
+* SOLID: SRP,OCP,LSP,ISP,DIP(5个对象和接口的设计原则)
 * SPA: Single Page web Application(单页面应用):不刷新页面, 动态变更html
 * SRE: Site Reliability Engineering(网站可靠性工程师, job)
-* SRP: Single Responsibility Principle(单一职责原则, microservice)
+* SRP: Single Responsibility Principle(单一职责原则, SOLID, microservice)
 * SSL: Security Socket Layer
 * SSO: Single Sign-On(单点登录)
 * SSR: Server-Side Rendering
 * SSRF: Server-side Request Forge(服务端请求伪造, vulnerability)
+* STAR面试法: situation, task, action, result
 * STP: Spanning Tree Protocol(生成树协议)
 * SVM: Support Vector Machine(支持向量机, ai)
 
@@ -309,6 +315,7 @@ T
 * TLS: Transport Layer Security
 * TOC: Technical Oversight Committee(技术监督委员会)
 * TOTP: Time-based One-time Password(security, rfc6238)
+* TPS: Transactions Per Second(每秒事务数，一般指写入，QPS)
 * TTS: Text to Speech
 
 U

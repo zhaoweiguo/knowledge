@@ -16,7 +16,7 @@ B+树为了控制树的高度,只在叶子节点存储数据（这样非叶子�
 相关参考
 ========
 
-* :ref:`Mongo与MySQL索引对比<index-db>`
+* 链接: ``Mongo与MySQL索引对比<index-db>``
 * `B树,B+树与LSM树 <https://www.jianshu.com/p/5f54a0d5daf6>`_
 
 
