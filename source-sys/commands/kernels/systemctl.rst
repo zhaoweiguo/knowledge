@@ -1,13 +1,21 @@
 systemctl命令
 ==================
-说明::
 
-  centos7以上才有的命令
-  cetnos6用的是service
+.. note:: 摘要: systemctl 是系统服务管理器命令，它实际上将 service 和 chkconfig 这两个命令组合到一起。centos7以上才有的命令，cetnos6用的是service和 chkconfig两个命令
+
+
 
 使用::
 
   systemctl [command] [–type=TYPE] [–all]
+
+相关目录::
+
+    /usr/lib/systemd/system (Centos) 
+    或 /etc/systemd/system (Ubuntu)
+
+    主要有四种类型文件.mount,.service,.target,.wants
+    现在主要了解「service」相关
 
 
 实例::
@@ -43,6 +51,42 @@ systemctl特殊的用法::
   systemctl status cups.service
   #取消注销cups服务
   systemctl unmask cups.service
+
+
+systemctl与之前命令对比::
+
+    1. 使某服务自动启动:
+        chkconfig --level 3 httpd on
+        =>
+        systemctl enable httpd.service
+    2. 使某服务不自动启动
+        chkconfig --level 3 httpd off
+        =>
+        systemctl disable httpd.service
+    3. 检查服务状态
+        service httpd status  
+        =>
+        systemctl status httpd.service （服务详细信息） 
+        systemctl is-active httpd.service （仅显示是否 Active)
+    4. 显示所有已启动的服务
+        chkconfig --list  
+        =>
+        systemctl list-units --type=service
+    5. 启动某服务
+        service httpd start
+        =>
+        systemctl start httpd.service
+    6. 停止某服务
+        service httpd stop 
+        =>
+        systemctl stop httpd.service
+    7. 重启某服务
+        service httpd restart
+        =>
+        systemctl restart httpd.service
+
+
+
 
 
 

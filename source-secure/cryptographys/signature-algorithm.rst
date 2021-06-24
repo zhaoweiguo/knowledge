@@ -7,5 +7,6 @@
    signature-algorithms/normal
    signature-algorithms/DSA
    signature-algorithms/ECDSA
+   signature-algorithms/other
 
 

@@ -12,21 +12,24 @@ erlang版本管理
     ~/.kerl/
 
 
-用法::
+用法
+====
 
-    % 查看release列表
+
+查看release列表::
+
     $> kerl list releases
     % 从erlang.org更新release列表
     $> kerl update releases
 
-    % 构建
+构建::
+
     $> kerl build 19.2 19.2
     % 显示已构建版本
     $> kerl list builds
 
+安装::
 
-
-    % 安装
     $> kerl install <build_name> <path>     % <build_name>为前面build起的名字
     % 19.2版本到指定目录
     $> kerl install 19.2 ~/kerl/19.2
@@ -34,7 +37,8 @@ erlang版本管理
     % 
     $> kerl list installations
 
-    % 查看
+查看::
+
     $> kerl status
     % 显示当前已经激活的Erlang版本
     $> kerl active
@@ -43,9 +47,8 @@ erlang版本管理
     % 显示指定build版本安装路径
     $ kerl path 19.2
 
+删除::
 
-
-    % 删除
     % 删除特定的构建
     $> kerl delete build 17.4
 
@@ -62,7 +65,7 @@ erlang版本管理
     $> kerl update releases
     $> kerl build R16B02_basho10 16b02-basho10
 
-使用::
+激活&取消激活::
 
     % 激活
     . <install_folder>/<version>/activate

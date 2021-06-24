@@ -9,42 +9,25 @@
     私钥密码(secret-key cryptography)
     共享密码(shared-key cryptography)
 
-AES(Advanced Encryption Standard)::
+优点::
 
-    历史:
-     公开竞选
-     美国国家技术研究所NIST(National Institute of Standards and Technology)
-     通过竞选来实现标准化(standardization by competition)
-     2000年10月2日, Rijndael(比利时: Joan Daemen, Vincent Rijmen)
+    加解密效率高（速度快，空间占用小），加密强度高。
 
-    支持三种长度的密钥:128位，192位，256位
-    AES128，AES192，AES256
-    填充方式
-     NoPadding
-     PKCS5Padding（默认）
-     ISO10126Padding
+缺点::
 
-    工作模式
-     CBC、ECB、CTR、CFB、OFB
+    参与多方都需要持有密钥，一旦有人泄露则安全性被破坏；
+    另外如何在不安全通道下分发密钥也是个问题。
 
-DES(Data Encryption Standard)::
+对称密码从实现原理上可以分为两种::
 
-    1977年联邦信息处理标准(FIPS)
-    分组密码(block cipher)
-     以分组为单位进行处理的密码
-     流密码(stream cipher)
-    已经被淘汰
+    分组密码和序列密码。
+    前者将明文切分为定长数据块作为加密单位，应用最为广泛。
+    后者则只对一个字节进行加密，且密码不断变化，只用在一些特定领域，如数字媒介的加密等。
+
+.. note:: 注：分组加密每次只能处理固定长度的明文，因此过长的内容需要采用一定模式进行加密，《实用密码学》中推荐使用 密文分组链接（Cipher Block Chain，CBC）、计数器（Counter，CTR）模式。
 
 
-3DES::
 
-    三重 DES(triple-DES)
-    不是3次 DES加密而是(加密-解密-加密)
-    不建议使用
-
-其他::
-
-    RC4: 不建议使用
 
 
 

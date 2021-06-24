@@ -6,7 +6,7 @@ Golang语言相关
 :时间: 2014-06-19
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    goes/sum
    goes/command
@@ -14,7 +14,7 @@ Golang语言相关
    goes/opensource
    goes/testing
    goes/history
-   goes/practice
+   goes/tune
    goes/question
    goes/tool
    goes/skill

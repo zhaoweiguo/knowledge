@@ -15,8 +15,11 @@ linux下的功能模块可以分为静态内核模块和动态功能模块
    kernels/kexec
    kernels/lsmod
    kernels/sysctl
-   kernels/systemctl
 
+   kernels/systemctl
+   kernels/service
+
+   kernels/journalctl
    kernels/supervisor
 
    kernels/make

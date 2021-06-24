@@ -208,6 +208,7 @@ N
 * NAPT: Network Address Port Translation(网络地址端口转换, network-protocol)
 * NAT: Network Address Translation(网络地址转换, network-protocol)
 * MFA: Multi-factor Authentication(多因子身份验证)
+* NIST: National Institute of Standards and Technology(crypto)
 * NTP: Network Time Protocol(网络时间协议)
 
 
@@ -284,6 +285,7 @@ S
 * SASL: System Architecture Support Libraries
 * SDK: Soft Development Kit
 * SFA: Single-factor authentication(单因素认证, security, MFA)
+* SHA: Secure Hash Algorithm(crypto)
 * SIG: Special Interest Group
 * SIP: System Integrity Protection (MacOS)
 * SLA: Service Level Agreement(服务等级协议)

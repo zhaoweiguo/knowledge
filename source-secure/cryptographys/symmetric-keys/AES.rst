@@ -1,6 +1,26 @@
 AES加解密
 #########
 
+AES(Advanced Encryption Standard)::
+
+    历史:
+     公开竞选
+     美国国家技术研究所NIST(National Institute of Standards and Technology)
+     通过竞选来实现标准化(standardization by competition)
+     2000年10月2日, Rijndael(比利时: Joan Daemen, Vincent Rijmen)
+
+    支持三种长度的密钥:128位，192位，256位
+    AES128，AES192，AES256
+    填充方式
+     NoPadding
+     PKCS5Padding（默认）
+     ISO10126Padding
+
+    工作模式
+     CBC、ECB、CTR、CFB、OFB
+
+
+
 :ref:`openssl enc<openssl_enc>`
 
 高级加密标准（英语：Advanced Encryption Standard，缩写：AES），在密码学中又称Rijndael加密法，是美国联邦政府采用的一种区块加密标准。这个标准用来替代原先的DES，已经被多方分析且广为全世界所使用。经过五年的甄选流程，高级加密标准由美国国家标准与技术研究院（NIST）于2001年11月26日发布于FIPS PUB 197，并在2002年5月26日成为有效的标准。2006年，高级加密标准已然成为对称密钥加密中最流行的算法之一

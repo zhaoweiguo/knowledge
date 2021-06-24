@@ -50,6 +50,12 @@ CAP::
     2. 最终一致性(eventual consistency)
         放宽对时间的要求，在被调完成操作响应后的某个时间点，被调多个节点的数据最终达成一致
 
+    * 顺序一致性（Sequential Consistency）：Leslie Lamport 1979 年经典论文《How to Make a Multiprocessor Computer That Correctly Executes Multiprocess Programs》中提出，是一种比较强的约束，保证所有进程看到的 全局执行顺序（total order）一致，并且每个进程看自身的执行（local order）跟实际发生顺序一致。例如，某进程先执行 A，后执行 B，则实际得到的全局结果中就应该为 A 在 B 前面，而不能反过来。同时所有其它进程在全局上也应该看到这个顺序。顺序一致性实际上限制了各进程内指令的偏序关系，但不在进程间按照物理时间进行全局排序。
+    https://en.wikipedia.org/wiki/Sequential_consistency
+    * 线性一致性（Linearizability Consistency）：Maurice P. Herlihy 与 Jeannette M. Wing 在 1990 年经典论文《Linearizability: A Correctness Condition for Concurrent Objects》中共同提出，在顺序一致性前提下加强了进程间的操作排序，形成唯一的全局顺序（系统等价于是顺序执行，所有进程看到的所有操作的序列顺序都一致，并且跟实际发生顺序一致），是很强的原子性保证。但是比较难实现，目前基本上要么依赖于全局的时钟或锁，要么通过一些复杂算法实现，性能往往不高。
+    https://en.wikipedia.org/wiki/Linearizability
+
+
 
 .. figure:: /images/theorys/cap1.png
 

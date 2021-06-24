@@ -8,6 +8,7 @@
   make
   make install
 
+  brew install tsung
 
 执行步骤::
 

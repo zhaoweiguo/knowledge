@@ -14,6 +14,7 @@
    002blockchains/application
    002blockchains/1bitcoin
    002blockchains/2ethereum
+   002blockchains/3Hyperledger
    002blockchains/coin
    002blockchains/other
 

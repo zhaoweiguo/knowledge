@@ -12,9 +12,9 @@
 .. toctree::
    :numbered: 3
 
-   erlang
    golang
    python
+   erlang
    children
    php
    node

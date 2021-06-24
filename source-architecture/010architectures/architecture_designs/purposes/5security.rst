@@ -25,7 +25,6 @@
 
 .. image:: /images/architectures/designs/design_security1.png
 
-
 .. note:: 防火墙的功能虽然强大，但性能一般，所以在传统的银行和企业应用领域应用较多。但在互联网领域，防火墙的应用场景并不多。
 
 性能::

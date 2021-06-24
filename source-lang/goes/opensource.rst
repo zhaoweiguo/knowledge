@@ -10,7 +10,6 @@
    opensources/sarama
    opensources/mock
    opensources/delve
-   opensources/pprof
    opensources/log
    opensources/runtime
    opensources/mongo-go-driver

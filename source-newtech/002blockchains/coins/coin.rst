@@ -7,6 +7,7 @@
 
    coins/Chia
    coins/Monero
+   coins/tmp
 
 
 

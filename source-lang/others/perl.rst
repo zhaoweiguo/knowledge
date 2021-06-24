@@ -18,3 +18,10 @@ perl命令::
     m  %列出列表
     h  %請求帮助
 
+cpan命令::
+
+    $ cpan Template
+
+
+
+

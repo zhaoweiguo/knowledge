@@ -13,6 +13,7 @@
    timelines/blockchain
    timelines/robot
    timelines/security
+   timelines/finance
    timelines/other
 
 
