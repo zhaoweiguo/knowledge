@@ -14,12 +14,12 @@ Matplotlib: Visualization with Python。Matplotlib is a comprehensive library fo
 
 .. toctree::
 
-    matplotlibs/normal
-    matplotlibs/install
-    matplotlibs/pyplot
-    matplotlibs/matplotlib.patches
-    matplotlibs/example
-    matplotlibs/pylab
+    Matplotlibs/normal
+    Matplotlibs/install
+    Matplotlibs/pyplot
+    Matplotlibs/matplotlib.patches
+    Matplotlibs/example
+    Matplotlibs/pylab
 
 
 

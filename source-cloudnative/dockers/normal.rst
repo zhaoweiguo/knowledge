@@ -9,7 +9,7 @@
 .. image:: /images/architectures/microservices/service-discovery-in-microservices.png
 
 
-* :ref:`CNCF <index-cloudnative>` (云原生计算基金会)给出了云原生应用的三大特征::
+* |:ref:| `CNCF <index-cloudnative>` (云原生计算基金会)给出了云原生应用的三大特征::
 
     容器化包装: 软件应用的进程应该包装在容器中独立运行
     动态管理: 通过集中式的编排调度系统来动态的管理和调度
@@ -20,8 +20,6 @@
 
     容器的部署密度越来越高（increasing Pod density）。
     容器的生命周期越来越短（decreasing Pod lifespan）。甚至短到秒级或毫秒级。
-
-
 
 
 

@@ -7,12 +7,12 @@
    :maxdepth: 2
 
    libraries/normal
-   libraries/ipython
-   libraries/jupyter
+   libraries/IPython
+   libraries/Jupyter
    libraries/NumPy
-   libraries/pandas
-   libraries/matplotlib
-   libraries/scipy
+   libraries/Pandas
+   libraries/Matplotlib
+   libraries/SciPy
    libraries/sklearn
    libraries/statsmodels
 

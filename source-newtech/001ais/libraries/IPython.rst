@@ -7,9 +7,9 @@ IPython
 
 .. toctree::
 
-    ipythons/normal
-    ipythons/magic
-    ipythons/display
+    IPythons/normal
+    IPythons/magic
+    IPythons/display
 
 
 

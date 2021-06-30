@@ -2,7 +2,7 @@ Dockerfile 文件
 ###############
 
 
-:ref:`Dockerfile<index-cloudnative>`
+|:ref:|`Dockerfile<index-cloudnative>`
 
 
 

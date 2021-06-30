@@ -1,7 +1,7 @@
 常用
 ####
 
-* :ref:`关联：分布式系统 <index-architecture>`
+* |:ref:| `关联：分布式系统 <index-architecture>`
 
 .. note:: RPC 出现的最初目的，就是为了让计算机能够跟调用本地方法一样，去调用远程方法。在RPC初期确实是奔着这个目标去做的，但这种透明的调用形式反而让程序员们误以为通信是无成本的，从而被滥用，以至于显著降低了分布式系统的性能。经过多年的教训，最后总结出了『 `通过网络进行分布式运算的八宗罪（8 Fallacies of Distributed Computing） <https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing>`_ 』
 

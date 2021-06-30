@@ -2,5 +2,5 @@ Prometheus
 ##########
 
 
-* 详见 :ref:`这儿<index-cloudnative>`
+* 详见 |:ref:| `这儿<index-cloudnative>`
 

@@ -282,9 +282,10 @@ texinfo_documents = [
 #texinfo_show_urls = 'footnote'
 
 
-
-
-
+# 2021-07-01 解决拆分多个 sphinx 项目后，站内链接问题
+rst_epilog = """
+.. |:ref:| replace:: ``站内链接:``
+"""
 
 
 
