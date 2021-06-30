@@ -56,6 +56,7 @@
 * [微信]从1到2000个微服务，史上最落地的实践云原生25个步骤: https://mp.weixin.qq.com/s/64cJJj14Ro4z0nAzQm4GGg
 * [微信]以业务为核心的云原生体系建设: https://mp.weixin.qq.com/s/8Rn3N51GpaSyrp7VR7XBVw
 * 【书】《微服务实践》——占红来译
+* 10 分钟入门微服务架构: https://www.jianshu.com/p/3320fbec2521
 
 
 

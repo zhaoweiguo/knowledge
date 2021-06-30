@@ -4,7 +4,7 @@
 并发
 ====
 
-* 1978 年就被 :ref:`东尼・霍尔 <person_Tony-Hoare>` 提出CSP并发模型
+* 1978 年就被 ``站内链接: 东尼・霍尔 Tony-Hoare`` 提出CSP并发模型
 * 1985年，FLP定理的论文由Fischer, Lynch and Patterson三位作者发表,之后该论文毫无疑问得获得了Dijkstra奖
 * 1987年普林斯顿大学的赫克托・加西亚・莫利纳（Hector Garcia Molina）和肯尼斯・麦克米伦（Kenneth Salem）在 ACM 发表的一篇论文《SAGAS》
 * 20世纪 90 年代，IBM Almaden 研究院总结了研发原型数据库系统 “IBM System R” 的经验，发表了 ARIES 理论中最主要的三篇论文
@@ -17,7 +17,10 @@
 ====
 
 * 20 世纪 80 年代初，出现了一些大型软件系统，亟需一种统一的模式(也就是后来的架构)来解决设计这些庞大系统所面临的 一些常见问题。从那时开始，演化出了今天我们所熟知的“软件架构”的概念。
-* 2014 年，微服务真正崛起， Martin Fowler 和 James Lewis 合写文章 “Microservices: a definition of this new architectural term”，定义了现代微服务的概念。
+* 2011 年 5 月微服务这个概念最早是在 威尼斯的一个软件架构会议上讨论并提出的，用于描述一些作为通用架构风格的设计原则。
+* 2012 年 3 月在波克兰克拉科夫举行的 33rd Degree Conference 大会上，Thoughtworks 首席咨询师 ``James Lewis`` 做了题为《Microservices - Java, the Unix Way》的演讲，这次演讲里 James 讨论了微服务的一些原则，例如单一服务职责、康威定律、自动扩展、DDD 等等。
+* 微服务架构则是由 ``Fred George`` 在 2012 年的一次技术大会上所提出，在大会的演讲中他讲解了如何分拆服务以及如何利用 MQ 来进行服务间的解耦，这就是最早的微服务架构雏形。
+* 2014 年，微服务真正崛起， ``Martin Fowler`` 和 ``James Lewis`` 合写文章 `“Microservices: a definition of this new architectural term” <https://martinfowler.com/articles/microservices.html>`_ ，定义了现代微服务的概念。
 
 
 

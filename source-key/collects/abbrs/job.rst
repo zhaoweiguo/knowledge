@@ -3,6 +3,7 @@
 
 
 * JD: job description
+* hire count: 雇佣人数
 
 
 hr3D

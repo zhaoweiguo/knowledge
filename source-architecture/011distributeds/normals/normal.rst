@@ -19,7 +19,7 @@
 
 主要内容::
 
-    一致性问题 共识问题
+    一致性问题VS共识问题
 
 分布式计算的8个谬论（`通过网络进行分布式运算的八宗罪 <https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing>`_ （8 Fallacies of Distributed Computing））::
 
@@ -41,7 +41,6 @@
     不考虑传输成本（Transport cost is zero）
     网络是同质化的（The network is homogeneous）
 
-* :ref:`RPC协议 <index-protocol>`
 
 
 一致性
@@ -59,7 +58,7 @@
 
 满足一致性的要求::
 
-    1. 有限时间完成请求的处理
+    1. 有限时间完成请求的处理
     2. 不同节点完成的结果相同
     3. 决策的结果必须是某个节点提出的提案.
 
@@ -67,7 +66,6 @@
 
     顺序保证. 时钟
 
- 
 
 共识
 ----

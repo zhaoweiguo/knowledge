@@ -51,6 +51,11 @@ other
 
 ::
 
+    authentication, monitoring, load balancing, caching, request shaping and management, and static response handling.
+
+
+::
+
     镜像治理
     资源治理
     源码治理

@@ -9,6 +9,7 @@
    studys/how-to-write
    studys/teaching-as-learning
    studys/ZTD-learning-routine
+   studys/how-to-become-guru
 
 
 

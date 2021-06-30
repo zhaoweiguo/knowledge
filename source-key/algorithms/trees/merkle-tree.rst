@@ -18,7 +18,7 @@ Merkle树::
     比特币：简化交易验证
      以太坊包含3个Merkle树：交易、收据，状态
 
-.. image:: /image/theorys/trees/merkle-tree1.png
+.. image:: /images/theorys/trees/merkle-tree1.png
 
 
 

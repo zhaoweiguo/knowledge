@@ -9,6 +9,7 @@
 * `首页 <../../../index.html>`_
 
 .. toctree::
+   :titlesonly:
    :numbered: 3
 
    normal

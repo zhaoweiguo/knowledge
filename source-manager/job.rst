@@ -12,6 +12,7 @@
 
    jobs/normal
    jobs/responsibility
+   jobs/interview
    jobs/other
 
 

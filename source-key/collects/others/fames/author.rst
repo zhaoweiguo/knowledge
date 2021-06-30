@@ -1,16 +1,14 @@
 作者
 ####
 
-.. _author_melvin_conway:
 
 Melvin Conway
 =============
 
 * Author of 「Conway's Law」
-* 【论文】Conway's Law(1967年) [1]_
+* 【论文】Conway's Law(1967年) : https://app.yinxiang.com/fx/1d4a3db5-5221-46bf-9fbf-8e2d8805b2c8
 
 
-.. _author_mike_amundsen:
 
 Mike Amundsen
 =============
@@ -35,30 +33,36 @@ Alan Turing
 
 
 
-.. _person_Tony-Hoare:
+Tony Hoare
+==========
 
-东尼・霍尔
+* Tony Hoare 东尼・霍尔
 
 英国计算机科学家，图灵奖得主，他设计了牛气冲天的快速排序算法、霍尔逻辑以及 CSP 模型。2011 年获颁约翰・冯诺依曼奖。
 
 .. image:: /images/collects/fames/Tony-Hoare.png
 
 
-.. _person_Richardson:
+Richardson
+==========
+
+* Richardson， REST 成熟度
+
+Martin-Fowler
+=============
+
+* 《Mocks Aren’t Stubs》
+* 和 ``James Lewis`` 合写文章 `“Microservices: a definition of this new architectural term” <https://martinfowler.com/articles/microservices.html>`_ ，定义了现代微服务的概念
+
+.. image:: /images/collects/fames/Martin-Fowler.png
 
 
-Richardson， REST 成熟度
 
 
-.. _person_Martin-Fowler:
+Vitalik Buterin
+===============
 
-Martin Fowler::
-
-    《Mocks Aren’t Stubs》
-
-.. _person_Vitalik-Buterin:
-
-Vitalik Buterin::
+::
 
     v神
     以太坊(Ethereum)
@@ -85,4 +89,7 @@ Other
 
 
 
-.. [1] https://app.yinxiang.com/fx/1d4a3db5-5221-46bf-9fbf-8e2d8805b2c8
+
+
+
+
