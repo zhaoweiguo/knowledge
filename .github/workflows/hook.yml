@@ -1,10 +1,7 @@
 on:
-  push:
-    branches:
-      - deploy
   pull_request:
     branches:
-      - deploy
+      - master
 jobs:
   build:
     name: Hook

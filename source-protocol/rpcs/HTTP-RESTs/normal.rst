@@ -16,6 +16,8 @@
 
 .. note:: 对于这种存在争议性大的东西，尽可能的少引入团队，争议性大就意味着大家对他的理解的共性越少，无论是引入推广还是实施的具体效果都会存在很长周期的磨合与统一。引入它带来认知负荷的提高，弊端就很可能完全盖过了收益。
 
+.. note:: REST APIs are excellent at handling requests in a generic way, establishing a set of rules that allow a large number of known and unknown developers to easily consume the services that the API offers. 解读: 适合做public API。提供确定 API作为规则，供各种消费者消费。
+
 
 
 
@@ -67,6 +69,8 @@
 .. note:: 尽管有着种种不同，REST 跟 RPC 还是产生了很频繁的比较与争论，这两种分别面向资源和面向过程的远程调用方式，就像当年面向对象与面向过程的编程思想一样，非得分出个高低不可。
 
 
+参考
+====
 
-
+* [NetFlix]Why REST Keeps Me Up At Night: https://www.programmableweb.com/news/why-rest-keeps-me-night/2012/05/15
 

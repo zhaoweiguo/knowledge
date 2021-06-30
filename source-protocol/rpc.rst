@@ -10,6 +10,7 @@ RPC相关
    rpcs/normal
    rpcs/HTTP-REST
    rpcs/gRPC
+   rpcs/GraphQL
    rpcs/thrift
    rpcs/JSON-RPC
    rpcs/web_service

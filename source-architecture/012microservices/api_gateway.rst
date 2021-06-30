@@ -14,6 +14,9 @@ API网关
         根据客户端(app, 网站)的不同，访问不同的内部服务
     6. 断路器
 
+    The API Gateway encapsulates the internal system architecture and provides an API that is tailored to each client. 
+    It might have other responsibilities such as authentication, monitoring, load balancing, caching, request shaping and management, and static response handling.
+    The API Gateway is responsible for request routing, composition, and protocol translation. 
 
 优点如下::
 

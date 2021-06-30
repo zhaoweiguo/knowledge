@@ -1,6 +1,6 @@
 GitHub Action
 #############
 
-参见 :ref:`github_action <index-open>`
+参见 ``站内链接: github_action``
 
 

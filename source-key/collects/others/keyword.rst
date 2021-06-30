@@ -45,9 +45,24 @@ devops
     服务网格
 
 
-
 other
 =====
+
+::
+
+    fine‑grained: 细粒度
+    coarse‑grained: 粗粒度
+
+    benefits and drawbacks: 优缺点
+    shortcomings: 缺点
+
+    Reactive Programming Model: 响应式编程模型
+    A much better approach is to write API Gateway code in a declarative style using a reactive approach.
+
+    one-size-fits-all solution: 一刀切解决方案
+
+    value proposition: 价值主张
+
 
 ::
 

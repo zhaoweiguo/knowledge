@@ -32,19 +32,6 @@ Deno 明确地承担了运行时和包管理器的角色。它使用标准的浏
 
 
 
-混沌工程原则
-============
-
-* 混沌工程原则 - http://principlesofchaos.org : https://github.com/wizardbyron/principlesofchaos_zh-cn
-* ChaosBlade - Github.com: https://github.com/chaosblade-io/chaosblade
-* from: https://developer.aliyun.com/article/763882
-
-GraphQL
-=======
-
-* 官网 https://www.howtographql.com/
-* github: https://github.com/howtographql/howtographql
-
 其他
 ====
 
@@ -94,9 +81,6 @@ tengine, soaproxy前端的代理服务，起到业务分离，负载均衡，防
 服务框架是我们正在基于twitter finagle开发的跨语言的SOA方案。（开发中）
 
 
-
-
-Jupyter notebook 是一个非常强大的工具，可以创建漂亮的交互式文档，制作教学材料
 
 
 『Quantum - Key Distribution』量子密钥分配是1984年物理学家Bennett和密码学家Brassard提出了基于量子力学测量原理的BB84协议，量子密钥分配从根本上保证了密钥的安全性

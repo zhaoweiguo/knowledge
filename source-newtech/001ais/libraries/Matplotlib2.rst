@@ -1,4 +1,4 @@
-matplotlib
+Matplotlib
 ##########
 
 * 官网 [1]_

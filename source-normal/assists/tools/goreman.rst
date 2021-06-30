@@ -2,7 +2,7 @@ goreman
 #######
 
 * github: https://github.com/mattn/goreman
-* :ref:`关联——Procfile<Procfile>`
+* ``站内链接: 关联——Procfile<Procfile>``
 
 基本::
 

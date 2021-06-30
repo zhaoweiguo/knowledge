@@ -14,6 +14,7 @@ DevOps相关服务
    normal
    CICD
    observable
+   chao
    notice
    ops
    jumpserver
