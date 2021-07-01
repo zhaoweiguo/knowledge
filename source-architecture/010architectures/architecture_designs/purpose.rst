@@ -23,7 +23,7 @@
 
    purposes/1performance
    purposes/2availability
-   purposes/3extension
+   purposes/3expandability
    purposes/4lowcost
    purposes/5security
    purposes/6scalability

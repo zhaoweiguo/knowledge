@@ -10,6 +10,7 @@
    010architectures/design_mode
    010architectures/history
    010architectures/architecture_design
+   010architectures/architecture_pattern
    010architectures/graph
 
 

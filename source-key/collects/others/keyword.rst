@@ -125,7 +125,7 @@ other
     代码腐化
     开发惰性
 
-    可扩展性 (Extensibility)
+    可扩展性 (Extensibility, expandability)
     可伸缩 (Scalability)
         伸缩的是性能
 

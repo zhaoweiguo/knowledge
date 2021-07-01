@@ -297,6 +297,7 @@ S
 * SOA: service oriented architecture
 * SOAP: Simple Object Access Protocol
 * SOLID: SRP,OCP,LSP,ISP,DIP(5个对象和接口的设计原则)
+* SOP: Standard Operating Procedure(标准作业程序)
 * SPA: Single Page web Application(单页面应用):不刷新页面, 动态变更html
 * SRE: Site Reliability Engineering(网站可靠性工程师, job)
 * SRP: Single Responsibility Principle(单一职责原则, SOLID, microservice)
