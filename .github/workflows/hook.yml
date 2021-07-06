@@ -1,8 +1,9 @@
 on:
   push:
+    paths:
+      - '0shares/VERSION.txt'
     branches:
-      paths:
-        - '0shares/VERSION.txt'
+      - master
 jobs:
   build:
     name: Hook
