@@ -7,6 +7,11 @@
 * 列式数据库，一般适用于数据分析（OLAP）领域。
 
 
+.. toctree::
+   :maxdepth: 1
+
+   normals/columnar
+   normals/other
 
 
 

@@ -6,10 +6,10 @@
 .. toctree::
    :maxdepth: 1
 
-   sqls/mysql
+   sqls/MySQL
    sqls/command
-   sqls/postgre
-   sqls/sqlite
+   sqls/PostgreSQL
+   sqls/SQLite
 
 
 

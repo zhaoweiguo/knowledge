@@ -11,6 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   sqlites/sqlite_introduce
-   sqlites/sqlite_command
-   sqlites/sqlite_question
+   SQLites/sqlite_introduce
+   SQLites/sqlite_command
+   SQLites/sqlite_question

@@ -7,6 +7,5 @@
 
    normals/index
    normals/normal
-   normals/columnar
 
 
