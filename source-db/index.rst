@@ -13,13 +13,13 @@
    :numbered: 3
 
    normal
-   kv
-   mongodb
+   Key-Value
+   Document
+   Column
    sql
    MQ
    tsdb
    graph
-   elasticsearch
-   hbase
+   FullText-Index
    other
 

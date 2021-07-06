@@ -54,6 +54,13 @@ other
     缓存击穿 Cache breakdown
     缓存穿透 Cache penetration
 
+
+    滥用图表（chart abuse）
+
+    数据仓库 (Data Warehouse)
+    数据库 (DataBase)
+
+
 ::
 
     fine‑grained: 细粒度
