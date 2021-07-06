@@ -1,7 +1,8 @@
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      paths:
+        - '0shares/VERSION.txt'
 jobs:
   build:
     name: Hook
