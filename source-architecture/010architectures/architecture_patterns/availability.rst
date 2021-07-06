@@ -6,6 +6,8 @@
    :maxdepth: 1
 
    availabilitys/normal
+   availabilitys/1CAP
+   availabilitys/2FMEA
 
 
 

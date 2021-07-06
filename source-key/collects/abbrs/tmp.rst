@@ -27,6 +27,10 @@
 * QPS: Query Per Second(每秒请求数，一般指读取，TPS)
 * TPS: Transactions Per Second(每秒事务数，一般指写入，QPS)
 
+* BIO: Block IO，阻塞 io，PPC 和 TPC 属于这种
+* NIO: No-Block IO，多路复用 io，reactor 就是基于这种技术
+* AIO: Async IO，异步 io，Proactor 就是基于这种技术
+
 其他
 ====
 
