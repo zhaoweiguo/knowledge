@@ -16,10 +16,11 @@
    Key-Value
    Document
    Column
-   sql
+   Relational
    MQ
-   tsdb
-   graph
+   Time-Serie
+   GraphDB
+   Multi-Model
    FullText-Index
    other
 
