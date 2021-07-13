@@ -6,6 +6,7 @@
    :maxdepth: 1
 
    theorys/CAP
+   theorys/PACELC
    theorys/FLP
    theorys/DLS
    theorys/CSP

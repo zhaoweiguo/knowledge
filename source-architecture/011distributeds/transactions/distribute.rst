@@ -19,6 +19,8 @@
    distributes/TCC
 
 
+.. image:: /images/architectures/distributes/transaction10.png
+
 
 
 

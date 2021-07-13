@@ -7,4 +7,10 @@
 * https://github.com/floodsung/Deep-Learning-Papers-Reading-Roadmap
 
 
+别人的收集
+==========
+
+* https://github.com/mdwelsh/mdwelsh.github.io/tree/master/papers
+
+
 

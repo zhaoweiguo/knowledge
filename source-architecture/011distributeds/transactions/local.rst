@@ -114,7 +114,7 @@ FORCE 和 STEAL::
       3. FORCE & NO-STEAL: 最慢, 不需要日志
       4. FORCE & STEAL: 回滚日志
 
-.. image:: /images/architectures/transaction1.jpg
+.. image:: /images/architectures/distributes/transaction1.jpg
 
 
 

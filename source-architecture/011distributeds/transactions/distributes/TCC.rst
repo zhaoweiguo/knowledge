@@ -27,7 +27,7 @@ TCC 的实现过程分为了三个阶段::
         注意，Cancel 阶段也可能会重复执行，因此也需要满足幂等性。
 
 
-.. figure:: /images/architectures/transaction6.jpg
+.. figure:: /images/architectures/distributes/transaction6.jpg
 
    TCC 事务操作时序
 

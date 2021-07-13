@@ -10,6 +10,7 @@
    normals/opensource
    normals/concept
    normals/contract
+   normals/other
 
 
 

@@ -11,6 +11,7 @@
    010architectures/history
    010architectures/architecture_design
    010architectures/architecture_pattern
+   010architectures/evolution
    010architectures/graph
 
 

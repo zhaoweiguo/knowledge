@@ -9,6 +9,7 @@
    others/crud
    others/ddd
    others/api
+   others/SSO
    others/event_driver
    others/network_agent
    others/message_bus

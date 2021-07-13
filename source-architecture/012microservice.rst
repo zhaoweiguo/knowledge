@@ -10,6 +10,7 @@
    012microservices/discovery
    012microservices/api_gateway
    012microservices/contract
+   012microservices/tmp
 
 
 

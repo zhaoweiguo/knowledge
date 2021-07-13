@@ -84,7 +84,7 @@ X/Open XA（XA 是 eXtended Architecture 的缩写）的事务处理框架::
 .. warning:: 提到的协调者和参与者，通常都是由数据库自己来扮演的，不需要应用程序介入，应用程序相对于数据库来说只扮演客户端的角色。注意，这点是和分布式事务的区别。也可以说：全局事务是针对「分布式数据库」的，而分布式事务是的针对分布式服务的。
 
 
-.. figure:: /images/architectures/transaction2.jpg
+.. figure:: /images/architectures/distributes/transaction2.jpg
 
    两段式提交
 
@@ -136,7 +136,7 @@ X/Open XA（XA 是 eXtended Architecture 的缩写）的事务处理框架::
     一旦协调者发出开始准备的消息，每个参与者都将马上开始写重做日志，这时候涉及的数据资源都会被锁住。
     如果此时某一个参与者无法完成提交，相当于所有的参与者都做了一轮无用功。
 
-.. figure:: /images/architectures/transaction3.jpg
+.. figure:: /images/architectures/distributes/transaction3.jpg
 
    三段式提交
 

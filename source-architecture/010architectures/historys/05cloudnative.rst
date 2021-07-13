@@ -53,7 +53,7 @@
 .. note:: 2017 年，可以说是容器生态发展历史中具有里程碑意义的一年。
 
 
-.. figure:: /images/architectures/distribute_sys1.jpeg
+.. figure:: /images/architectures/distributes/distribute_sys1.jpeg
 
    针对同一个分布式服务的问题，对比下 Spring Cloud 中提供的『应用层面』的解决方案，以及 Kubernetes 中提供的『基础设施层面』的解决方案
 

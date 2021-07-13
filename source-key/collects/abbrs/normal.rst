@@ -112,7 +112,7 @@ F
 ----
 
 * FaaS: Function as a Service
-* FMEA: Failure Mode and Effects Analysis(潜在的失效模式及后果分析)
+* FMEA: Failure Mode and Effects Analysis(故障模式与影响分析)
 * FSF: Free Software Foundation(自由软件基金会)
 * FSM: finite-state machine(有限状态机)
 
@@ -284,6 +284,7 @@ S
 * SaaS: Software as a Service(软件服务化)
 * SASL: System Architecture Support Libraries
 * SDK: Soft Development Kit
+* SEDA: Stage Event Driver Architecture(分阶段的事件驱动架构)
 * SFA: Single-factor authentication(单因素认证, security, MFA)
 * SHA: Secure Hash Algorithm(crypto)
 * SIG: Special Interest Group

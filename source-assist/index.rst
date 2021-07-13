@@ -16,6 +16,7 @@
    emacs
    sphinxdoc
    nginx
+   LibreOffice
 
 
 

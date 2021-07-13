@@ -3,6 +3,10 @@ Paxos算法
 
 .. note:: There is only one consensus protocol, and that's “Paxos” — all other approaches are just broken versions of Paxos.世界上只有一种共识协议，就是 Paxos，其他所有共识算法都是 Paxos 的退化版本。—— Mike Burrows，Inventor of Google Chubby
 
+.. note:: Paxos 算法本身是满足线性一致性的。线性一致性，也是实际系统能够达到的最强一致性。但工程上目前还没有完全实现 paxos 算法的系统。Paxos 及其各种变体，在实际工程领域的实现，大多是做了一定程度的取舍，并不完全是线性一致性的。
+
+
+
 Paxos 算法将分布式系统中的节点分为三类节点::
 
     提案节点: Proposer
